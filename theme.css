@@ -1,0 +1,67 @@
+/* TSW — token warna + dark/light + gradasi. Dimuat SETELAH home.css, hanya di index.html. */
+:root {
+  --navy:#263F68; --navy-2:#344F78; --pearl:#F4F2EC; --ivory:#F6F2E9; --beige:#DCCDB8;
+  --champagne:#D2B16F; --rose-deep:#B98778; --ink:#263F68;
+  --bg:#263F68; --surface:#344F78; --surface-light:#3D5A88; --line:#5A7099;
+  --sec-hero:#263F68; --sec-ritual:#2D4772; --sec-paths:#F4F2EC; --sec-close:#263F68;
+  --text:#fff; --text-soft:#D9DFEA; --text-mute:#AEB9CE; --accent:#D2B16F; --on-accent:#1B2B49;
+  --rule:rgba(210,177,111,.28); --topbar:rgba(38,63,104,.92);
+}
+[data-theme="light"] {
+  --bg:#F4F2EC; --surface:#fff; --surface-light:#EEEAE0; --line:#DCCDB8;
+  --sec-hero:#F4F2EC; --sec-ritual:#E9EDF3; --sec-paths:#FBF9F4; --sec-close:#263F68;
+  --text:#191919; --text-soft:#3A4660; --text-mute:#5A6584; --accent:#8A6A24; --on-accent:#fff;
+  --rule:rgba(38,63,104,.22); --topbar:rgba(38,63,104,.96);
+}
+body.home { background:var(--bg); color:var(--text); transition:background-color .35s, color .35s; }
+.h-hero { background:var(--sec-hero); border-bottom-color:var(--rule); }
+.h-ritual { background:var(--sec-ritual); border-bottom-color:var(--rule); }
+.h-paths { background:var(--sec-paths); }
+.h-closing { background:var(--sec-close); color:#fff; }
+body.home .topbar { background:var(--topbar); }
+body.home .h-title { color:var(--text); }
+body.home .h-title em, .h-tagline, .h-eyebrow { color:var(--accent); }
+.h-eyebrow::before { background:var(--rose-deep); }
+.h-copy { color:var(--text-soft); } .h-kicker,.h-inst-meta,.h-inst-foot { color:var(--text-mute); }
+.h-inst-meta { border-bottom-color:var(--rule); } .h-now { color:var(--accent); }
+.h-btn { background:var(--accent); color:var(--on-accent); }
+.h-btn:hover { background:var(--navy); color:#fff; }
+.h-link { color:var(--text); border-bottom-color:var(--accent); }
+.h-steps strong { color:var(--text); } .h-steps p { color:var(--text-soft); }
+.h-steps li + li, .h-steps li:nth-child(n+3) { border-color:var(--rule); }
+.h-step-no { color:var(--rose-deep); }
+.h-closing .h-btn { background:#D2B16F; color:#1B2B49; }
+.h-closing-title em, .h-closing .eyebrow { color:#D2B16F; }
+.h-paths .eyebrow, .h-paths-head h2 em, .h-path-no, .h-path-go, .h-level-name { color:#8E5F52; }
+.h-path::before { background:var(--beige); }
+
+/* Gradasi: interpolasi oklab + kurva ease (S-curve), tanpa titik tengah abu keruh */
+.h-fade { --a:var(--sec-ritual); --b:var(--sec-paths); height:clamp(110px,14vw,200px); margin:-1px 0;
+  background:linear-gradient(var(--a),var(--b)); }
+@supports (background:color-mix(in oklab,red,blue)) {
+  .h-fade { background:linear-gradient(to bottom,
+    var(--a) 0%,
+    color-mix(in oklab,var(--b) 2%,var(--a)) 10%,
+    color-mix(in oklab,var(--b) 7%,var(--a)) 20%,
+    color-mix(in oklab,var(--b) 16%,var(--a)) 30%,
+    color-mix(in oklab,var(--b) 30%,var(--a)) 40%,
+    color-mix(in oklab,var(--b) 50%,var(--a)) 50%,
+    color-mix(in oklab,var(--b) 70%,var(--a)) 60%,
+    color-mix(in oklab,var(--b) 84%,var(--a)) 70%,
+    color-mix(in oklab,var(--b) 93%,var(--a)) 80%,
+    color-mix(in oklab,var(--b) 98%,var(--a)) 90%,
+    var(--b) 100%); }
+}
+.h-fade-to-dark { --a:var(--sec-paths); --b:var(--sec-close); }
+
+/* Ornamen hero (SVG di HTML) */
+.h-ornament { position:absolute; right:-4%; top:50%; width:min(62vw,620px); transform:translateY(-50%); pointer-events:none; opacity:.9; z-index:0; }
+.h-orn-line { stroke:var(--rule); stroke-width:1; vector-effect:non-scaling-stroke; stroke-dasharray:1; }
+@media (max-width:960px){ .h-ornament{ opacity:.35; } }
+
+/* Toggle tema */
+.theme-toggle { width:38px; height:38px; display:grid; place-items:center; border:1px solid rgba(210,177,111,.5); border-radius:50%; background:transparent; color:#fff; transition:background .25s, transform .25s; }
+.theme-toggle:hover { background:rgba(210,177,111,.2); }
+.theme-toggle:focus-visible { outline:2px solid #D2B16F; outline-offset:3px; }
+.theme-toggle svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.6; }
+.theme-toggle .i-sun { display:none; } [data-theme="light"] .theme-toggle .i-sun { display:block; } [data-theme="light"] .theme-toggle .i-moon { display:none; }
