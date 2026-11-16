@@ -33,18 +33,18 @@
       <article class="l-topic"><span class="l-no">0.2 — IDENTIFY</span><h3>The Musical Alphabet</h3>
         <p>Musik dasar menggunakan tujuh nama nada: <b>C, D, E, F, G, A, B</b>. Setelah B, urutannya kembali ke C pada oktaf berikutnya. Jarak dari satu C ke C berikutnya disebut <b>octave</b>. Nada-nada tanpa tanda kres atau mol disebut <i>natural notes</i>.</p>
         <p>Di antara beberapa nada natural terdapat nada berjarak satu <b>semitone</b> (setengah langkah) atau dua semitone yang disebut <b>whole tone</b> (satu langkah). Tanda <b>sharp (♯)</b> menaikkan nada satu semitone, sedangkan <b>flat (♭)</b> menurunkannya satu semitone. Contoh: C♯ berada satu semitone di atas C.</p>
-        <div class="l-keys" id="demoKeys" role="group" aria-label="Tuts C sampai B"></div><small class="l-hint">Tekan setiap tuts untuk mendengar nadanya.</small>
+        <div class="l-keys" id="demoKeys" role="group" aria-label="Tuts C sampai B"></div><small class="l-hint">Tekan setiap tuts untuk mendengar rekaman nada piano akustik.</small>
       </article>
       <article class="l-topic"><span class="l-no">0.3 — EXPLORE</span><h3>Introduction to the Keyboard</h3>
         <p>Keyboard tersusun dari pola tuts putih dan hitam yang berulang. Tuts hitam membentuk kelompok dua dan tiga. Temukan kelompok dua tuts hitam: tuts putih tepat di sebelah kirinya adalah <b>C</b>. Dari C, urutan nada berlanjut ke kanan.</p>
         <div class="l-keyboard-map l-playable-piano" id="playableKeyboard" aria-label="Keyboard interaktif dua oktaf"></div>
-        <small class="l-hint">Tekan tuts putih maupun hitam untuk mendengar nada. Pola dua dan tiga tuts hitam membantu menemukan posisi C.</small>
+        <small class="l-hint">Tekan tuts putih maupun hitam untuk mendengar rekaman suara grand piano akustik. Pola dua dan tiga tuts hitam membantu menemukan posisi C.</small>
         <p><b>Octave</b> adalah jarak antara dua nada dengan nama sama. Pada piano, pola 12 tuts (7 putih dan 5 hitam) berulang di setiap octave. Tuts hitam dapat memiliki dua nama, misalnya C♯ dan D♭, yang disebut <i>enharmonic equivalents</i>.</p>
       </article>
       <article class="l-topic l-topic-wide"><span class="l-no">0.4 — EXPLORE</span><h3>Meet the Guitar</h3>
         <p>Gitar menghasilkan bunyi ketika senar dipetik atau digesek. Pada gitar standar enam senar, urutan tuning dari senar paling tebal ke paling tipis adalah <b>E – A – D – G – B – E</b>. Angka fret menunjukkan posisi jari pada leher gitar. Setiap naik satu fret, pitch naik satu semitone.</p>
-        <div class="l-guitar-wrap"><div class="l-guitar-board" id="guitarBoard" aria-label="Fretboard gitar interaktif"></div></div>
-        <small class="l-hint">Tekan titik fret untuk mendengar nada. Baris paling atas adalah senar E rendah, baris paling bawah senar E tinggi.</small>
+        <div class="l-guitar-wrap"><div class="l-guitar-board" id="guitarBoard" aria-label="Fretboard gitar akustik interaktif"></div></div><p class="l-audio-status" id="instrumentAudioStatus" aria-live="polite">Audio instrumen menggunakan sampel rekaman akustik. Klik instrumen untuk mulai memuat suara.</p>
+        <small class="l-hint">Tekan posisi senar atau fret untuk memetik rekaman suara gitar akustik. Baris paling atas adalah senar E rendah, baris paling bawah senar E tinggi.</small>
         <p>Berbeda dari piano yang setiap tutsnya sudah memiliki posisi nada tetap, gitar menggunakan kombinasi <b>string</b> (senar) dan <b>fret</b>. Nada yang sama dapat ditemukan di beberapa posisi berbeda pada fretboard.</p>
       </article>
       <article class="l-topic"><span class="l-no">0.5 — READ</span><h3>Introduction to Musical Notation</h3>
@@ -93,5 +93,5 @@
   </div></section>
 </main>
 <div id="site-footer"></div>
-<script src="app.js"></script><script src="audio-engine.js"></script><script src="level0.js"></script>
+<script src="app.js"></script><script src="audio-engine.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script><script src="level0.js"></script>
 </body></html>
