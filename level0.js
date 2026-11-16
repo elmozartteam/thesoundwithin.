@@ -7,26 +7,70 @@
   var rnd = function (a, b) { return a + Math.floor(Math.random() * (b - a + 1)); };
   var $ = function (id) { return document.getElementById(id); };
 
-  /* Piano audio from the shared engine, with a simple oscillator fallback. */
-  var actx = null;
-  function beep(f) {
-    var AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
-    actx = actx || new AC(); if (actx.state === 'suspended') actx.resume();
-    var t = actx.currentTime, o = actx.createOscillator(), g = actx.createGain();
-    o.frequency.value = f; g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.2, t + .02); g.gain.exponentialRampToValueAtTime(.0001, t + 1.1);
-    o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t + 1.2);
+  /* Real recorded acoustic instrument samples (not oscillator/synth tones). */
+  var acousticSamplers = { piano: null, guitar: null };
+  var acousticReady = { piano: false, guitar: false };
+  var acousticPending = { piano: [], guitar: [] };
+  var sampleBase = 'https://raw.githubusercontent.com/nbrosowsky/tonejs-instruments/master/samples/';
+  var midiNames = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+  function midiNote(midi) { return midiNames[midi % 12] + (Math.floor(midi / 12) - 1); }
+  function sampleMap(kind) {
+    if (kind === 'guitar') return {
+      'E2':'E2.mp3','F#2':'Fs2.mp3','A2':'A2.mp3','C3':'C3.mp3','D3':'D3.mp3',
+      'F3':'F3.mp3','G3':'G3.mp3','A3':'A3.mp3','C4':'C4.mp3','D4':'D4.mp3',
+      'F4':'F4.mp3','G4':'G4.mp3','A4':'A4.mp3','C5':'C5.mp3'
+    };
+    return {
+      'C3':'C3.mp3','F#3':'Fs3.mp3','A3':'A3.mp3','C4':'C4.mp3','F#4':'Fs4.mp3',
+      'A4':'A4.mp3','C5':'C5.mp3','F#5':'Fs5.mp3','A5':'A5.mp3','C6':'C6.mp3'
+    };
+  }
+  function flushAcoustic(kind) {
+    var q = acousticPending[kind].splice(0);
+    q.forEach(function (midi) { playAcoustic(kind, midi); });
+  }
+  function loadAcoustic(kind) {
+    if (acousticSamplers[kind] || !window.Tone || !window.Tone.Sampler) return;
+    var folder = kind === 'guitar' ? 'guitar-acoustic/' : 'piano/';
+    acousticSamplers[kind] = new Tone.Sampler({
+      urls: sampleMap(kind),
+      baseUrl: sampleBase + folder,
+      release: kind === 'guitar' ? 0.35 : 1.1,
+      onload: function () { acousticReady[kind] = true; flushAcoustic(kind); },
+      onerror: function () {
+        var status = $('instrumentAudioStatus');
+        if (status) status.textContent = 'Sampel suara belum dapat dimuat. Periksa koneksi internet lalu coba lagi.';
+      }
+    }).toDestination();
+  }
+  function playAcoustic(kind, midi) {
+    if (!window.Tone || !window.Tone.Sampler) {
+      var status = $('instrumentAudioStatus');
+      if (status) status.textContent = 'Audio instrumen memerlukan koneksi internet untuk memuat sampel akustik.';
+      return;
+    }
+    loadAcoustic(kind);
+    if (!acousticSamplers[kind]) return;
+    if (!acousticReady[kind] && !acousticSamplers[kind].loaded) {
+      acousticPending[kind].push(midi);
+      var status = $('instrumentAudioStatus');
+      if (status) status.textContent = 'Memuat sampel suara ' + (kind === 'guitar' ? 'gitar akustik' : 'grand piano') + '…';
+      return;
+    }
+    acousticReady[kind] = true;
+    Tone.start().then(function () {
+      acousticSamplers[kind].triggerAttackRelease(midiNote(midi), kind === 'guitar' ? 1.4 : 1.8);
+      var status = $('instrumentAudioStatus');
+      if (status) status.textContent = 'Suara ' + (kind === 'guitar' ? 'gitar akustik' : 'piano akustik') + ' aktif.';
+    }).catch(function () {});
   }
   function sound(d) {
-    /* Use the shared sampler when it is available; otherwise use the local synth. */
-    if (window.TSWAudio && typeof window.TSWAudio.play === 'function') {
-      try { window.TSWAudio.play(nm(d)); return; } catch (e) {}
-    }
-    beep(hz(d));
+    /* Musical exercises use the recorded acoustic grand-piano sample. */
+    var midi = 60 + (d - 28); // C4 is the reference point for Level 0
+    playAcoustic('piano', midi);
   }
-  function playMidi(midi) {
-    var f = 440 * Math.pow(2, (midi - 69) / 12);
-    beep(f);
-  }
+  function playMidi(midi) { playAcoustic('piano', midi); }
+  function playGuitarMidi(midi) { playAcoustic('guitar', midi); }
   function sequence(a, b) { sound(a); window.setTimeout(function () { sound(b); }, 850); }
 
   /* Staff illustration. d is a diatonic index; C4 = 28. */
@@ -105,11 +149,11 @@
         var b = document.createElement('button'); b.type = 'button'; b.className = 'l-fret';
         b.textContent = fret === 0 ? '○' : '·'; b.setAttribute('data-midi', st.midi + fret);
         b.setAttribute('aria-label', 'Senar ' + st.label + ', fret ' + fret + ', mainkan nada');
-        b.addEventListener('pointerdown', function (e) { e.preventDefault(); this.classList.add('pressed'); playMidi(Number(this.getAttribute('data-midi'))); });
+        b.addEventListener('pointerdown', function (e) { e.preventDefault(); this.classList.add('pressed'); playGuitarMidi(Number(this.getAttribute('data-midi'))); });
         b.addEventListener('pointerup', function () { this.classList.remove('pressed'); });
         b.addEventListener('pointerleave', function () { this.classList.remove('pressed'); });
         b.addEventListener('pointercancel', function () { this.classList.remove('pressed'); });
-        b.addEventListener('keydown', function (e) { if ((e.key === 'Enter' || e.key === ' ') && !e.repeat) { e.preventDefault(); this.classList.add('pressed'); playMidi(Number(this.getAttribute('data-midi'))); } });
+        b.addEventListener('keydown', function (e) { if ((e.key === 'Enter' || e.key === ' ') && !e.repeat) { e.preventDefault(); this.classList.add('pressed'); playGuitarMidi(Number(this.getAttribute('data-midi'))); } });
         b.addEventListener('keyup', function () { this.classList.remove('pressed'); });
         row.appendChild(b);
       }
