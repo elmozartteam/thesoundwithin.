@@ -28,14 +28,6 @@
     <main>
         <!-- HERO -->
         <section class="h-hero" id="home">
-            <svg class="h-staff" viewBox="0 0 1440 700" preserveAspectRatio="none" aria-hidden="true">
-                <path pathLength="1" d="M0 150 H1440" />
-                <path pathLength="1" d="M0 178 H1440" />
-                <path pathLength="1" d="M0 206 H1440" />
-                <path pathLength="1" d="M0 234 H1440" />
-                <path pathLength="1" d="M0 262 H1440" />
-            </svg>
-
             <div class="container h-hero-grid">
                 <div class="h-hero-text">
                     <p class="eyebrow h-eyebrow">SELAMAT DATANG DI THE SOUND WITHIN</p>
@@ -51,6 +43,44 @@
                     </div>
                     <p class="h-kicker">RUANG UNTUK MUSIK DAN PEMAHAMAN</p>
                 </div>
+
+                <!-- Ornamen: cincin bunyi + paranada dengan arpeggio naik (E–G–B–D). Gambar asli, bukan ikon generik. -->
+                <svg class="h-ornament" viewBox="0 0 560 560" aria-hidden="true" focusable="false">
+                    <g fill="none" stroke="#DCC795">
+                        <circle class="h-orn-ring" cx="360" cy="280" r="60"  pathLength="1" stroke-opacity=".55" />
+                        <circle class="h-orn-ring" cx="360" cy="280" r="110" pathLength="1" stroke-opacity=".40" />
+                        <circle class="h-orn-ring" cx="360" cy="280" r="160" pathLength="1" stroke-opacity=".28" />
+                        <circle class="h-orn-ring" cx="360" cy="280" r="215" pathLength="1" stroke-opacity=".18" />
+                        <circle class="h-orn-dash" cx="360" cy="280" r="188" stroke="#D79AA4" stroke-opacity=".55" stroke-dasharray="2 9" />
+                    </g>
+                    <circle class="h-orn-ripple" cx="360" cy="280" r="8" fill="none" stroke="#D79AA4" stroke-width="1.2" opacity="0" />
+
+                    <path class="h-orn-line" pathLength="1" d="M10 220 H550" />
+                    <path class="h-orn-line" pathLength="1" d="M10 240 H550" />
+                    <path class="h-orn-line" pathLength="1" d="M10 260 H550" />
+                    <path class="h-orn-line" pathLength="1" d="M10 280 H550" />
+                    <path class="h-orn-line" pathLength="1" d="M10 300 H550" />
+                    <path class="h-orn-line" pathLength="1" d="M40 220 V300" style="stroke-width:1.6" />
+
+                    <g class="h-orn-note" fill="#DCC795" stroke="#DCC795">
+                        <ellipse cx="100" cy="300" rx="12" ry="8.5" transform="rotate(-20 100 300)" stroke="none" />
+                        <path d="M111 298 V238" fill="none" stroke-width="1.6" />
+                    </g>
+                    <g class="h-orn-note" fill="#DCC795" stroke="#DCC795">
+                        <ellipse cx="165" cy="280" rx="12" ry="8.5" transform="rotate(-20 165 280)" stroke="none" />
+                        <path d="M176 278 V218" fill="none" stroke-width="1.6" />
+                    </g>
+                    <g class="h-orn-note" fill="#DCC795" stroke="#DCC795">
+                        <ellipse cx="230" cy="260" rx="12" ry="8.5" transform="rotate(-20 230 260)" stroke="none" />
+                        <path d="M219 262 V322" fill="none" stroke-width="1.6" />
+                    </g>
+                    <g class="h-orn-note" fill="#D79AA4" stroke="#D79AA4">
+                        <ellipse cx="295" cy="240" rx="12" ry="8.5" transform="rotate(-20 295 240)" stroke="none" />
+                        <path d="M284 242 V302" fill="none" stroke-width="1.6" />
+                    </g>
+
+                    <circle class="h-orn-dot" cx="360" cy="280" r="5" fill="#D79AA4" />
+                </svg>
 
                 <div class="h-instrument">
                     <div class="h-inst-meta"><span>THE SOUND WITHIN / 001</span><span>MUSIC STUDIO</span></div>
@@ -89,6 +119,8 @@
                 </ol>
             </div>
         </section>
+
+        <div class="h-fade h-fade-to-light" aria-hidden="true"></div>
 
         <!-- PILIH LEVEL -->
         <section class="h-paths" id="menu">
@@ -165,6 +197,8 @@
                 </div>
             </div>
         </section>
+
+        <div class="h-fade h-fade-to-dark" aria-hidden="true"></div>
 
         <!-- PENUTUP -->
         <section class="h-closing">
