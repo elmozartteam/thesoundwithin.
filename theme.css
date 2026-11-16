@@ -1,4 +1,4 @@
-/* TSW — token warna + dark/light + gradasi. Dimuat SETELAH home.css, hanya di index.html. */
+/* TSW — token warna (dark) + gradasi. Dimuat SETELAH home.css, hanya di index.html. */
 :root {
   --navy:#263F68; --navy-2:#344F78; --pearl:#F4F2EC; --ivory:#F6F2E9; --beige:#DCCDB8;
   --champagne:#D2B16F; --rose-deep:#B98778; --ink:#263F68;
@@ -6,12 +6,6 @@
   --sec-hero:#263F68; --sec-ritual:#2D4772; --sec-paths:#F4F2EC; --sec-close:#263F68;
   --text:#fff; --text-soft:#D9DFEA; --text-mute:#AEB9CE; --accent:#D2B16F; --on-accent:#1B2B49;
   --rule:rgba(210,177,111,.28); --topbar:rgba(38,63,104,.92);
-}
-[data-theme="light"] {
-  --bg:#F4F2EC; --surface:#fff; --surface-light:#EEEAE0; --line:#DCCDB8;
-  --sec-hero:#F4F2EC; --sec-ritual:#E9EDF3; --sec-paths:#FBF9F4; --sec-close:#263F68;
-  --text:#191919; --text-soft:#3A4660; --text-mute:#5A6584; --accent:#8A6A24; --on-accent:#fff;
-  --rule:rgba(38,63,104,.22); --topbar:rgba(38,63,104,.96);
 }
 body.home { background:var(--bg); color:var(--text); transition:background-color .35s, color .35s; }
 .h-hero { background:var(--sec-hero); border-bottom-color:var(--rule); }
@@ -58,10 +52,3 @@ body.home .h-title em, .h-tagline, .h-eyebrow { color:var(--accent); }
 .h-ornament { position:absolute; right:-4%; top:50%; width:min(62vw,620px); transform:translateY(-50%); pointer-events:none; opacity:.9; z-index:0; }
 .h-orn-line { stroke:var(--rule); stroke-width:1; vector-effect:non-scaling-stroke; stroke-dasharray:1; }
 @media (max-width:960px){ .h-ornament{ opacity:.35; } }
-
-/* Toggle tema */
-.theme-toggle { width:38px; height:38px; display:grid; place-items:center; border:1px solid rgba(210,177,111,.5); border-radius:50%; background:transparent; color:#fff; transition:background .25s, transform .25s; }
-.theme-toggle:hover { background:rgba(210,177,111,.2); }
-.theme-toggle:focus-visible { outline:2px solid #D2B16F; outline-offset:3px; }
-.theme-toggle svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.6; }
-.theme-toggle .i-sun { display:none; } [data-theme="light"] .theme-toggle .i-sun { display:block; } [data-theme="light"] .theme-toggle .i-moon { display:none; }
