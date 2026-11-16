@@ -16,7 +16,17 @@
     o.frequency.value = f; g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.2, t + .02); g.gain.exponentialRampToValueAtTime(.0001, t + 1.1);
     o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t + 1.2);
   }
-  function sound(d) { if (!(window.TSWAudio && TSWAudio.play(nm(d)))) beep(hz(d)); }
+  function sound(d) {
+    /* Use the shared sampler when it is available; otherwise use the local synth. */
+    if (window.TSWAudio && typeof window.TSWAudio.play === 'function') {
+      try { window.TSWAudio.play(nm(d)); return; } catch (e) {}
+    }
+    beep(hz(d));
+  }
+  function playMidi(midi) {
+    var f = 440 * Math.pow(2, (midi - 69) / 12);
+    beep(f);
+  }
   function sequence(a, b) { sound(a); window.setTimeout(function () { sound(b); }, 850); }
 
   /* Staff illustration. d is a diatonic index; C4 = 28. */
@@ -51,6 +61,61 @@
   }
   if ($('demoTreble')) $('demoTreble').innerHTML = staff('treble', [28,29,30,31,32,33,34], 380);
   if ($('demoBass')) $('demoBass').innerHTML = staff('bass', [21,22,23,24,25,26,27], 380);
+
+  /* Every piano key in the two-octave diagram is playable, including black keys. */
+  var piano = $('playableKeyboard');
+  if (piano) {
+    var whiteCount = 0, whiteNotes = [0,2,4,5,7,9,11];
+    for (var midi = 60; midi <= 83; midi++) {
+      var pc = midi % 12, isWhite = whiteNotes.indexOf(pc) !== -1, key = document.createElement('button');
+      key.type = 'button'; key.className = 'l-piano-key ' + (isWhite ? 'white' : 'black');
+      key.setAttribute('aria-label', 'Mainkan ' + ['C','C♯/D♭','D','D♯/E♭','E','F','F♯/G♭','G','G♯/A♭','A','A♯/B♭','B'][pc] + ' octave ' + (Math.floor(midi / 12) - 1));
+      key.title = key.getAttribute('aria-label');
+      if (isWhite) {
+        key.style.left = (whiteCount * 100 / 14) + '%'; key.style.width = (100 / 14) + '%';
+        key.textContent = pc === 0 || pc === 5 ? (pc === 0 ? 'C' : 'F') : '';
+        whiteCount++;
+      } else {
+        key.style.left = ((whiteCount * 100 / 14) - (3.1 / 2)) + '%'; key.style.width = '3.1%';
+      }
+      key.addEventListener('pointerdown', function (e) { e.preventDefault(); this.classList.add('pressed'); playMidi(Number(this.getAttribute('data-midi'))); });
+      key.addEventListener('pointerup', function () { this.classList.remove('pressed'); });
+      key.addEventListener('pointerleave', function () { this.classList.remove('pressed'); });
+      key.addEventListener('pointercancel', function () { this.classList.remove('pressed'); });
+      key.addEventListener('keydown', function (e) { if ((e.key === 'Enter' || e.key === ' ') && !e.repeat) { e.preventDefault(); this.classList.add('pressed'); playMidi(Number(this.getAttribute('data-midi'))); } });
+      key.addEventListener('keyup', function () { this.classList.remove('pressed'); });
+      key.setAttribute('data-midi', midi); piano.appendChild(key);
+    }
+  }
+
+  /* Interactive six-string guitar fretboard: standard tuning E-A-D-G-B-E. */
+  var guitar = $('guitarBoard');
+  if (guitar) {
+    var strings = [
+      { name: 'E', midi: 40, label: 'E rendah' }, { name: 'A', midi: 45, label: 'A' },
+      { name: 'D', midi: 50, label: 'D' }, { name: 'G', midi: 55, label: 'G' },
+      { name: 'B', midi: 59, label: 'B' }, { name: 'E', midi: 64, label: 'E tinggi' }
+    ];
+    var head = document.createElement('div'); head.className = 'l-guitar-head';
+    head.innerHTML = '<span>SENAR</span><span>OPEN</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>'; guitar.appendChild(head);
+    strings.forEach(function (st, si) {
+      var row = document.createElement('div'); row.className = 'l-guitar-row';
+      var label = document.createElement('span'); label.className = 'l-string-label'; label.textContent = st.name; label.title = st.label; row.appendChild(label);
+      for (var fret = 0; fret <= 5; fret++) {
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'l-fret';
+        b.textContent = fret === 0 ? '○' : '·'; b.setAttribute('data-midi', st.midi + fret);
+        b.setAttribute('aria-label', 'Senar ' + st.label + ', fret ' + fret + ', mainkan nada');
+        b.addEventListener('pointerdown', function (e) { e.preventDefault(); this.classList.add('pressed'); playMidi(Number(this.getAttribute('data-midi'))); });
+        b.addEventListener('pointerup', function () { this.classList.remove('pressed'); });
+        b.addEventListener('pointerleave', function () { this.classList.remove('pressed'); });
+        b.addEventListener('pointercancel', function () { this.classList.remove('pressed'); });
+        b.addEventListener('keydown', function (e) { if ((e.key === 'Enter' || e.key === ' ') && !e.repeat) { e.preventDefault(); this.classList.add('pressed'); playMidi(Number(this.getAttribute('data-midi'))); } });
+        b.addEventListener('keyup', function () { this.classList.remove('pressed'); });
+        row.appendChild(b);
+      }
+      guitar.appendChild(row);
+    });
+  }
 
   /* Preserve the score keys consumed by Track Progress and the certificate. */
   function save(mode, pct, pts) {
