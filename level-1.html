@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#263F68">
+<meta name="description" content="Level 1 The Sound Within: Notation & Rhythm. Birama, tanda kunci dasar, interval, dan tonic triad.">
+<title>Level 1 · Notation &amp; Rhythm — THE SOUND WITHIN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="home.css"><link rel="stylesheet" href="theme.css"><link rel="stylesheet" href="level.css">
+</head>
+<body class="home lvl">
+<div id="site-gate"></div><div id="site-header"></div>
+<main>
+  <section class="l-hero" id="home">
+    <div class="container">
+      <p class="eyebrow h-eyebrow">LEVEL 1 · SETARA ABRSM GRADE 1–2 · GRATIS</p>
+      <h1 class="l-title">Notation &amp; <em>Rhythm.</em></h1>
+      <p class="l-lead">Birama 2/4, 3/4, dan 4/4, tanda kunci dasar, interval, dan tonic triad. Pelajari dulu, lalu uji lewat Reading, Listening, dan Speaking.</p>
+      <div class="h-actions"><a class="h-btn" href="#latihan">Langsung latihan <i>↗</i></a><a class="h-link" href="#materi">Baca materi dulu</a></div>
+    </div>
+  </section>
+  <div class="h-fade h-fade-to-light" aria-hidden="true"></div>
+
+  <section class="l-materi" id="materi">
+    <div class="container">
+      <p class="eyebrow">MATERI</p><h2 class="l-h2">Empat hal <em>baru.</em></h2>
+      <div class="l-topics">
+        <article class="l-topic"><span class="l-no">01</span><h3>Birama</h3>
+          <p>Angka atas menunjukkan jumlah ketukan dalam satu birama, angka bawah menunjukkan not yang bernilai satu ketuk. Pada 4 di bawah, satu ketuk sama dengan satu not seperempat.</p>
+          <ul class="l-values"><li><b>2/4</b><span>2 ketuk per birama</span></li><li><b>3/4</b><span>3 ketuk per birama</span></li><li><b>4/4</b><span>4 ketuk per birama</span></li></ul></article>
+        <article class="l-topic"><span class="l-no">02</span><h3>Tanda kunci dasar</h3>
+          <p>Tanda kunci ditulis di awal paranada dan berlaku untuk seluruh lagu. Tiga yang paling dasar:</p>
+          <ul class="l-values"><li><b>C mayor</b><span>tanpa kres atau mol</span></li><li><b>G mayor</b><span>1 kres (F♯)</span></li><li><b>F mayor</b><span>1 mol (B♭)</span></li></ul></article>
+        <article class="l-topic"><span class="l-no">03</span><h3>Interval</h3>
+          <p>Interval adalah jarak antara dua nada. Hitung nada pertama sebagai 1. C ke E adalah interval 3 (terts), C ke G adalah interval 5 (kuint).</p>
+          <div class="l-demo"><div class="paper" data-staff="treble:28,30"></div><div class="paper" data-staff="treble:28,32"></div></div></article>
+        <article class="l-topic"><span class="l-no">04</span><h3>Tonic triad</h3>
+          <p>Tonic triad adalah tiga nada yang disusun dengan selang satu nada, dimulai dari nada pertama tangga nada. Pada C mayor: C, E, G.</p>
+          <div class="l-demo"><div class="paper" data-staff="treble:28,30,32"></div></div></article>
+      </div>
+    </div>
+  </section>
+  <div class="h-fade h-fade-to-dark" aria-hidden="true"></div>
+
+  <section class="l-lab" id="latihan">
+    <div class="container">
+      <p class="eyebrow">LATIHAN TANPA BATAS</p><h2 class="l-h2">Uji <em>pemahamanmu.</em></h2>
+      <div class="l-tabs" role="tablist" aria-label="Pilih jalur latihan">
+        <button role="tab" data-mode="reading" aria-selected="true">Reading</button>
+        <button role="tab" data-mode="listening" aria-selected="false">Listening</button>
+        <button role="tab" data-mode="speaking" aria-selected="false">Speaking</button>
+      </div>
+      <div class="l-panel" id="lab" aria-live="polite"></div>
+    </div>
+  </section>
+</main>
+<div id="site-footer"></div>
+<script src="app.js"></script>
+<script src="audio-engine.js"></script>
+<script src="level1.js"></script>
+<script src="lab.js"></script>
+</body>
+</html>
