@@ -6,8 +6,11 @@
     <meta name="theme-color" content="#1C2B4D">
     <meta name="description" content="The Sound Within. Ruang untuk belajar teori musik, memahami harmoni, dan melatih pendengaran.">
     <title>THE SOUND WITHIN</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="home.css">
     <!-- Google Analytics (GA4) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-59GLZ4RQGR"></script>
     <script>
@@ -18,85 +21,162 @@
     </script>
 </head>
 
-<body>
+<body class="home">
     <div id="site-gate"></div>
     <div id="site-header"></div>
 
     <main>
-        <!-- WELCOME PAGE -->
-        <section class="hero" id="home">
-            <div class="container hero-grid">
-                <div>
-                    <div class="hero-label"><span></span> RUANG UNTUK MUSIK DAN PEMAHAMAN</div>
-                    <p class="eyebrow" style="margin-top: 30px;">SELAMAT DATANG DI THE SOUND WITHIN</p>
-                    <h1>THE SOUND<br><em>WITHIN.</em></h1>
-                    <p class="hero-tagline">Every Expert Once Heard a First Note</p>
-                    <p class="hero-copy">Musik bukan sekadar nada yang kita dengar. Ada pola, harmoni, dan cerita di balik setiap bunyi. Temukan cara baru untuk memahami musik, satu nada demi satu nada.</p>
-                    <div class="hero-actions">
-                        <a class="button" href="#menu">Mulai Perjalananmu <span>↗</span></a>
-                        <a class="button button-outline" href="tentang.html">Kenali The Sound Within</a>
+        <!-- HERO -->
+        <section class="h-hero" id="home">
+            <svg class="h-staff" viewBox="0 0 1440 700" preserveAspectRatio="none" aria-hidden="true">
+                <path pathLength="1" d="M0 150 H1440" />
+                <path pathLength="1" d="M0 178 H1440" />
+                <path pathLength="1" d="M0 206 H1440" />
+                <path pathLength="1" d="M0 234 H1440" />
+                <path pathLength="1" d="M0 262 H1440" />
+            </svg>
+
+            <div class="container h-hero-grid">
+                <div class="h-hero-text">
+                    <p class="eyebrow h-eyebrow">SELAMAT DATANG DI THE SOUND WITHIN</p>
+                    <h1 class="h-title" aria-label="The Sound Within.">
+                        <span class="h-line"><span>THE SOUND</span></span>
+                        <span class="h-line"><span><em>WITHIN.</em></span></span>
+                    </h1>
+                    <p class="h-tagline">Every Expert Once Heard a First Note</p>
+                    <p class="h-copy">Musik bukan sekadar nada yang kita dengar. Ada pola, harmoni, dan cerita di balik setiap bunyi. Temukan cara baru untuk memahami musik, satu nada demi satu nada.</p>
+                    <div class="h-actions">
+                        <a class="h-btn" href="#menu">Mulai Perjalananmu <i>↗</i></a>
+                        <a class="h-link" href="tentang.html">Kenali The Sound Within</a>
                     </div>
-                    <p class="hero-note">DENGAR. PAHAMI. MAINKAN. ULANGI.</p>
+                    <p class="h-kicker">RUANG UNTUK MUSIK DAN PEMAHAMAN</p>
                 </div>
-                <div class="piano-card">
-                    <div class="piano-card-glow"></div>
-                    <div class="piano-card-top"><span>THE SOUND WITHIN / 001</span><span>MUSIC STUDIO</span></div>
-                    <div class="treble" aria-hidden="true">𝄞</div>
-                    <div class="piano-keyboard" aria-hidden="true">
-                        <span class="white-key"><span class="black-key"></span></span>
-                        <span class="white-key"><span class="black-key"></span></span>
-                        <span class="white-key"></span>
-                        <span class="white-key"><span class="black-key"></span></span>
-                        <span class="white-key"><span class="black-key"></span></span>
-                        <span class="white-key"><span class="black-key"></span></span>
-                        <span class="white-key"></span>
-                        <span class="white-key"><span class="black-key"></span></span>
+
+                <div class="h-instrument">
+                    <div class="h-inst-meta"><span>THE SOUND WITHIN / 001</span><span>MUSIC STUDIO</span></div>
+                    <div class="h-keys" role="group" aria-label="Piano mini, tekan tuts untuk mendengar nada">
+                        <button class="h-key-w" type="button" data-note="C4" data-freq="261.63" aria-label="Nada C"><span>C</span></button>
+                        <button class="h-key-w" type="button" data-note="D4" data-freq="293.66" aria-label="Nada D"><span>D</span></button>
+                        <button class="h-key-w" type="button" data-note="E4" data-freq="329.63" aria-label="Nada E"><span>E</span></button>
+                        <button class="h-key-w" type="button" data-note="F4" data-freq="349.23" aria-label="Nada F"><span>F</span></button>
+                        <button class="h-key-w" type="button" data-note="G4" data-freq="392.00" aria-label="Nada G"><span>G</span></button>
+                        <button class="h-key-w" type="button" data-note="A4" data-freq="440.00" aria-label="Nada A"><span>A</span></button>
+                        <button class="h-key-w" type="button" data-note="B4" data-freq="493.88" aria-label="Nada B"><span>B</span></button>
+                        <button class="h-key-w" type="button" data-note="C5" data-freq="523.25" aria-label="Nada C oktaf atas"><span>C</span></button>
+
+                        <button class="h-key-b" type="button" style="--i:1" data-note="C#4" data-freq="277.18" aria-label="Nada C kres"></button>
+                        <button class="h-key-b" type="button" style="--i:2" data-note="D#4" data-freq="311.13" aria-label="Nada D kres"></button>
+                        <button class="h-key-b" type="button" style="--i:4" data-note="F#4" data-freq="369.99" aria-label="Nada F kres"></button>
+                        <button class="h-key-b" type="button" style="--i:5" data-note="G#4" data-freq="415.30" aria-label="Nada G kres"></button>
+                        <button class="h-key-b" type="button" style="--i:6" data-note="A#4" data-freq="466.16" aria-label="Nada A kres"></button>
                     </div>
-                    <div class="piano-caption"><span>LISTEN · LEARN · PLAY</span><span>YOUR MUSICAL JOURNEY</span></div>
+                    <div class="h-inst-foot">
+                        <span>DENGAR · PAHAMI · MAINKAN</span>
+                        <span class="h-now" id="noteReadout" aria-live="polite">Tekan tuts untuk mencoba</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- MENU READING, LISTENING, SPEAKING -->
-        <section class="section" id="menu">
+        <!-- ALUR BELAJAR -->
+        <section class="h-ritual" aria-label="Alur belajar">
             <div class="container">
-                <div class="section-heading">
-                    <div><p class="eyebrow">PILIH RUANG BELAJARMU</p><h2>Find your rhythm.</h2></div>
-                    <p class="section-description">Setiap orang punya cara belajar yang berbeda. Pilih ruang yang sesuai dengan kemampuan musik yang ingin kamu kembangkan.</p>
-                </div>
-                <div class="menu-grid">
-                    <article class="menu-card">
-                        <div class="card-top"><span class="card-icon">♩</span><span class="card-number">01 / READ</span></div>
-                        <h3>Reading.</h3>
-                        <p>Baca dan pahami materi musik, teori dasar, notasi, analisis family chord, serta konsep yang membantu kamu memahami apa yang dimainkan.</p>
-                        <a class="card-link" href="reading.html#reading-test">Masuk ke Reading <span>↗</span></a>
-                    </article>
-                    <article class="menu-card">
-                        <div class="card-top"><span class="card-icon">♬</span><span class="card-number">02 / LIST</span></div>
-                        <h3>Listening.</h3>
-                        <p>Uji kefasihan pendengaran real-time, kenali progresi chord dan referensi musik dalam satu ruang terorganisasi.</p>
-                        <a class="card-link" href="listening.html#listening-test">Masuk ke Listening <span>↗</span></a>
-                    </article>
-                    <article class="menu-card">
-                        <div class="card-top"><span class="card-icon">♫</span><span class="card-number">03 / SPEAK</span></div>
-                        <h3>Speaking.</h3>
-                        <p>Latih kemampuan mengenali nada dasar melalui humming dan pemahaman progresi chord.</p>
-                        <a class="card-link" href="speaking.html#speaking-test">Masuk ke Speaking <span>↗</span></a>
-                    </article>
-                </div>
+                <ol class="h-steps">
+                    <li><span class="h-step-no">01</span><strong>Dengar.</strong><p>Latih telinga mengenali progresi chord lewat Listening.</p></li>
+                    <li><span class="h-step-no">02</span><strong>Pahami.</strong><p>Baca teori, notasi, dan family chord lewat Reading.</p></li>
+                    <li><span class="h-step-no">03</span><strong>Mainkan.</strong><p>Kenali nada dasar lewat humming di Speaking.</p></li>
+                    <li><span class="h-step-no">04</span><strong>Ulangi.</strong><p>Soal selalu baru, jadi latihan tidak pernah habis.</p></li>
+                </ol>
             </div>
         </section>
 
-        <!-- AJAKAN PENUTUP -->
-        <section class="section">
+        <!-- PILIH LEVEL -->
+        <section class="h-paths" id="menu">
             <div class="container">
-                <div class="closing">
+                <header class="h-paths-head">
                     <div>
-                        <p class="eyebrow">MULAI DARI SATU NADA</p>
-                        <h3>Temukan suara dalam dirimu.</h3>
-                        <p>Belajar sedikit demi sedikit. Pahami lebih dalam. Mainkan dengan percaya diri.</p>
+                        <p class="eyebrow">PILIH LEVEL BELAJARMU</p>
+                        <h2>Find your <em>level.</em></h2>
                     </div>
-                    <a class="button" href="#menu">Mulai Sekarang <span>↗</span></a>
+                    <p>Mulai dari level yang sesuai dengan kemampuanmu. Di setiap level ada tiga jalur latihan: Reading, Listening, dan Speaking.</p>
+                </header>
+
+                <div class="h-path-list">
+                    <a class="h-path h-level" href="level-0.html">
+                        <span class="h-path-no">00</span>
+                        <span class="h-path-body">
+                            <h3>Level 0.</h3>
+                            <span class="h-level-name">Musical Foundation</span>
+                            <p>Nama nada C sampai B, treble dan bass clef, posisi nada di keyboard, serta nilai not dasar.</p>
+                            <span class="h-level-meta">Setara Pre-Grade <b>Gratis</b></span>
+                        </span>
+                        <span class="h-path-go">Masuk Level 0 <i>↗</i></span>
+                    </a>
+                    <a class="h-path h-level" href="level-1.html">
+                        <span class="h-path-no">01</span>
+                        <span class="h-path-body">
+                            <h3>Level 1.</h3>
+                            <span class="h-level-name">Notation &amp; Rhythm</span>
+                            <p>Notasi dan ritme, birama 2/4, 3/4, 4/4, key signature dasar, interval, dan tonic triad.</p>
+                            <span class="h-level-meta">Setara ABRSM Grade 1–2 <b>Gratis</b></span>
+                        </span>
+                        <span class="h-path-go">Masuk Level 1 <i>↗</i></span>
+                    </a>
+                    <a class="h-path h-level" href="level-2.html">
+                        <span class="h-path-no">02</span>
+                        <span class="h-path-body">
+                            <h3>Level 2.</h3>
+                            <span class="h-level-name">Scales, Keys &amp; Intervals</span>
+                            <p>Compound time, tangga nada mayor dan minor, interval, transposisi, dan chromatic scale.</p>
+                            <span class="h-level-meta">Setara ABRSM Grade 3–4 <b>Gratis</b></span>
+                        </span>
+                        <span class="h-path-go">Masuk Level 2 <i>↗</i></span>
+                    </a>
+                    <a class="h-path h-level" href="level-3.html">
+                        <span class="h-path-no">03</span>
+                        <span class="h-path-body">
+                            <h3>Level 3.</h3>
+                            <span class="h-level-name">Basic Harmony</span>
+                            <p>Triad I, IV, V, family chord di 12 tangga nada, inversi, cadence, dan chord progression.</p>
+                            <span class="h-level-meta">Setara ABRSM Grade 4–5 <b>Gratis</b></span>
+                        </span>
+                        <span class="h-path-go">Masuk Level 3 <i>↗</i></span>
+                    </a>
+                    <a class="h-path h-level" href="level-4.html">
+                        <span class="h-path-no">04</span>
+                        <span class="h-path-body">
+                            <h3>Level 4.</h3>
+                            <span class="h-level-name">Intermediate Harmony</span>
+                            <p>Dominant 7th, chord VI, VII, dan III, harmoni SATB, figured bass, dan modulasi ke kunci terdekat.</p>
+                            <span class="h-level-meta">Setara ABRSM Grade 6 <b class="premium">Premium</b></span>
+                        </span>
+                        <span class="h-path-go">Masuk Level 4 <i>↗</i></span>
+                    </a>
+                    <a class="h-path h-level" href="level-5.html">
+                        <span class="h-path-no">05</span>
+                        <span class="h-path-body">
+                            <h3>Level 5.</h3>
+                            <span class="h-level-name">Advanced Harmony</span>
+                            <p>Diminished 7th, Neapolitan 6th, secondary dominant, augmented 6th, modal interchange, dan reharmonisasi.</p>
+                            <span class="h-level-meta">Setara ABRSM Grade 7–8 <b class="premium">Premium</b></span>
+                        </span>
+                        <span class="h-path-go">Masuk Level 5 <i>↗</i></span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- PENUTUP -->
+        <section class="h-closing">
+            <div class="container">
+                <p class="eyebrow">MULAI DARI SATU NADA</p>
+                <h2 class="h-closing-title">
+                    <span class="h-line"><span>Temukan <em>suara</em></span></span>
+                    <span class="h-line"><span>dalam dirimu.</span></span>
+                </h2>
+                <div class="h-closing-row">
+                    <p>Belajar sedikit demi sedikit. Pahami lebih dalam. Mainkan dengan percaya diri.</p>
+                    <a class="h-btn" href="#menu">Mulai Sekarang <i>↗</i></a>
                 </div>
             </div>
         </section>
@@ -105,5 +185,11 @@
     <div id="site-footer"></div>
 
     <script src="app.js"></script>
+
+    <!-- Animasi: GSAP + ScrollTrigger + Lenis (gratis). Semua logika ada di animations.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
+    <script defer src="animations.js"></script>
 </body>
 </html>
