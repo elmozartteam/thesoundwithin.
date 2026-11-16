@@ -32,16 +32,15 @@
                 <div class="brand-logo-frame">
                     <img src="logo.png" alt="Logo The Sound Within">
                 </div>
-                <span class="brand-name">THE SOUND WITHIN<small>THE ART OF UNDERSTANDING MUSIC</small></span>
+                <span class="brand-name">THE SOUND WITHIN<small>EVERY EXPERT ONCE HEARD A FIRST NOTE</small></span>
             </a>
             <nav class="nav-links" id="navLinks">
                 <a href="index.html">Home</a>
-                <a href="family-chord.html">Family Chord</a>
+                <a href="index.html#menu">Level</a>
                 <a href="progress.html">Track Progress</a>
                 <a href="progress.html#certificate">Sertifikat</a>
                 <a href="tentang.html">Tentang Kami</a>
                 <a href="tentang.html#profiles">Our Profiles</a>
-                <a href="reading.html#reading-material">Materi Musik</a>
                 <a href="komunitas.html">Komunitas</a>
                 <a href="komunitas.html#exclusive">Eksklusif</a>
             </nav>
@@ -55,7 +54,7 @@
                 <div class="brand-logo-frame">
                     <img src="logo.png" alt="Logo The Sound Within">
                 </div>
-                <span class="brand-name">THE SOUND WITHIN<small>THE ART OF UNDERSTANDING MUSIC</small></span>
+                <span class="brand-name">THE SOUND WITHIN<small>EVERY EXPERT ONCE HEARD A FIRST NOTE</small></span>
             </a>
             <div class="footer-links">
                 <a href="index.html">Home</a><a href="progress.html#certificate">Sertifikat</a><a href="tentang.html">Tentang Kami</a><a href="komunitas.html">Komunitas</a><a href="komunitas.html#exclusive">Eksklusif</a>
