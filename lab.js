@@ -18,6 +18,9 @@
     o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t + 1.5);
   }
   function sound(d) { if (!(window.TSWAudio && TSWAudio.play(nm(d)))) beep(hz(d)); }
+  /* nada berdasarkan nomor MIDI (60 = C4), termasuk tuts hitam */
+  var NN = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+  function midi(m) { if (!(window.TSWAudio && TSWAudio.play(NN[m % 12] + (Math.floor(m / 12) - 1)))) beep(440 * Math.pow(2, (m - 69) / 12)); }
 
   /* ── paranada SVG. d = indeks diatonik (C4 = 28). Nada ditaruh dengan warna currentColor ── */
   function staff(clef, ds, w) {
@@ -73,7 +76,7 @@
   /* ── generator soal: tiap pemanggilan membuat soal baru, tidak mengulang nada sebelumnya ── */
   var last = -1;
   function pick(lo, hi) { var d; do { d = rnd(lo, hi); } while (d === last); last = d; return d; }
-  var H = { L: L, SEMI: SEMI, rnd: rnd, pick: pick, sound: sound, nm: nm };
+  var H = { L: L, SEMI: SEMI, rnd: rnd, pick: pick, sound: sound, nm: nm, midi: midi, NAMES: ['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'] };
   var MODES = (window.TSW_LEVEL && window.TSW_LEVEL(H)) || {
     reading: { total: 10, make: function () {
       var c = Math.random() < .5 ? 'treble' : 'bass', d = c === 'treble' ? pick(28, 35) : pick(21, 28);
@@ -114,20 +117,21 @@
   /* ── sesi ── */
   var panel = $('lab'), mode = 'reading', S;
   function start() { S = { i: 0, ok: 0, q: null, done: false }; next(); }
-  function head() { return '<div class="l-meta"><span>Soal ' + (S.i + 1) + ' / ' + MODES[mode].total + '</span><button class="l-swap" id="swap" type="button">↻ Ganti soal</button><span>Benar ' + S.ok + '</span></div>'; }
+  function head() { var T = MODES[mode].total; return '<div class="l-meta"><span>Soal ' + (S.i + 1) + ' / ' + T + '</span><button class="l-swap" id="swap" type="button">↻ Ganti soal</button><span>Benar ' + S.ok + '</span></div><div class="l-bar" role="progressbar" aria-valuemin="0" aria-valuemax="' + T + '" aria-valuenow="' + S.i + '"><i style="width:' + (S.i / T * 100) + '%"></i></div>'; }
   function next() {
     if (S.i >= MODES[mode].total) return finish();
     var q = S.q = MODES[mode].make(), opts = q.opts || L;
     q.play = q.play || function () { sound(q.d); };
     var h = head() + '<p class="l-prompt">' + q.prompt + '</p>';
     if (mode === 'reading') h += '<div class="l-stage"><div class="paper">' + (q.html || staff(q.clef || 'treble', q.ds || [q.d], 300)) + '</div></div>';
-    if (mode === 'listening') h += '<div class="l-stage"><button class="l-play l-big-play" id="rep" type="button">▶ Dengar nada</button></div><p class="l-hint">Tekan tombol untuk mendengar. Boleh diulang.</p>';
-    if (mode === 'speaking') h += '<div class="l-stage"><div class="paper">' + staff('treble', q.ds || [q.d], 300) + '</div></div><p><button class="l-play" id="ref" type="button">▶ Dengar nada awal</button> <button class="l-play" id="hum" type="button">● Mulai humming (3 dtk)</button></p>';
+    if (mode === 'listening') h += '<div class="l-stage"><button class="l-play l-big-play" id="rep" type="button"><span class="l-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span> Dengar nada</button></div><p class="l-hint">Tekan tombol untuk mendengar. Boleh diulang.</p>';
+    if (mode === 'speaking') h += '<div class="l-stage"><div class="paper">' + staff('treble', q.ds || [q.d], 300) + '</div></div><p><button class="l-play" id="ref" type="button"><span class="l-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span> Dengar nada awal</button> <button class="l-play" id="hum" type="button">● Mulai humming (3 dtk)</button></p>';
     if (mode !== 'speaking') h += '<div class="l-ans' + (opts.some(function (o) { return o.length > 2; }) ? ' txt' : '') + '" id="ans" style="--n:' + opts.length + '">' + opts.map(function (n) { return '<button type="button" data-n="' + n + '">' + n + '</button>'; }).join('') + '</div>';
     panel.innerHTML = h + '<p class="l-fb" id="fb"></p><div id="nx"></div>'; panel.classList.remove('l-fade-in'); void panel.offsetWidth; panel.classList.add('l-fade-in');
     $('swap').onclick = next;
-    if ($('rep')) $('rep').onclick = q.play;
-    if ($('ref')) $('ref').onclick = q.play;
+    function fx(b) { b.onclick = function () { b.classList.add('playing'); clearTimeout(b._t); b._t = setTimeout(function () { b.classList.remove('playing'); }, 1600); q.play(); }; }
+    if ($('rep')) fx($('rep'));
+    if ($('ref')) fx($('ref'));
     if ($('ans')) $('ans').onclick = function (e) { var b = e.target.closest('button'); if (b) answer(b.getAttribute('data-n') === q.ans, b); };
     if ($('hum')) $('hum').onclick = hum;
   }
