@@ -62,3 +62,6 @@
 .l-fret:hover,.l-fret.pressed{background:#DCC795;color:#16223F;transform:scale(1.08)}
 .l-topic-wide .l-guitar-wrap + .l-hint{margin-bottom:14px}
 @media(max-width:520px){.l-playable-piano{height:112px}.l-piano-key{font-size:10px}.l-guitar-board{padding:12px 10px}.l-guitar-head,.l-guitar-row{grid-template-columns:42px repeat(6,minmax(48px,1fr))}.l-guitar-row:before{left:42px}}
+
+/* Acoustic sample loading feedback */
+.l-audio-status{margin:10px 0 0;color:#7B7890;font-size:11px;letter-spacing:.035em;min-height:18px}
