@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#1C2B4D">
+    <meta name="theme-color" content="#263F68">
     <meta name="description" content="The Sound Within. Ruang untuk belajar teori musik, memahami harmoni, dan melatih pendengaran.">
     <title>THE SOUND WITHIN</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,6 +11,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="theme.css">
+    <script>try{document.documentElement.setAttribute("data-theme",localStorage.getItem("tsw_theme")||"dark")}catch(e){}</script>
     <!-- Google Analytics (GA4) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-59GLZ4RQGR"></script>
     <script>
@@ -219,6 +221,8 @@
     <div id="site-footer"></div>
 
     <script src="app.js"></script>
+    <script src="theme.js"></script>
+    <script src="audio-engine.js"></script>
 
     <!-- Animasi: GSAP + ScrollTrigger + Lenis (gratis). Semua logika ada di animations.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
