@@ -56,6 +56,7 @@
             var freq = parseFloat(key.getAttribute('data-freq'));
             if (freq) tone(freq);
             if (readout) readout.textContent = key.getAttribute('data-note') + '  ·  ' + Math.round(freq) + ' Hz';
+            ripple();
         }
 
         function release(key) {
@@ -106,7 +107,10 @@
         if (!hasGsap || reduce) return;
         var tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-        tl.from('.h-staff path', { strokeDashoffset: 1, duration: 1.8, stagger: 0.12, ease: 'power2.inOut' }, 0)
+        tl.from('.h-orn-ring', { strokeDashoffset: 1, duration: 1.8, stagger: 0.15, ease: 'power2.inOut' }, 0)
+          .from('.h-orn-line', { strokeDashoffset: 1, duration: 1.4, stagger: 0.08, ease: 'power2.inOut' }, 0.2)
+          .from('.h-orn-note', { opacity: 0, y: 14, duration: 0.7, stagger: 0.14, ease: 'power3.out' }, 1.0)
+          .from('.h-orn-dot', { opacity: 0, duration: 0.6 }, 1.5)
           .from('.h-eyebrow', { opacity: 0, y: 14, duration: 0.7 }, 0.1)
           .from('.h-title .h-line > span', { yPercent: 115, duration: 1.1, stagger: 0.12 }, 0.2)
           .from(['.h-tagline', '.h-copy', '.h-actions', '.h-kicker'], { opacity: 0, y: 22, duration: 0.8, stagger: 0.1 }, 0.7)
@@ -121,8 +125,8 @@
         if (!hasST || reduce) return;
         gsap.registerPlugin(ScrollTrigger);
 
-        /* Garis paranada bergeser pelan mengikuti scroll */
-        gsap.to('.h-staff', { yPercent: 12, ease: 'none', scrollTrigger: { trigger: '.h-hero', start: 'top top', end: 'bottom top', scrub: true } });
+        /* Ornamen hero naik sedikit lebih lambat dari scroll */
+        gsap.to('.h-ornament', { yPercent: -8, ease: 'none', scrollTrigger: { trigger: '.h-hero', start: 'top top', end: 'bottom top', scrub: true } });
 
         /* Alur belajar */
         gsap.from('.h-steps li', {
@@ -154,11 +158,26 @@
         if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
     }
 
+    /* ───────── Ornamen hero: gerak pelan + riak saat tuts ditekan ───────── */
+    function initOrnament() {
+        if (!hasGsap || reduce || !document.querySelector('.h-ornament')) return;
+        gsap.to('.h-orn-dash', { rotation: 360, transformOrigin: '50% 50%', duration: 90, repeat: -1, ease: 'none' });
+        gsap.to('.h-orn-dot', { scale: 1.7, opacity: 0.55, transformOrigin: '50% 50%', duration: 1.7, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: 2 });
+    }
+
+    function ripple() {
+        if (!hasGsap || reduce) return;
+        var r = document.querySelector('.h-orn-ripple');
+        if (!r) return;
+        gsap.fromTo(r, { attr: { r: 8 }, opacity: 0.8 }, { attr: { r: 230 }, opacity: 0, duration: 1.5, ease: 'power2.out', overwrite: 'auto' });
+    }
+
     function init() {
         initPiano();
         initSmoothScroll();
         introHero();
         initScrollReveals();
+        initOrnament();
     }
 
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
