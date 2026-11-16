@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#263F68">
+<meta name="description" content="Level 0 The Sound Within: Musical Foundation. Nama nada, kunci G dan F, keyboard, dan nilai not.">
+<title>Level 0 · Musical Foundation — THE SOUND WITHIN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="home.css"><link rel="stylesheet" href="theme.css"><link rel="stylesheet" href="level.css">
+</head>
+<body class="home lvl">
+<div id="site-gate"></div><div id="site-header"></div>
+<main>
+  <section class="l-hero" id="home">
+    <div class="container">
+      <p class="eyebrow h-eyebrow">LEVEL 0 · SETARA PRE-GRADE · GRATIS</p>
+      <h1 class="l-title">Musical <em>Foundation.</em></h1>
+      <p class="l-lead">Nama nada C sampai B, kunci G dan F, posisi nada di keyboard, dan nilai not dasar. Pelajari dulu, lalu uji lewat Reading, Listening, dan Speaking.</p>
+      <div class="h-actions"><a class="h-btn" href="#latihan">Langsung latihan <i>↗</i></a><a class="h-link" href="#materi">Baca materi dulu</a></div>
+    </div>
+  </section>
+  <div class="h-fade h-fade-to-light" aria-hidden="true"></div>
+
+  <section class="l-materi" id="materi">
+    <div class="container">
+      <p class="eyebrow">MATERI</p><h2 class="l-h2">Empat hal <em>dasar.</em></h2>
+      <div class="l-topics">
+        <article class="l-topic"><span class="l-no">01</span><h3>Nama nada</h3>
+          <p>Ada tujuh nama nada: <b>C D E F G A B</b>, lalu kembali ke C satu oktaf lebih tinggi. Tuts putih memakai tujuh nama ini. Tekan untuk mendengarnya.</p>
+          <div class="l-keys" id="demoKeys" role="group" aria-label="Tuts C sampai B"></div></article>
+        <article class="l-topic"><span class="l-no">02</span><h3>Kunci G dan kunci F</h3>
+          <p>Paranada terdiri dari lima garis. <b>Kunci G (treble)</b> untuk nada yang lebih tinggi, <b>kunci F (bass)</b> untuk nada yang lebih rendah. Nada yang sama dibaca berbeda di tiap kunci.</p>
+          <div class="l-demo"><div class="paper" id="demoTreble"></div><div class="paper" id="demoBass"></div></div></article>
+        <article class="l-topic"><span class="l-no">03</span><h3>Posisi di keyboard</h3>
+          <p>Kelompok dua tuts hitam selalu ada di sebelah kanan <b>C</b>. Cari dua tuts hitam, lalu nada putih di kirinya adalah C. Dari situ sisanya mengikuti urutan abjad.</p></article>
+        <article class="l-topic"><span class="l-no">04</span><h3>Nilai not</h3>
+          <ul class="l-values"><li><b>Not penuh</b><span>4 ketuk</span></li><li><b>Not setengah</b><span>2 ketuk</span></li><li><b>Not seperempat</b><span>1 ketuk</span></li><li><b>Not seperdelapan</b><span>½ ketuk</span></li></ul></article>
+      </div>
+    </div>
+  </section>
+  <div class="h-fade h-fade-to-dark" aria-hidden="true"></div>
+
+  <section class="l-lab" id="latihan">
+    <div class="container">
+      <p class="eyebrow">LATIHAN TANPA BATAS</p><h2 class="l-h2">Uji <em>telingamu.</em></h2>
+      <div class="l-tabs" role="tablist" aria-label="Pilih jalur latihan">
+        <button role="tab" data-mode="reading" aria-selected="true">Reading</button>
+        <button role="tab" data-mode="listening" aria-selected="false">Listening</button>
+        <button role="tab" data-mode="speaking" aria-selected="false">Speaking</button>
+      </div>
+      <div class="l-panel" id="lab" aria-live="polite"></div>
+    </div>
+  </section>
+</main>
+<div id="site-footer"></div>
+<script src="app.js"></script>
+<script src="audio-engine.js"></script>
+<script src="level0.js"></script>
+</body>
+</html>
