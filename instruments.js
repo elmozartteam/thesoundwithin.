@@ -1,6 +1,128 @@
-**Lanjutan `instruments.js` — sambungkan tepat setelah bagian sebelumnya.**
+/* TSW — instruments.js
+   Satu sistem audio terkoordinasi (Web Audio API):
+   - Piano, gitar akustik/listrik, biola: sampel SoundFont FluidR3_GM (gleitz/midi-js-soundfonts), dimuat saat dibutuhkan.
+     Bila sampel gagal dimuat, otomatis memakai suara sintetis (simulasi).
+   - Drum: sintetis akustik; otomatis memakai rekaman asli bila ada di assets/audio/drums/{kick,snare,hihat,crash,ride,tom1,tom2,floor}.mp3
+   - Mikrofon: pitch detection autocorrelation + MediaRecorder (lokal, tidak diunggah).
+   Animasi: GSAP (drum, reveal), Anime.js (getar senar, bow, tab), Lottie (indikator rekam). Semua opsional/guarded. */
+(function () {
+    'use strict';
+    const $ = (s, r = document) => r.querySelector(s);
+    const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+    const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const NN = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+    const nm = m => NN[m % 12].replace('#', '♯') + (Math.floor(m / 12) - 1);
+    const freq = m => 440 * Math.pow(2, (m - 69) / 12);
+    const midiOf = n => { const m = /^([A-G])([#b]?)(-?\d+)$/.exec(n); return m ? ({ C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 })[m[1]] + (m[2] === '#' ? 1 : m[2] === 'b' ? -1 : 0) + 12 * (+m[3] + 1) : NaN; };
+    const say = t => { const e = $('#tsxStatus'); if (e) e.textContent = t; };
+    const pop = sel => { if (!RM && window.anime) anime({ targets: sel, scale: [1.25, 1], duration: 260, easing: 'easeOutBack' }); };
 
-```javascript
+    /* ───────── Audio core ───────── */
+    let ctx, master, vol = 0.8;
+    const active = new Set();
+    function ac() {
+        if (!ctx) {
+            ctx = new (window.AudioContext || window.webkitAudioContext)();
+            master = ctx.createGain(); master.gain.value = vol;
+            const comp = ctx.createDynamicsCompressor();
+            master.connect(comp); comp.connect(ctx.destination);
+        }
+        if (ctx.state === 'suspended') ctx.resume();
+        return ctx;
+    }
+    function mk(c, g, ...srcs) {
+        const h = { stop(rel = 0.3) {
+            if (h.done) return; h.done = 1; active.delete(h);
+            const n = c.currentTime;
+            g.gain.cancelScheduledValues(n); g.gain.setValueAtTime(g.gain.value, n); g.gain.linearRampToValueAtTime(0, n + rel);
+            srcs.forEach(s => { try { s.stop(n + rel + 0.03); } catch (e) {} });
+        } };
+        return h;
+    }
+
+    /* SoundFont loader (format file gleitz: {"A0":"data:audio/mp3;base64,..."}) */
+    const BANK_URL = 'https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/';
+    const INST = { piano: 'acoustic_grand_piano', steel: 'acoustic_guitar_steel', clean: 'electric_guitar_clean', violin: 'violin' };
+    const LABEL = { piano: 'piano', steel: 'gitar akustik', clean: 'gitar listrik', violin: 'biola' };
+    const ready = {}, pending = {};
+    function loadBank(inst) {
+        const name = INST[inst];
+        if (ready[name]) return Promise.resolve();
+        if (pending[name]) return pending[name];
+        say('Memuat sampel ' + LABEL[inst] + '…');
+        return (pending[name] = fetch(BANK_URL + name + '-mp3.js')
+            .then(r => { if (!r.ok) throw 0; return r.text(); })
+            .then(txt => {
+                const re = /"([A-G][b#]?-?\d+)"\s*:\s*"(data:audio[^"]+)"/g; let m; const l = [];
+                while ((m = re.exec(txt))) l.push(m);
+                if (!l.length) throw 0;
+                return Promise.all(l.map(x => fetch(x[2]).then(r => r.arrayBuffer()).then(b => ac().decodeAudioData(b)).then(buf => ({ mi: midiOf(x[1]), buf }))));
+            })
+            .then(arr => { ready[name] = arr.sort((a, b) => a.mi - b.mi); say('Sampel ' + LABEL[inst] + ' siap (rekaman akustik SoundFont).'); })
+            .catch(() => say('Sampel ' + LABEL[inst] + ' gagal dimuat. Memakai suara sintetis (simulasi).'))
+            .finally(() => { delete pending[name]; }));
+    }
+    function sample(b, midi, o) {
+        const c = ac(), t = c.currentTime; let s = b[0];
+        for (const x of b) if (Math.abs(x.mi - midi) < Math.abs(s.mi - midi)) s = x;
+        const src = c.createBufferSource(); src.buffer = s.buf; src.playbackRate.value = Math.pow(2, (midi - s.mi) / 12);
+        if (o.loop) { src.loop = true; src.loopStart = s.buf.duration * 0.35; src.loopEnd = s.buf.duration * 0.9; }
+        const g = c.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(o.vel, t + (o.loop ? 0.06 : 0.008));
+        src.connect(g); g.connect(master); src.start(t);
+        const h = mk(c, g, src); if (o.dur) setTimeout(() => h.stop(0.5), o.dur * 1000); return h;
+    }
+    function synth(inst, midi, o) {
+        const c = ac(), t = c.currentTime, f = freq(midi), v = o.vel * 0.4, vi = inst === 'violin';
+        const os = c.createOscillator(), lp = c.createBiquadFilter(), g = c.createGain();
+        os.type = vi ? 'sawtooth' : 'triangle'; os.frequency.value = f;
+        lp.type = 'lowpass'; lp.frequency.value = f * (vi ? 4 : 6);
+        os.connect(lp); lp.connect(g); g.connect(master);
+        g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + (vi ? 0.08 : 0.01));
+        if (!o.hold) g.gain.exponentialRampToValueAtTime(0.0001, t + (o.dur || 2)); else if (!vi) g.gain.exponentialRampToValueAtTime(v * 0.3, t + 2.5);
+        os.start(t); const h = mk(c, g, os); if (o.dur && o.hold) setTimeout(() => h.stop(0.4), o.dur * 1000); return h;
+    }
+    function note(inst, midi, o = {}) {
+        o = Object.assign({ vel: 0.8 }, o); if (o.loop) o.hold = true; if (!o.hold && !o.dur) o.dur = 4;
+        const b = ready[INST[inst]]; if (!b) loadBank(inst);
+        const h = b ? sample(b, midi, o) : synth(inst, midi, o); active.add(h); return h;
+    }
+
+    /* Drum: sintetis akustik, atau rekaman lokal bila tersedia */
+    const dbuf = {}; let dTried = false;
+    function tryDrums() {
+        if (dTried) return; dTried = true;
+        ['kick', 'snare', 'hihat', 'crash', 'ride', 'tom1', 'tom2', 'floor'].forEach(n =>
+            fetch('assets/audio/drums/' + n + '.mp3').then(r => r.ok ? r.arrayBuffer() : Promise.reject()).then(a => ac().decodeAudioData(a)).then(b => { dbuf[n] = b; }).catch(() => {}));
+    }
+    function tone(c, t, f0, f1, v, d, type) {
+        const o = c.createOscillator(), g = c.createGain(); o.type = type || 'sine';
+        o.frequency.setValueAtTime(f0, t); o.frequency.exponentialRampToValueAtTime(f1, t + d * 0.8);
+        g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+        o.connect(g); g.connect(master); o.start(t); o.stop(t + d + 0.05);
+    }
+    function nz(c, t, type, f, v, d, q) {
+        const b = c.createBuffer(1, Math.max(1, c.sampleRate * d), c.sampleRate), a = b.getChannelData(0);
+        for (let i = 0; i < a.length; i++) a[i] = Math.random() * 2 - 1;
+        const s = c.createBufferSource(), fl = c.createBiquadFilter(), g = c.createGain();
+        s.buffer = b; fl.type = type; fl.frequency.value = f; if (q) fl.Q.value = q;
+        g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+        s.connect(fl); fl.connect(g); g.connect(master); s.start(t);
+    }
+    function drumSound(type) {
+        const c = ac(), t = c.currentTime;
+        if (dbuf[type]) { const s = c.createBufferSource(); s.buffer = dbuf[type]; s.connect(master); s.start(t); return; }
+        switch (type) {
+            case 'kick': tone(c, t, 150, 45, 1, 0.55); nz(c, t, 'lowpass', 400, 0.25, 0.04); break;
+            case 'snare': tone(c, t, 210, 150, 0.5, 0.18, 'triangle'); nz(c, t, 'highpass', 1800, 0.6, 0.22); break;
+            case 'hihat': nz(c, t, 'highpass', 7500, 0.35, 0.07); break;
+            case 'crash': nz(c, t, 'highpass', 4500, 0.5, 1.6); break;
+            case 'ride': nz(c, t, 'bandpass', 5200, 0.35, 0.9, 3); break;
+            case 'tom1': tone(c, t, 270, 170, 0.8, 0.35); nz(c, t, 'bandpass', 900, 0.12, 0.05); break;
+            case 'tom2': tone(c, t, 200, 125, 0.8, 0.4); nz(c, t, 'bandpass', 700, 0.12, 0.05); break;
+            default: tone(c, t, 125, 80, 0.85, 0.5); nz(c, t, 'bandpass', 500, 0.12, 0.05);
+        }
+    }
+
     /* ───────── Tab & kontrol global ───────── */
     let cur = 'piano', mode = 'steel', patTimer = null, bowAnim = null;
     function stopAll() {
@@ -132,6 +254,7 @@
             loadBank(mode);
         });
     }
+
     /* ───────── BIOLA ───────── */
     const VO = [55, 62, 69, 76], VX = [130, 165, 200, 235];
     function buildViolin() {
@@ -210,7 +333,8 @@
             patTimer = setInterval(() => { hit('hihat'); if (i % 4 === 0) hit('kick'); if (i % 4 === 2) hit('snare'); i = (i + 1) % 8; }, 300);
         };
     }
-        /* ───────── MIKROFON ───────── */
+
+    /* ───────── MIKROFON ───────── */
     let stream = null, an = null, raf = 0, rec = null, chunks = [], recUrl = null, lot = null, fr = 0;
     const PULSE = { v: '5.7.0', fr: 30, ip: 0, op: 60, w: 100, h: 100, nm: 'rec', ddd: 0, assets: [], layers: [{ ddd: 0, ind: 1, ty: 4, nm: 'ring', sr: 1, ks: { o: { a: 1, k: [{ t: 0, s: [100], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 60, s: [0] }] }, r: { a: 0, k: 0 }, p: { a: 0, k: [50, 50, 0] }, a: { a: 0, k: [0, 0, 0] }, s: { a: 1, k: [{ t: 0, s: [40, 40, 100], i: { x: [0.5, 0.5, 0.5], y: [1, 1, 1] }, o: { x: [0.5, 0.5, 0.5], y: [0, 0, 0] } }, { t: 60, s: [100, 100, 100] }] } }, ao: 0, shapes: [{ ty: 'gr', it: [{ ty: 'el', p: { a: 0, k: [0, 0] }, s: { a: 0, k: [60, 60] } }, { ty: 'st', c: { a: 0, k: [0.85, 0.53, 0.47, 1] }, o: { a: 0, k: 100 }, w: { a: 0, k: 4 } }, { ty: 'tr', p: { a: 0, k: [0, 0] }, a: { a: 0, k: [0, 0] }, s: { a: 0, k: [100, 100] }, r: { a: 0, k: 0 }, o: { a: 0, k: 100 } }] }], ip: 0, op: 60, st: 0, bm: 0 }] };
     function detect(buf, sr) {
@@ -318,6 +442,6 @@
         gsap.from('.tsx .tsx-tabs, .tsx .tsx-panel.active', { opacity: 0, y: 30, duration: 0.7, stagger: 0.12, scrollTrigger: { trigger: '#instruments', start: 'top 80%' } });
     }
     window.TSWInstruments = { note, drumSound, ac, stopAll, loadBank };
-    /* Merge into the shared audio API: do not overwrite audio-engine.js methods such as play/playChord/stop. */
+    /* Gabung ke API audio bersama; jangan menimpa play/playChord/stop dari audio-engine.js. */
     window.TSWAudio = Object.assign(window.TSWAudio || {}, { note, drumSound, ac });
 })();
