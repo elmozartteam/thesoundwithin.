@@ -72,11 +72,12 @@
                 <div class="lvs-journey"><p>PERJALANAN BELAJAR · 6 LEVEL</p><div class="lvs-jbar" id="lvsJourney" aria-hidden="true"></div><div class="lvs-jtxt" id="lvsJourneyTxt"></div></div>
                 <div class="lvs-grid" id="lvsGrid"></div>
                 <div class="lvs-detail" id="lvsDetail" style="margin-top:22px" hidden></div>
+                <p style="margin:22px 0 0"><button type="button" class="lvs-btn alt" id="lvsResetAll" style="flex:none;border-color:#A8574A;color:#8A3E33">Reset semua catatan latihan</button> <span id="lvsResetMsg" aria-live="polite" style="margin-left:10px;font-size:13px"></span></p>
             </div>
         </section>
 
-        <!-- TRACK PROGRESS -->
-        <section class="section" id="track-progress">
+        <!-- TRACK PROGRESS LAMA: disembunyikan (bukan dihapus) agar app.js tetap menemukan elemennya -->
+        <section class="section" id="track-progress" hidden style="display:none" aria-hidden="true">
             <div class="container">
                 <div class="section-heading">
                     <div><p class="eyebrow">YOUR LEARNING JOURNEY</p><h2>Track your progress.</h2></div>
@@ -214,6 +215,13 @@
                 var gone = localStorage.getItem('tsw_score_reading') === null && localStorage.getItem('tsw_score_listening') === null && localStorage.getItem('tsw_score_speaking') === null;
                 if (gone && window.TSWProgress) { window.TSWProgress.reset(0); render(); }
             }, 150);
+        });
+        var ra = $('lvsResetAll');
+        if (ra) ra.addEventListener('click', function () {
+            if (!confirm('Hapus semua catatan latihan dan skor di browser ini? Tindakan ini tidak bisa dibatalkan.')) return;
+            if (window.TSWProgress) LEVELS.forEach(function (L) { window.TSWProgress.reset(L.n); });
+            ['reading', 'listening', 'speaking'].forEach(function (m) { try { localStorage.removeItem('tsw_score_' + m); localStorage.removeItem('tsw_level0_' + m); } catch (e) {} });
+            open = {}; render(); $('lvsResetMsg').textContent = 'Catatan latihan sudah dihapus.';
         });
         window.addEventListener('tsw:progress', render);
         window.addEventListener('storage', render);
