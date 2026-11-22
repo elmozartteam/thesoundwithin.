@@ -8,6 +8,44 @@
     <title>Track Progress — THE SOUND WITHIN</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* ── Pintasan level + progres keseluruhan (self-contained, kontras tinggi) ── */
+        .lvs{--n:#14233F;--n2:#27406B;--iv:#FBF7EE;--gd:#B8923F;font-family:Lora,Georgia,serif}
+        .lvs-overall{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin:0 0 26px}
+        .lvs-stat{padding:18px;border-radius:14px;background:linear-gradient(160deg,#FBF7EE 0%,#EFE6D2 100%);color:#14233F;border:1px solid rgba(210,177,111,.6);box-shadow:0 6px 18px rgba(0,0,0,.18)}
+        .lvs-stat b{display:block;font:600 40px/1.05 "Cormorant Garamond",Georgia,serif;color:#27406B}
+        .lvs-stat span{display:block;margin-top:4px;font:700 11px Lora,serif;letter-spacing:.14em;color:#14233F}
+        .lvs-stat small{display:block;margin-top:4px;font-size:12px;color:#33466A}
+        .lvs-journey{margin:0 0 26px;padding:18px 20px;border-radius:14px;background:linear-gradient(120deg,#14233F,#27406B);color:#FBF7EE;border:1px solid rgba(210,177,111,.5)}
+        .lvs-journey p{margin:0 0 10px;font:700 12px Lora,serif;letter-spacing:.14em;color:#F1DDA7}
+        .lvs-jbar{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+        .lvs-jbar i{display:block;height:10px;border-radius:5px;background:rgba(251,247,238,.25)}
+        .lvs-jbar i.on{background:linear-gradient(90deg,#D9B45E,#F1DDA7)}.lvs-jbar i.cur{background:rgba(217,180,94,.55)}
+        .lvs-jtxt{margin-top:10px;font-size:13px;color:#E8EEF8}
+        .lvs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+        .lvs-card{display:flex;flex-direction:column;padding:20px;border-radius:16px;background:linear-gradient(170deg,#FFFDF8 0%,#F3EBDA 100%);color:#14233F;border:1.5px solid rgba(20,35,63,.3);box-shadow:0 8px 22px rgba(0,0,0,.2)}
+        .lvs-card.done{border-color:#1F7A4D}.lvs-card.off{opacity:.92}
+        .lvs-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+        .lvs-no{font:600 38px/1 "Cormorant Garamond",Georgia,serif;color:#8A6417}
+        .lvs-card h3{margin:2px 0 2px;font:700 20px "Cormorant Garamond",Georgia,serif;color:#14233F}
+        .lvs-meta{margin:0 0 10px;font-size:12px;color:#33466A}
+        .lvs-pill{display:inline-block;padding:4px 12px;border-radius:999px;font:700 11px Lora,serif;background:#F3E4C0;color:#5E4308;white-space:nowrap}
+        .lvs-pill.ok{background:#CFEBDB;color:#124B2F}.lvs-pill.mute{background:#E3E8F1;color:#33466A}
+        .lvs-score{font:600 34px/1 "Cormorant Garamond",Georgia,serif;color:#27406B}
+        .lvs-mods{display:grid;gap:8px;margin:6px 0 14px}
+        .lvs-mod{display:grid;grid-template-columns:78px 1fr 40px;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#14233F}
+        .lvs-mod .bar{position:relative;height:8px;border-radius:5px;background:#D5DCE9}.lvs-mod .bar i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,#27406B,#B8923F)}
+        .lvs-mod .bar u{position:absolute;left:70%;top:-3px;width:2px;height:14px;background:#A8574A}
+        .lvs-mod em{font-style:normal;text-align:right;color:#27406B}
+        .lvs-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:auto}
+        .lvs-btn{flex:1 1 auto;padding:11px 16px;border-radius:11px;border:1.5px solid #14233F;background:#14233F;color:#FBF7EE;font:700 13px Lora,serif;text-align:center;text-decoration:none;cursor:pointer}
+        .lvs-btn:hover{background:#27406B}
+        .lvs-btn.alt{background:#FBF7EE;color:#14233F}.lvs-btn.alt:hover{background:#F1E3BC}
+        .lvs-btn:focus-visible{outline:3px solid #B8923F;outline-offset:2px}
+        .lvs-detail{grid-column:1/-1;margin-top:4px}
+        .lvs-empty{margin:4px 0 12px;font-size:12.5px;line-height:1.55;color:#33466A}
+        @media (max-width:600px){.lvs-grid{grid-template-columns:1fr}}
+    </style>
     <!-- Google Analytics (GA4) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-59GLZ4RQGR"></script>
     <script>
@@ -23,6 +61,20 @@
     <div id="site-header"></div>
 
     <main>
+        <!-- PROGRES PER LEVEL + KESELURUHAN -->
+        <section class="section" id="level-progress">
+            <div class="container lvs">
+                <div class="section-heading">
+                    <div><p class="eyebrow">LEVEL SHORTCUTS</p><h2>Progress setiap level.</h2></div>
+                    <p class="section-description">Pintasan ke latihan tiap level, lengkap dengan skor Reading, Listening, dan Speaking. Ringkasan keseluruhan ada di bagian atas.</p>
+                </div>
+                <div class="lvs-overall" id="lvsOverall" aria-live="polite"></div>
+                <div class="lvs-journey"><p>PERJALANAN BELAJAR · 6 LEVEL</p><div class="lvs-jbar" id="lvsJourney" aria-hidden="true"></div><div class="lvs-jtxt" id="lvsJourneyTxt"></div></div>
+                <div class="lvs-grid" id="lvsGrid"></div>
+                <div class="lvs-detail" id="lvsDetail" style="margin-top:22px" hidden></div>
+            </div>
+        </section>
+
         <!-- TRACK PROGRESS -->
         <section class="section" id="track-progress">
             <div class="container">
@@ -69,8 +121,9 @@
             <div class="container">
                 <div class="section-heading">
                     <div><p class="eyebrow">YOUR CERTIFICATE</p><h2>Claim your certificate.</h2></div>
-                    <p class="section-description">Sertifikat memuat nama, tanggal, skor Reading, Listening, Speaking, dan overall band score.</p>
+                    <p class="section-description">Sertifikat memuat nama, tanggal, level tertinggi yang selesai, skor Reading, Listening, Speaking, dan skor keseluruhan.</p>
                 </div>
+                <div class="lvs" style="margin:0 0 18px"><div id="certSummary"></div></div>
                 <div class="certificate-box">
                     <div>
                         <h3>Sertifikat The Sound Within</h3>
@@ -85,5 +138,88 @@
     <div id="site-footer"></div>
 
     <script src="app.js"></script>
+    <script src="tsw-progress.js"></script>
+    <script>
+    /* Pintasan level + progres keseluruhan. Membaca data dari TSWProgress (tsw-progress.js). */
+    (function () {
+        'use strict';
+        var LEVELS = [
+            { n: 0, name: 'Musical Foundation', eq: 'Setara Pre-Grade', href: 'level-0.html#practice' },
+            { n: 1, name: 'Notation & Rhythm', eq: 'Setara ABRSM Grade 1–2', href: 'level-1.html' },
+            { n: 2, name: 'Scales, Keys & Intervals', eq: 'Setara ABRSM Grade 3–4', href: 'level-2.html' },
+            { n: 3, name: 'Basic Harmony', eq: 'Setara ABRSM Grade 4–5', href: 'level-3.html' },
+            { n: 4, name: 'Intermediate Harmony', eq: 'Setara ABRSM Grade 6 · Premium', href: 'level-4.html' },
+            { n: 5, name: 'Advanced Harmony', eq: 'Setara ABRSM Grade 7–8 · Premium', href: 'level-5.html' }
+        ];
+        var MODS = [['reading', 'Reading'], ['listening', 'Listening'], ['speaking', 'Speaking']];
+        var open = {};
+        var $ = function (id) { return document.getElementById(id); };
+
+        function render() {
+            var P = window.TSWProgress, grid = $('lvsGrid'); if (!grid) return;
+            if (!P) { grid.innerHTML = '<p class="lvs-empty" style="color:#FBF7EE">Modul tsw-progress.js belum termuat. Pastikan filenya ada di folder yang sama.</p>'; return; }
+            var rep = P.getReport(), done = 0, tracked = 0, answers = 0, correct = 0, sums = { reading: 0, listening: 0, speaking: 0 }, cur = -1;
+            LEVELS.forEach(function (L) {
+                var r = P.levelReport(L.n); L.r = r;
+                if (r) { tracked++; answers += r.totalAnswers; correct += r.totalCorrect; MODS.forEach(function (m) { sums[m[0]] += r.modules[m[0]].percent; }); if (r.passed) done++; else if (cur < 0) cur = L.n; }
+            });
+            if (cur < 0) cur = Math.min(done, 5);
+            var avg = function (k) { return tracked ? Math.round(sums[k] / tracked) : 0; };
+            var overall = tracked ? Math.round((avg('reading') + avg('listening') + avg('speaking')) / 3) : 0;
+            $('lvsOverall').innerHTML =
+                stat(overall + '%', 'SKOR KESELURUHAN', 'rata-rata tiga jalur') +
+                stat(done + ' / 6', 'LEVEL SELESAI', rep.highestLevelCompleted >= 0 ? 'tertinggi: Level ' + rep.highestLevelCompleted : 'belum ada level selesai') +
+                stat(avg('reading') + '%', 'READING', 'rata-rata semua level') +
+                stat(avg('listening') + '%', 'LISTENING', 'rata-rata semua level') +
+                stat(avg('speaking') + '%', 'SPEAKING', 'rata-rata semua level') +
+                stat(String(answers), 'JAWABAN TERCATAT', answers ? 'akurasi ' + Math.round(correct / answers * 100) + '%' : 'mulai latihan dulu');
+            var jb = '';
+            LEVELS.forEach(function (L) { jb += '<i class="' + (L.r && L.r.passed ? 'on' : L.n === cur ? 'cur' : '') + '"></i>'; });
+            $('lvsJourney').innerHTML = jb;
+            $('lvsJourneyTxt').textContent = done >= 6 ? 'Semua level selesai.' : 'Level aktif: Level ' + cur + ' · ' + LEVELS[cur].name + '. ' + done + ' dari 6 level sudah memenuhi kriteria.';
+
+            var h = '';
+            LEVELS.forEach(function (L) {
+                var r = L.r, has = !!r, attempted = has && r.totalAnswers > 0;
+                h += '<article class="lvs-card' + (has && r.passed ? ' done' : '') + (has ? '' : ' off') + '"><div class="lvs-head"><div><div class="lvs-no">0' + L.n + '</div><h3>Level ' + L.n + ' · ' + L.name + '</h3><p class="lvs-meta">' + L.eq + '</p></div>' +
+                    '<div style="text-align:right">' + (has ? '<div class="lvs-score">' + r.overall + '%</div>' : '') + '<span class="lvs-pill ' + (has && r.passed ? 'ok' : !has ? 'mute' : '') + '">' +
+                    (has ? (r.passed ? 'Selesai · ' + r.grade : attempted ? 'Dalam proses' : 'Belum dimulai') : 'Pelacakan segera hadir') + '</span></div></div>';
+                if (has) {
+                    h += '<div class="lvs-mods">';
+                    MODS.forEach(function (m) { var s = r.modules[m[0]]; h += '<div class="lvs-mod"><span>' + m[1] + '</span><div class="bar"><i style="width:' + s.percent + '%"></i><u></u></div><em>' + s.percent + '%</em></div>'; });
+                    h += '</div>';
+                } else {
+                    h += '<p class="lvs-empty">Skor level ini akan tampil di sini setelah latihannya tersedia dan mulai dikerjakan.</p>';
+                }
+                h += '<div class="lvs-actions"><a class="lvs-btn" href="' + L.href + '">' + (attempted ? 'Lanjut latihan ↗' : 'Buka Level ' + L.n + ' ↗') + '</a>' +
+                    (has ? '<button type="button" class="lvs-btn alt" data-detail="' + L.n + '" aria-expanded="' + (open[L.n] ? 'true' : 'false') + '">' + (open[L.n] ? 'Tutup rincian' : 'Lihat rincian') + '</button>' : '') + '</div>' +
+                    (has ? '<div class="lvs-detail" id="detail-' + L.n + '"' + (open[L.n] ? '' : ' hidden') + '></div>' : '') + '</article>';
+            });
+            grid.innerHTML = h;
+            var dv = $('lvsDetail'), on = null;
+            LEVELS.forEach(function (L) { if (L.r && open[L.n]) on = L.n; });
+            if (on == null) { dv.hidden = true; dv.innerHTML = ''; } else { dv.hidden = false; P.renderTracker(dv, on); }
+            P.renderCertificateSummary($('certSummary'));
+        }
+        function stat(v, l, s) { return '<div class="lvs-stat"><b>' + v + '</b><span>' + l + '</span><small>' + s + '</small></div>'; }
+
+        document.addEventListener('click', function (e) {
+            var b = e.target.closest('[data-detail]'); if (!b) return;
+            var n = +b.getAttribute('data-detail'), was = !!open[n]; open = {}; open[n] = !was; render(); if (!was) { var d = $('lvsDetail'); if (d && d.scrollIntoView) d.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+        });
+        /* "Reset latihan" bawaan menghapus skor lama; ikut hapus catatan detail bila skor lama benar-benar terhapus. */
+        var rl = $('resetLatihanBtn');
+        if (rl) rl.addEventListener('click', function () {
+            setTimeout(function () {
+                var gone = localStorage.getItem('tsw_score_reading') === null && localStorage.getItem('tsw_score_listening') === null && localStorage.getItem('tsw_score_speaking') === null;
+                if (gone && window.TSWProgress) { window.TSWProgress.reset(0); render(); }
+            }, 150);
+        });
+        window.addEventListener('tsw:progress', render);
+        window.addEventListener('storage', render);
+        window.addEventListener('pageshow', render);
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', render); else render();
+    })();
+    </script>
 </body>
 </html>
