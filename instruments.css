@@ -39,7 +39,7 @@
 .dr:hover{filter:brightness(1.12)}
 .dr:focus-visible,.tsx-tab:focus-visible,.pk-w:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 
-#micWave{display:block;width:100%;height:auto;border:1px solid rgba(210,177,111,.3);border-radius:var(--r);background:var(--navy-deep)}
+#micWave{display:block;flex:1;min-width:0;width:100%;height:auto;border:1px solid rgba(210,177,111,.3);border-radius:var(--r);background:var(--navy-deep)}
 .tsx-meter{position:relative;height:6px;margin-top:10px;border-radius:3px;background:rgba(255,255,255,.12)}
 .tsx-meter::after{content:"";position:absolute;left:50%;top:-3px;width:1px;height:12px;background:var(--gold)}
 .tsx-meter i{position:absolute;top:-3px;left:50%;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:var(--rosegold);transition:left .08s}
@@ -48,3 +48,26 @@
 #micPlay{display:block;width:100%;margin-top:14px}
 @media (max-width:600px){.tsx-piano{height:150px}.tsx-top{font-size:18px}}
 @media (prefers-reduced-motion:reduce){.pk-w,.pk-b,.tsx-meter i{transition:none}}
+
+/* teks di luar kartu: selector diperkuat agar tidak tertimpa warna putih bawaan */
+.tsx .tsx-bar,.tsx .tsx-bar label{color:var(--navy-deep)}
+.tsx .tsx-status,.tsx .tsx-hint{color:var(--navy-mid)}
+
+/* ilustrasi mikrofon + animasi */
+.tsx-micstage{position:relative;display:flex;align-items:center;gap:18px;--lv:0}
+.tsx-micsvg{flex:none;width:150px;height:auto;overflow:visible;filter:drop-shadow(0 0 calc(var(--lv) * 14px) rgba(210,177,111,.75))}
+.mic-ring{fill:none;stroke:var(--gold);stroke-width:2;opacity:0;transform-box:fill-box;transform-origin:center}
+.tsx-micstage.live .mic-ring.r1{opacity:.55;transform:scale(calc(1 + var(--lv) * .55))}
+.tsx-micstage.rec .mic-ring,.tsx-micstage.play .mic-ring{animation:micPulse 1.8s ease-out infinite}
+.tsx-micstage.rec .mic-ring{stroke:var(--rosegold)}
+.mic-ring.r2{animation-delay:.6s!important}.mic-ring.r3{animation-delay:1.2s!important}
+.tsx-micstage.rec .mic-ring.r2,.tsx-micstage.rec .mic-ring.r3,.tsx-micstage.play .mic-ring.r2,.tsx-micstage.play .mic-ring.r3{opacity:0}
+@keyframes micPulse{0%{opacity:.75;transform:scale(1)}100%{opacity:0;transform:scale(1.9)}}
+.tsx-badge{display:none;position:absolute;top:0;right:0;padding:3px 10px;border-radius:999px;font:700 11px var(--body);background:rgba(0,0,0,.35)}
+.tsx-badge.rec{color:#fff;background:var(--rosegold)}
+.tsx-badge.play{color:var(--gold);border:1px solid var(--gold)}
+.tsx-micstage.rec .tsx-badge.rec{display:block;animation:micBlink 1s steps(2) infinite}
+.tsx-micstage.play .tsx-badge.play{display:block}
+@keyframes micBlink{50%{opacity:.55}}
+@media (max-width:600px){.tsx-micstage{flex-direction:column}.tsx-micsvg{width:120px}}
+@media (prefers-reduced-motion:reduce){.tsx-micstage.rec .mic-ring,.tsx-micstage.play .mic-ring,.tsx-badge{animation:none!important}.tsx-micstage.rec .mic-ring.r1,.tsx-micstage.play .mic-ring.r1{opacity:.6}}
