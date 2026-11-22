@@ -38,7 +38,7 @@
                 <a href="index.html">Home</a>
                 <a href="index.html#menu">Level</a>
                 <a href="progress.html">Track Progress</a>
-                <a href="progress.html#certificate">Sertifikat</a>
+                <a href="certificate.html">Sertifikat</a>
                 <a href="tentang.html">Tentang Kami</a>
                 <a href="tentang.html#profiles">Our Profiles</a>
                 <a href="komunitas.html">Komunitas</a>
@@ -57,7 +57,7 @@
                 <span class="brand-name">THE SOUND WITHIN<small>EVERY EXPERT ONCE HEARD A FIRST NOTE</small></span>
             </a>
             <div class="footer-links">
-                <a href="index.html">Home</a><a href="progress.html#certificate">Sertifikat</a><a href="tentang.html">Tentang Kami</a><a href="komunitas.html">Komunitas</a><a href="komunitas.html#exclusive">Eksklusif</a>
+                <a href="index.html">Home</a><a href="certificate.html">Sertifikat</a><a href="tentang.html">Tentang Kami</a><a href="komunitas.html">Komunitas</a><a href="komunitas.html#exclusive">Eksklusif</a>
             </div>
             <span>© <span id="year"></span> The Sound Within — Nadine Nathania (Universitas Indonesia)</span>
         </div>
@@ -143,14 +143,17 @@
     
 
 /* ═══ Sertifikat ═══ */
-window.downloadSoundWithinCertificate = function () {
+window.downloadSoundWithinCertificate = function (opts) {
+            /* opts.level (0-3) opsional. Tanpa opts = sertifikat lama. Level 0 memakai key skor bawaan, Level 1-3 memakai key berakhiran _l1/_l2/_l3. */
+            const lv = opts && Number.isInteger(opts.level) ? opts.level : null;
+            const sfx = lv && lv > 0 ? '_l' + lv : '';
             const esc = value => String(value ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;');
             let identity={name:'Peserta The Sound Within',date:new Date().toISOString().slice(0,10)};
             try { identity={...identity,...JSON.parse(localStorage.getItem('tsw_visitor_identity')||'{}')}; } catch(e) {}
             let reading=null,listening=null,speaking=null;
-            try { reading=JSON.parse(localStorage.getItem('tsw_score_reading')||'null'); } catch(e) {}
-            try { listening=JSON.parse(localStorage.getItem('tsw_score_listening')||'null'); } catch(e) {}
-            try { speaking=JSON.parse(localStorage.getItem('tsw_score_speaking')||'null'); } catch(e) {}
+            try { reading=JSON.parse(localStorage.getItem('tsw_score_reading'+sfx)||'null'); } catch(e) {}
+            try { listening=JSON.parse(localStorage.getItem('tsw_score_listening'+sfx)||'null'); } catch(e) {}
+            try { speaking=JSON.parse(localStorage.getItem('tsw_score_speaking'+sfx)||'null'); } catch(e) {}
             const readPct=reading?(reading.percent+'% · '+reading.score+' points'):'Belum dikerjakan';
             const listenPct=listening?(listening.accuracy+'% · '+listening.score+' points'):'Belum dikerjakan';
             let speakPct='Belum dikerjakan', speakBand=0;
@@ -181,7 +184,7 @@ window.downloadSoundWithinCertificate = function () {
 <rect x="793" y="175" width="14" height="14" transform="rotate(45 800 182)" fill="#f6e2a6"/>
 <text x="800" y="275" text-anchor="middle" fill="#ffffff" font-family="${serif}" font-size="84" letter-spacing="6">CERTIFICATE</text>
 <text x="800" y="330" text-anchor="middle" fill="#f6e2a6" font-family="${serif}" font-size="26" letter-spacing="14">OF ACHIEVEMENT</text>
-<text x="800" y="385" text-anchor="middle" fill="#c8cfe0" font-family="${serif}" font-size="21" font-style="italic" letter-spacing="3">Harmonic Fluency Test</text>
+<text x="800" y="385" text-anchor="middle" fill="#c8cfe0" font-family="${serif}" font-size="21" font-style="italic" letter-spacing="3">Harmonic Fluency Test${lv!==null?' · Level '+lv:''}</text>
 <text x="800" y="445" text-anchor="middle" fill="#d6dbea" font-family="${serif}" font-size="24" font-style="italic">This certificate is proudly presented to</text>
 <text x="800" y="530" text-anchor="middle" fill="#f6e2a6" font-family="${serif}" font-size="${nameSize}" font-style="italic">${esc(identity.name)}</text>
 <path d="M300 560 H1300" stroke="url(#gold)" stroke-width="2"/>
@@ -201,6 +204,7 @@ window.downloadSoundWithinCertificate = function () {
 <text x="800" y="840" text-anchor="middle" fill="#c8cfe0" font-family="${serif}" font-size="22" letter-spacing="8">OVERALL BAND SCORE</text>
 <text x="800" y="920" text-anchor="middle" fill="#f6e2a6" font-family="${serif}" font-size="70">${overallBand} <tspan font-size="36" fill="#c8cfe0">/ 9.0</tspan></text>
 <text x="800" y="985" text-anchor="middle" fill="#c8cfe0" font-family="${serif}" font-size="22" font-style="italic">${esc(niceDate)}</text>
+${lv!==null?`<text x="800" y="1016" text-anchor="middle" fill="#f6e2a6" font-family="${serif}" font-size="17" letter-spacing="2">${lv<3?'LANJUTKAN KE LEVEL '+(lv+1):'SEMUA LEVEL GRATIS TUNTAS'}</text>`:''}
 <g>
 <circle cx="285" cy="925" r="78" fill="none" stroke="url(#gold)" stroke-width="4"/>
 <circle cx="285" cy="925" r="66" fill="#16223F" stroke="#f6e2a6" stroke-opacity=".6" stroke-width="1.5"/>
@@ -231,7 +235,7 @@ window.downloadSoundWithinCertificate = function () {
 
                     canvas.toBlob(async function (pngBlob) {
                         if (!pngBlob) return;
-                        const fileName = 'sertifikat-the-sound-within.png';
+                        const fileName = 'sertifikat-the-sound-within' + (lv !== null ? '-level-' + lv : '') + '.png';
                         const downloadUrl = URL.createObjectURL(pngBlob);
                         const link = document.createElement('a');
                         link.href = downloadUrl;
@@ -537,7 +541,7 @@ window.downloadSoundWithinCertificate = function () {
         $('resetLatihanBtn').addEventListener('click', function () {
             if (!confirm('Reset latihan? Skor Reading, Listening, dan Speaking yang tersimpan (termasuk untuk sertifikat) akan dihapus dan halaman dimuat ulang.')) return;
             try {
-                ['tsw_score_reading', 'tsw_score_listening', 'tsw_score_speaking', 'hft_seen_progressions', 'hft_test_results'].forEach(function (k) { localStorage.removeItem(k); });
+                ['tsw_score_reading', 'tsw_score_listening', 'tsw_score_speaking', 'hft_seen_progressions', 'hft_test_results'].concat([1, 2, 3].reduce(function (a, n) { return a.concat(['reading', 'listening', 'speaking'].map(function (m) { return 'tsw_score_' + m + '_l' + n; })); }, [])).forEach(function (k) { localStorage.removeItem(k); });
             } catch (e) {}
             location.reload();
         });
