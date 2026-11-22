@@ -132,7 +132,7 @@
         $$('.pk-w.on,.pk-b.on').forEach(k => k.classList.remove('on'));
     }
     function show(t) {
-        stopAll(); cur = t; if (t !== 'mic') micOff();
+        stopAll(); cur = t; if (t !== 'mic') { micOff(); const au = $('#micPlay'); if (au) au.pause(); }
         $$('.tsx-tab').forEach(b => { const on = b.dataset.tab === t; b.classList.toggle('active', on); b.setAttribute('aria-selected', String(on)); });
         $$('.tsx-panel').forEach(p => {
             const on = p.id === 'tsx-' + t; p.classList.toggle('active', on);
@@ -346,13 +346,18 @@
         for (let i = 1; i < c.length - 1; i++) if (c[i] > c[i - 1] && c[i] >= c[i + 1] && c[i] >= 0.85 * mx) return sr / (min + i);
         return -1;
     }
+    let pan = null, pSrc = null, playing = false;
+    const stage = (cls, on) => { const s = $('#micStage'); if (s) s.classList.toggle(cls, on); };
     function micLoop() {
-        const cv = $('#micWave'), g = cv.getContext('2d'), buf = new Float32Array(an.fftSize);
-        an.getFloatTimeDomainData(buf);
-        g.clearRect(0, 0, cv.width, cv.height); g.beginPath(); g.strokeStyle = '#D2B16F'; g.lineWidth = 2;
+        const a = an || (playing ? pan : null), cv = $('#micWave'), g = cv.getContext('2d'), st = $('#micStage');
+        if (!a) { raf = 0; g.clearRect(0, 0, cv.width, cv.height); st.style.setProperty('--lv', 0); return; }
+        const buf = new Float32Array(a.fftSize); a.getFloatTimeDomainData(buf);
+        let rms = 0; for (let i = 0; i < buf.length; i++) rms += buf[i] * buf[i];
+        st.style.setProperty('--lv', Math.min(1, Math.sqrt(rms / buf.length) * 6).toFixed(2));
+        g.clearRect(0, 0, cv.width, cv.height); g.beginPath(); g.strokeStyle = an ? '#D2B16F' : '#CFA090'; g.lineWidth = 2;
         for (let i = 0; i < cv.width; i++) { const y = cv.height / 2 + buf[Math.floor(i / cv.width * buf.length)] * cv.height * 0.45; i ? g.lineTo(i, y) : g.moveTo(i, y); }
         g.stroke();
-        if (++fr % 3 === 0) {
+        if (an && ++fr % 3 === 0) {
             const f = detect(buf, ctx.sampleRate);
             if (f > 0) {
                 const mf = 69 + 12 * Math.log2(f / 440), m = Math.round(mf), ct = Math.round((mf - m) * 100);
@@ -362,11 +367,13 @@
         }
         raf = requestAnimationFrame(micLoop);
     }
+    function startViz() { if (!raf) micLoop(); }
     function micOff() {
         cancelAnimationFrame(raf); raf = 0;
         if (rec && rec.state === 'recording') rec.stop();
         if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
-        an = null;
+        an = null; stage('live', false); stage('rec', false);
+        if (playing) startViz();
         const on = $('#micOn'); if (on) { on.textContent = 'Aktifkan mikrofon'; $('#micRec').disabled = true; $('#micStop').disabled = true; }
     }
     function buildMic() {
@@ -376,7 +383,7 @@
             try { stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false } }); }
             catch (e) { say('Mikrofon tidak bisa diakses. Izinkan akses mikrofon di browser, lalu coba lagi.'); return; }
             const c = ac(); an = c.createAnalyser(); an.fftSize = 2048; c.createMediaStreamSource(stream).connect(an);
-            $('#micOn').textContent = 'Matikan mikrofon'; $('#micRec').disabled = false; micLoop();
+            $('#micOn').textContent = 'Matikan mikrofon'; $('#micRec').disabled = false; stage('live', true); startViz();
         };
         $('#micRec').onclick = () => {
             if (!stream || typeof MediaRecorder === 'undefined') { say('Perekaman tidak didukung browser ini.'); return; }
@@ -386,13 +393,20 @@
                 if (recUrl) URL.revokeObjectURL(recUrl);
                 recUrl = URL.createObjectURL(new Blob(chunks, { type: rec.mimeType }));
                 const a = $('#micPlay'); a.src = recUrl; a.hidden = false; $('#micClear').disabled = false;
-                $('#micRec').classList.remove('rec'); $('#micStop').disabled = true; if (lot) lot.pause(); $('#micLot').classList.remove('on');
+                $('#micRec').classList.remove('rec'); stage('rec', false); $('#micStop').disabled = true; if (lot) lot.pause(); $('#micLot').classList.remove('on');
                 say('Rekaman siap. Tekan putar untuk mendengarnya.');
             };
-            rec.start(); $('#micRec').classList.add('rec'); $('#micStop').disabled = false; say('Merekam…');
+            rec.start(); stage('rec', true); $('#micRec').classList.add('rec'); $('#micStop').disabled = false; say('Merekam…');
             const L = $('#micLot'); L.classList.add('on');
             if (window.lottie && !RM) { try { if (!lot) lot = lottie.loadAnimation({ container: L, renderer: 'svg', loop: true, autoplay: false, animationData: PULSE }); lot.play(); } catch (e) {} }
         };
+        const au = $('#micPlay');
+        au.addEventListener('play', () => {
+            const c = ac();
+            if (!pSrc) { pSrc = c.createMediaElementSource(au); pan = c.createAnalyser(); pan.fftSize = 2048; pSrc.connect(pan); pan.connect(master); }
+            playing = true; stage('play', true); startViz();
+        });
+        ['pause', 'ended'].forEach(ev => au.addEventListener(ev, () => { playing = false; stage('play', false); }));
         $('#micStop').onclick = () => { if (rec && rec.state === 'recording') rec.stop(); };
         $('#micClear').onclick = () => {
             if (recUrl) URL.revokeObjectURL(recUrl); recUrl = null;
