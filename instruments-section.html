@@ -1,0 +1,92 @@
+<!-- ═══ INSTRUMEN SECTION (pengganti <section class="h-instruments" id="instruments">…</section>) ═══ -->
+<section class="h-instruments tsx" id="instruments" aria-label="Coba instrumen virtual">
+    <div class="container">
+        <div class="section-head">
+            <p class="eyebrow">INSTRUMEN VIRTUAL</p>
+            <h2>Dengar langsung.<br><em>Rasakan nadanya.</em></h2>
+            <p class="sub">Tekan tuts, petik dan genjreng gitar, gesek biola, pukul drum, atau bicara ke mikrofon lalu putar ulang rekamanmu.</p>
+        </div>
+
+        <div class="tsx-tabs" role="tablist" aria-label="Pilih instrumen">
+            <button class="tsx-tab active" role="tab" aria-selected="true" data-tab="piano" type="button">Piano</button>
+            <button class="tsx-tab" role="tab" aria-selected="false" data-tab="guitar" type="button">Gitar</button>
+            <button class="tsx-tab" role="tab" aria-selected="false" data-tab="violin" type="button">Biola</button>
+            <button class="tsx-tab" role="tab" aria-selected="false" data-tab="drum" type="button">Drum</button>
+            <button class="tsx-tab" role="tab" aria-selected="false" data-tab="mic" type="button">Mikrofon</button>
+        </div>
+
+        <div class="tsx-bar">
+            <label for="tsxVol">Volume</label>
+            <input type="range" id="tsxVol" min="0" max="1" step="0.05" value="0.8">
+            <button type="button" class="tsx-btn" id="tsxStop">Hentikan suara</button>
+            <span class="tsx-status" id="tsxStatus" aria-live="polite"></span>
+        </div>
+
+        <!-- PIANO -->
+        <div class="tsx-panel active" id="tsx-piano" role="tabpanel">
+            <div class="tsx-card">
+                <div class="tsx-top"><b>Piano akustik (grand)</b><span class="tsx-read" id="pnNote">—</span></div>
+                <div class="tsx-piano" id="tsxPiano" role="group" aria-label="Keyboard piano dua oktaf, C3 sampai B4"></div>
+                <div class="tsx-row" id="pnChords"></div>
+            </div>
+            <p class="tsx-hint">Klik atau sentuh tuts (bisa beberapa sekaligus) · Keyboard: A S D F G H J = C4–B4, W E T Y U = tuts hitam</p>
+        </div>
+
+        <!-- GITAR -->
+        <div class="tsx-panel" id="tsx-guitar" role="tabpanel">
+            <div class="tsx-card">
+                <div class="tsx-top">
+                    <div class="tsx-seg" role="group" aria-label="Jenis gitar">
+                        <button type="button" class="on" data-gmode="steel">Akustik</button>
+                        <button type="button" data-gmode="clean">Listrik (clean)</button>
+                    </div>
+                    <span class="tsx-read" id="gtNote">—</span>
+                </div>
+                <div id="tsxGuitar"></div>
+                <div class="tsx-row" id="gtChords"></div>
+                <div class="tsx-row">
+                    <button type="button" class="tsx-btn" id="gtDown">Genjreng ↓</button>
+                    <button type="button" class="tsx-btn" id="gtUp">Genjreng ↑</button>
+                </div>
+            </div>
+            <p class="tsx-hint">Klik senar di badan gitar untuk memetik, seret melintasi senar untuk menggenjreng, klik kotak fret untuk nada tertentu. Pilih akor untuk melihat posisi jari.</p>
+        </div>
+
+        <!-- BIOLA -->
+        <div class="tsx-panel" id="tsx-violin" role="tabpanel">
+            <div class="tsx-card">
+                <div class="tsx-top"><b>Biola akustik</b><span class="tsx-read" id="vnNote">—</span></div>
+                <div id="tsxViolin" class="tsx-narrow"></div>
+            </div>
+            <p class="tsx-hint">Tahan dan geser di papan jari: kiri–kanan memilih senar (G D A E), atas–bawah memilih posisi jari. Lepas untuk berhenti menggesek.</p>
+        </div>
+
+        <!-- DRUM -->
+        <div class="tsx-panel" id="tsx-drum" role="tabpanel">
+            <div class="tsx-card">
+                <div class="tsx-top"><b>Drum kit akustik</b><span class="tsx-read" id="drNote">—</span></div>
+                <div id="tsxDrum"></div>
+                <div class="tsx-row"><button type="button" class="tsx-btn" id="drPattern">Putar pola rock dasar</button></div>
+            </div>
+            <p class="tsx-hint">Pukul bagian drum langsung · Keyboard: Q crash, W hi-hat, E ride, R tom 1, A kick, S snare, D tom 2, F floor tom. Suara drum saat ini simulasi sintetis; taruh rekaman asli di assets/audio/drums/ untuk menggantinya.</p>
+        </div>
+
+        <!-- MIKROFON -->
+        <div class="tsx-panel" id="tsx-mic" role="tabpanel">
+            <div class="tsx-card">
+                <div class="tsx-top"><b>Mikrofon &amp; rekaman suara</b><span class="tsx-read" id="micNote">—</span></div>
+                <canvas id="micWave" width="720" height="130" aria-label="Visualisasi gelombang suara"></canvas>
+                <div class="tsx-meter" aria-hidden="true"><i id="micMeter"></i></div>
+                <div class="tsx-row">
+                    <button type="button" class="tsx-btn" id="micOn">Aktifkan mikrofon</button>
+                    <button type="button" class="tsx-btn" id="micRec" disabled>Rekam</button>
+                    <button type="button" class="tsx-btn" id="micStop" disabled>Berhenti</button>
+                    <button type="button" class="tsx-btn" id="micClear" disabled>Hapus rekaman</button>
+                    <span class="tsx-lot" id="micLot" aria-hidden="true"></span>
+                </div>
+                <audio id="micPlay" controls hidden></audio>
+            </div>
+            <p class="tsx-hint">Nada terdeteksi lewat analisis frekuensi (bukan speech-to-text). Suara diproses di browser dan rekaman tidak dikirim ke server mana pun.</p>
+        </div>
+    </div>
+</section>
