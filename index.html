@@ -143,7 +143,7 @@
             </div>
         </section>
 
-        <div class="h-fade h-fade-to-light" aria-hidden="true"></div>
+        <div class="h-fade h-fade-to-light" aria-hidden="true" style="height:200px;background:linear-gradient(to bottom,#263F68 0%,#2A426A 8%,#384E73 18%,#536583 30%,#758298 42%,#9DA5B0 55%,#C3C5C8 68%,#DFDED9 80%,#EFEBE2 90%,#F5F0E6 100%)"></div>
 
         <!-- ═══ INSTRUMEN VIRTUAL (BARU) ═══ -->
         <section class="h-instruments tsx" id="instruments" aria-label="Coba instrumen virtual">
@@ -162,11 +162,11 @@
                     <button class="tsx-tab" role="tab" aria-selected="false" data-tab="mic" type="button">Mikrofon</button>
                 </div>
 
-                <div class="tsx-bar">
+                <div class="tsx-bar" style="color:#1A3055">
                     <label for="tsxVol">Volume</label>
                     <input type="range" id="tsxVol" min="0" max="1" step="0.05" value="0.8">
                     <button type="button" class="tsx-btn" id="tsxStop">Hentikan suara</button>
-                    <span class="tsx-status" id="tsxStatus" aria-live="polite"></span>
+                    <span class="tsx-status" id="tsxStatus" aria-live="polite" style="color:#2F4F7C"></span>
                 </div>
 
                 <!-- PIANO -->
@@ -176,7 +176,7 @@
                         <div class="tsx-piano" id="tsxPiano" role="group" aria-label="Keyboard piano dua oktaf, C3 sampai B4"></div>
                         <div class="tsx-row" id="pnChords"></div>
                     </div>
-                    <p class="tsx-hint">Klik atau sentuh tuts (bisa beberapa sekaligus) · Keyboard: A S D F G H J = C4–B4, W E T Y U = tuts hitam</p>
+                    <p class="tsx-hint" style="color:#2F4F7C">Klik atau sentuh tuts (bisa beberapa sekaligus) · Keyboard: A S D F G H J = C4–B4, W E T Y U = tuts hitam</p>
                 </div>
 
                 <!-- GITAR -->
@@ -196,7 +196,7 @@
                             <button type="button" class="tsx-btn" id="gtUp">Genjreng ↑</button>
                         </div>
                     </div>
-                    <p class="tsx-hint">Klik senar di badan gitar untuk memetik, seret melintasi senar untuk menggenjreng, klik kotak fret untuk nada tertentu. Pilih akor untuk melihat posisi jari.</p>
+                    <p class="tsx-hint" style="color:#2F4F7C">Klik senar di badan gitar untuk memetik, seret melintasi senar untuk menggenjreng, klik kotak fret untuk nada tertentu. Pilih akor untuk melihat posisi jari.</p>
                 </div>
 
                 <!-- BIOLA -->
@@ -205,7 +205,7 @@
                         <div class="tsx-top"><b>Biola akustik</b><span class="tsx-read" id="vnNote">—</span></div>
                         <div id="tsxViolin" class="tsx-narrow"></div>
                     </div>
-                    <p class="tsx-hint">Tahan dan geser di papan jari: kiri–kanan memilih senar (G D A E), atas–bawah memilih posisi jari. Lepas untuk berhenti menggesek.</p>
+                    <p class="tsx-hint" style="color:#2F4F7C">Tahan dan geser di papan jari: kiri–kanan memilih senar (G D A E), atas–bawah memilih posisi jari. Lepas untuk berhenti menggesek.</p>
                 </div>
 
                 <!-- DRUM -->
@@ -215,7 +215,7 @@
                         <div id="tsxDrum"></div>
                         <div class="tsx-row"><button type="button" class="tsx-btn" id="drPattern">Putar pola rock dasar</button></div>
                     </div>
-                    <p class="tsx-hint">Pukul bagian drum langsung · Keyboard: Q crash, W hi-hat, E ride, R tom 1, A kick, S snare, D tom 2, F floor tom. Suara drum saat ini simulasi sintetis; taruh rekaman asli di assets/audio/drums/ untuk menggantinya.</p>
+                    <p class="tsx-hint" style="color:#2F4F7C">Pukul bagian drum langsung · Keyboard: Q crash, W hi-hat, E ride, R tom 1, A kick, S snare, D tom 2, F floor tom. Suara drum saat ini simulasi sintetis; taruh rekaman asli di assets/audio/drums/ untuk menggantinya.</p>
                 </div>
 
                 <!-- MIKROFON -->
@@ -223,12 +223,12 @@
                     <div class="tsx-card">
                         <div class="tsx-top"><b>Mikrofon &amp; rekaman suara</b><span class="tsx-read" id="micNote">—</span></div>
                         <div class="tsx-micstage" id="micStage">
-                            <svg class="tsx-micsvg" viewBox="0 0 200 240" aria-hidden="true" focusable="false">
+                            <svg class="tsx-micsvg" width="150" height="180" style="max-width:150px;flex:none" viewBox="0 0 200 240" aria-hidden="true" focusable="false">
                                 <defs>
                                     <linearGradient id="mh" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#A8A49E"/><stop offset=".35" stop-color="#F5F0E6"/><stop offset="1" stop-color="#8E8A84"/></linearGradient>
                                     <pattern id="mp" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="1.5" fill="#1A3055" opacity=".5"/></pattern>
                                 </defs>
-                                <circle class="mic-ring r1" cx="100" cy="78" r="58"/><circle class="mic-ring r2" cx="100" cy="78" r="58"/><circle class="mic-ring r3" cx="100" cy="78" r="58"/>
+                                <circle class="mic-ring r1" fill="none" stroke="#D2B16F" stroke-width="2" opacity="0" cx="100" cy="78" r="58"/><circle class="mic-ring r2" fill="none" stroke="#D2B16F" stroke-width="2" opacity="0" cx="100" cy="78" r="58"/><circle class="mic-ring r3" fill="none" stroke="#D2B16F" stroke-width="2" opacity="0" cx="100" cy="78" r="58"/>
                                 <path d="M58 100C58 176 142 176 142 100" fill="none" stroke="#D2B16F" stroke-width="5" stroke-linecap="round"/>
                                 <rect x="94" y="168" width="12" height="46" fill="#B98778"/><rect x="60" y="212" width="80" height="10" rx="5" fill="#D2B16F"/>
                                 <rect x="82" y="116" width="36" height="34" rx="8" fill="#2A3F63" stroke="#D2B16F" stroke-opacity=".5"/>
@@ -248,12 +248,12 @@
                         </div>
                         <audio id="micPlay" controls hidden></audio>
                     </div>
-                    <p class="tsx-hint">Nada terdeteksi lewat analisis frekuensi (bukan speech-to-text). Suara diproses di browser dan rekaman tidak dikirim ke server mana pun.</p>
+                    <p class="tsx-hint" style="color:#2F4F7C">Nada terdeteksi lewat analisis frekuensi (bukan speech-to-text). Suara diproses di browser dan rekaman tidak dikirim ke server mana pun.</p>
                 </div>
             </div>
         </section>
 
-        <div class="h-fade h-fade-to-dark" aria-hidden="true"></div>
+        <div class="h-fade h-fade-to-dark" aria-hidden="true" style="height:200px;background:linear-gradient(to bottom,#F5F0E6 0%,#F1EDE4 8%,#E3E1DB 18%,#C8CACB 30%,#A6ADB6 42%,#7E8A9E 55%,#586A86 68%,#3C5175 80%,#2C446C 90%,#263F68 100%)"></div>
 
         <!-- ═══ PILIH LEVEL ═══ -->
         <section class="h-paths" id="menu">
