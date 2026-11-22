@@ -222,7 +222,22 @@
                 <div class="tsx-panel" id="tsx-mic" role="tabpanel">
                     <div class="tsx-card">
                         <div class="tsx-top"><b>Mikrofon &amp; rekaman suara</b><span class="tsx-read" id="micNote">—</span></div>
-                        <canvas id="micWave" width="720" height="130" aria-label="Visualisasi gelombang suara"></canvas>
+                        <div class="tsx-micstage" id="micStage">
+                            <svg class="tsx-micsvg" viewBox="0 0 200 240" aria-hidden="true" focusable="false">
+                                <defs>
+                                    <linearGradient id="mh" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#A8A49E"/><stop offset=".35" stop-color="#F5F0E6"/><stop offset="1" stop-color="#8E8A84"/></linearGradient>
+                                    <pattern id="mp" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="1.5" fill="#1A3055" opacity=".5"/></pattern>
+                                </defs>
+                                <circle class="mic-ring r1" cx="100" cy="78" r="58"/><circle class="mic-ring r2" cx="100" cy="78" r="58"/><circle class="mic-ring r3" cx="100" cy="78" r="58"/>
+                                <path d="M58 100C58 176 142 176 142 100" fill="none" stroke="#D2B16F" stroke-width="5" stroke-linecap="round"/>
+                                <rect x="94" y="168" width="12" height="46" fill="#B98778"/><rect x="60" y="212" width="80" height="10" rx="5" fill="#D2B16F"/>
+                                <rect x="82" y="116" width="36" height="34" rx="8" fill="#2A3F63" stroke="#D2B16F" stroke-opacity=".5"/>
+                                <rect x="70" y="24" width="60" height="100" rx="30" fill="url(#mh)"/><rect x="70" y="24" width="60" height="100" rx="30" fill="url(#mp)"/>
+                                <rect x="66" y="78" width="68" height="8" rx="4" fill="#D2B16F"/>
+                            </svg>
+                            <canvas id="micWave" width="720" height="130" aria-label="Visualisasi gelombang suara"></canvas>
+                            <span class="tsx-badge rec">● Merekam</span><span class="tsx-badge play">▶ Memutar rekaman</span>
+                        </div>
                         <div class="tsx-meter" aria-hidden="true"><i id="micMeter"></i></div>
                         <div class="tsx-row">
                             <button type="button" class="tsx-btn" id="micOn">Aktifkan mikrofon</button>
