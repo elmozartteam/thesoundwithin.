@@ -699,7 +699,7 @@
     const size = buffer.length;
     let rms = 0;
     for (let i = 0; i < size; i++) rms += buffer[i] * buffer[i];
-    if (Math.sqrt(rms / size) < 0.012) return null;
+    if (Math.sqrt(rms / size) < 0.004) return null; /* lebih peka: suara pelan tetap dianalisis */
 
     const minLag = Math.max(2, Math.floor(sampleRate / 850));
     const maxLag = Math.min(Math.floor(sampleRate / 75), Math.floor(size / 2));
@@ -721,7 +721,7 @@
     }
     let chosen = -1;
     for (let lag = minLag; lag <= maxLag; lag++) {
-      if (cmnd[lag] < 0.15) {
+      if (cmnd[lag] < 0.22) {
         while (lag + 1 <= maxLag && cmnd[lag + 1] < cmnd[lag]) lag++;
         chosen = lag;
         break;
@@ -730,7 +730,7 @@
     if (chosen < 0) {
       let best = 1;
       for (let lag = minLag; lag <= maxLag; lag++) if (cmnd[lag] < best) { best = cmnd[lag]; chosen = lag; }
-      if (best > 0.28) return null;
+      if (best > 0.42) return null;
     }
     const left = cmnd[chosen - 1] || cmnd[chosen];
     const center = cmnd[chosen];
@@ -749,19 +749,20 @@
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return reset('Browser ini tidak menyediakan akses mikrofon. Gunakan browser modern lewat HTTPS atau localhost. Kamu bisa menekan "Lewati soal".');
     let stream;
     try {
-      stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } });
+      stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: true } });
       activeMicStream = stream;
       const AC = window.AudioContext || window.webkitAudioContext;
       audioContext = audioContext || new AC();
       if (audioContext.state === 'suspended') await audioContext.resume();
       const analyser = audioContext.createAnalyser(); analyser.fftSize = 4096; analyser.smoothingTimeConstant = 0;
       const source = audioContext.createMediaStreamSource(stream), buffer = new Float32Array(analyser.fftSize), readings = [];
-      button.textContent = '● Dengarkan humming…'; $('feedback').className = 'lp-fb'; $('feedback').textContent = 'Humming nada dengan stabil selama 3 detik.';
+      source.connect(analyser); /* penyebab utama: sumber mikrofon sebelumnya tidak terhubung ke analyser sehingga sinyal selalu kosong */
+      button.textContent = '● Dengarkan humming…'; $('feedback').className = 'lp-fb'; $('feedback').textContent = 'Humming nada dengan stabil selama 4 detik. Dekatkan mikrofon dan bunyikan "mmm" atau "aaa" yang panjang.';
       const started = performance.now();
-      await new Promise(resolve => { const sample = () => { if (performance.now() - started >= 3200) return resolve(); analyser.getFloatTimeDomainData(buffer); const hz = detectPitchYIN(buffer, audioContext.sampleRate); if (hz && hz > 0) readings.push(69 + 12 * Math.log2(hz / 440)); window.setTimeout(sample, 80); }; sample(); });
+      await new Promise(resolve => { const sample = () => { if (performance.now() - started >= 4000) return resolve(); analyser.getFloatTimeDomainData(buffer); const hz = detectPitchYIN(buffer, audioContext.sampleRate); if (hz && hz > 0) { const m = 69 + 12 * Math.log2(hz / 440); readings.push(m); const fb = $('feedback'); if (fb) fb.textContent = 'Terdengar: ' + noteName(Math.round(m)) + ' · tahan nadanya…'; } window.setTimeout(sample, 50); }; sample(); });
       stream.getTracks().forEach(t => t.stop()); activeMicStream = null; source.disconnect(); analyser.disconnect();
       const stable = median(readings);
-      if (stable == null || readings.length < 5) return reset('Nada belum terdeteksi stabil. Coba lagi di tempat tenang dan humming secara berkelanjutan. Percobaan ini tidak dihitung.');
+      if (stable == null || readings.length < 4) return reset('Nada belum terdeteksi stabil. Coba lagi di tempat tenang dan humming secara berkelanjutan. Percobaan ini tidak dihitung.');
       /* octave-folded: selisih ke target diukur modulo 12 agar cocok dengan rentang suara siapa pun */
       let diff = ((stable - question.midi) % 12 + 12) % 12; if (diff > 6) diff -= 12;
       const nearest = Math.round(stable), cents = Math.round((stable - nearest) * 100), ok = Math.abs(diff) <= 0.6;
