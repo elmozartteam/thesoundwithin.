@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sertifikat | The Sound Within</title>
+<link rel="icon" href="logo.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="home.css">
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="style.css">
+<style>
+:root{
+  --navy:#263F68; --navy-d:#1b2e4c; --ivory:#F5F0E6; --gold:#D2B16F; --rose:#B98778; --white:#fff;
+  --ink:#2b3447;
+}
+*{box-sizing:border-box}
+body{background:var(--ivory)}
+main{font-family:'Poppins',system-ui,sans-serif;color:var(--ink);line-height:1.6}
+main{max-width:1100px;margin:0 auto;padding:0 16px 64px}
+
+.hero{background:linear-gradient(135deg,var(--navy-d),var(--navy));color:var(--ivory);text-align:center;padding:56px 16px 64px;margin:0 -16px 36px;border-bottom:4px solid var(--gold)}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3.2rem);color:var(--gold);font-weight:700}
+.hero p{max-width:620px;margin:10px auto 0;opacity:.9}
+
+.who{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:var(--white);border:1px solid rgba(210,177,111,.5);border-radius:14px;padding:14px 18px;margin-bottom:28px}
+.who label{font-size:.8rem;color:var(--rose);display:block}
+.who strong{color:var(--navy);font-size:1.05rem}
+.who input{font:inherit;border:1px solid var(--gold);border-radius:8px;padding:6px 10px;min-width:220px;color:var(--navy)}
+
+h2.sec{font-family:'Cormorant Garamond',serif;color:var(--navy);font-size:1.8rem;margin:8px 0 4px}
+.sub{color:#5d6679;margin-bottom:18px;font-size:.92rem}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(460px,1fr));gap:22px}
+@media(max-width:540px){.grid{grid-template-columns:1fr}}
+
+.cert{position:relative;background:var(--white);border:2px solid var(--gold);border-radius:16px;padding:26px 24px 22px;box-shadow:0 8px 24px rgba(38,63,104,.1);overflow:hidden}
+.cert::before{content:"";position:absolute;inset:8px;border:1px solid rgba(185,135,120,.45);border-radius:10px;pointer-events:none}
+.cert .badge{display:inline-block;background:var(--navy);color:var(--gold);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;padding:3px 12px;border-radius:999px}
+.cert h3{font-family:'Cormorant Garamond',serif;color:var(--navy);font-size:1.7rem;margin:10px 0 2px}
+.cert .lvl{color:var(--rose);font-weight:600;font-size:.9rem}
+.cert .given{margin-top:14px;font-size:.85rem;color:#5d6679}
+.cert .name{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--navy);border-bottom:1px solid var(--gold);display:inline-block;padding:0 6px 2px;margin:2px 0 10px}
+.cert p.txt{font-size:.9rem}
+.scores{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0 10px}
+.scores div{background:var(--ivory);border-radius:10px;text-align:center;padding:8px 4px}
+.scores small{display:block;font-size:.72rem;color:#5d6679}
+.scores b{font-size:1.15rem;color:var(--navy)}
+.total{display:flex;justify-content:space-between;align-items:center;background:var(--navy);color:var(--ivory);border-radius:10px;padding:8px 14px;font-size:.9rem}
+.total b{color:var(--gold);font-size:1.3rem}
+.next{margin-top:12px;font-size:.85rem;color:var(--rose);font-weight:500}
+.foot{display:flex;justify-content:space-between;align-items:center;margin-top:14px;font-size:.78rem;color:#5d6679}
+button.dl{font:inherit;font-weight:600;font-size:.85rem;background:var(--gold);color:var(--navy-d);border:0;border-radius:999px;padding:8px 18px;cursor:pointer}
+button.dl:hover{background:#c29f56}
+
+.cert.locked{background:#fbf8f1;border-style:dashed;border-color:var(--rose)}
+.cert.locked .name,.cert.locked .scores,.cert.locked .total{opacity:.35;filter:grayscale(.4)}
+.cert.locked button.dl{background:#ddd;color:#888;cursor:not-allowed}
+.lock-note{font-size:.82rem;color:var(--rose);font-weight:500;margin-top:10px}
+
+.premium{margin-top:44px;background:linear-gradient(135deg,var(--navy),var(--navy-d));color:var(--ivory);border:2px solid var(--gold);border-radius:18px;text-align:center;padding:38px 20px}
+.premium h3{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--gold)}
+.premium .soon{display:inline-block;margin-top:12px;background:var(--rose);color:var(--white);padding:5px 20px;border-radius:999px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:.8rem}
+.premium p{max-width:520px;margin:12px auto 0;font-size:.92rem;opacity:.92}
+
+@media print{
+  body *{visibility:hidden}
+  .printing,.printing *{visibility:visible}
+  .printing{position:absolute;left:0;top:0;width:100%;box-shadow:none}
+}
+</style>
+</head>
+<body>
+
+<div id="site-gate"></div>
+<header id="site-header"></header>
+
+<main>
+  <section class="hero">
+    <h1>Sertifikat</h1>
+    <p>Kumpulan sertifikat dari perjalanan belajarmu di The Sound Within. Selesaikan Reading, Listening, dan Speaking di tiap level untuk membukanya.</p>
+  </section>
+
+  <div class="who">
+    <div><label>Nama peserta</label><strong id="pName">-</strong></div>
+    <div style="text-align:right"><label>Tanggal</label><strong id="pDate">-</strong></div>
+  </div>
+
+  <h2 class="sec">Sertifikat Gratis</h2>
+  <p class="sub">Tersedia untuk Level 0 sampai Level 3. Skor diambil otomatis dari hasil latihanmu.</p>
+  <div class="grid" id="certGrid"></div>
+
+  <section class="premium">
+    <h3>Sertifikat Premium</h3>
+    <span class="soon">Coming Soon</span>
+    <p>Sertifikat premium masih kami siapkan. Nantikan ya, kabarnya akan kami umumkan di sini.</p>
+  </section>
+</main>
+
+<footer id="site-footer"></footer>
+
+<script>
+/* Sumber data (sama dengan app.js):
+   - identitas : tsw_visitor_identity -> {name, date}
+   - skor      : tsw_score_reading / _listening / _speaking  (Level 0)
+                 tsw_score_<modul>_l1 / _l2 / _l3             (Level 1-3, dibuat saat latihan level itu selesai) */
+var MODULES = [['reading','Reading'],['listening','Listening'],['speaking','Speaking']];
+var LEVELS  = [0,1,2,3];
+
+function readJSON(k){ try{ return JSON.parse(localStorage.getItem(k)||'null'); }catch(e){ return null; } }
+function modPct(m,v){
+  if(!v) return null;
+  if(m==='reading') return Number(v.percent)||0;
+  if(m==='listening') return Number(v.accuracy)||0;
+  var b=String(v.band||'').match(/([0-9]+(?:\.[0-9]+)?)/);
+  return b ? Math.round(Number(b[1])/9*100) : (parseFloat(v.accuracy)||0);
+}
+function extract(){
+  var res={};
+  LEVELS.forEach(function(l){
+    var sfx=l>0?'_l'+l:''; res[l]={};
+    MODULES.forEach(function(m){ var v=readJSON('tsw_score_'+m[0]+sfx); res[l][m[0]]={done:!!v,score:modPct(m[0],v)}; });
+  });
+  return res;
+}
+var IDENT=readJSON('tsw_visitor_identity')||{};
+function getName(){ return (IDENT.name||'').trim(); }
+function fmtDate(d){ return d.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'}); }
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+
+var DATA, NAME, TODAY=(function(){var d=IDENT.date?new Date(IDENT.date+'T12:00:00'):new Date();return isNaN(d)?new Date():d;})();
+
+function levelInfo(l){
+  var d=(DATA[l]||{}), total=0, done=true, sc={};
+  MODULES.forEach(function(m){
+    var r=d[m[0]]; if(!r||!r.done) done=false;
+    sc[m[0]]=r&&r.score!=null?r.score:null; total+=sc[m[0]]||0;
+  });
+  return {done:done,scores:sc,total:total};
+}
+
+function render(){
+  IDENT=readJSON('tsw_visitor_identity')||{}; DATA=extract(); NAME=getName();
+  document.getElementById('pName').textContent=NAME||'Belum diisi';
+  document.getElementById('pDate').textContent=fmtDate(TODAY);
+  
+  var html='';
+  LEVELS.forEach(function(l){
+    var info=levelInfo(l), last=(l===3); info.avg=Math.round(info.total/3);
+    var nextLine= last ? 'Selamat, kamu sudah menuntaskan seluruh level gratis!' : 'Lanjutkan perjalananmu ke Level '+(l+1)+'.';
+    html+='<article class="cert'+(info.done?'':' locked')+'" id="cert-'+l+'">'+
+      '<span class="badge">Sertifikat Gratis</span>'+
+      '<h3>The Sound Within</h3><div class="lvl">Level '+l+'</div>'+
+      '<div class="given">Sertifikat ini diberikan kepada</div>'+
+      '<div class="name">'+esc(NAME||'Nama Peserta')+'</div>'+
+      '<p class="txt">yang telah menyelesaikan latihan <b>Reading</b>, <b>Listening</b>, dan <b>Speaking</b> pada Level '+l+'.</p>'+
+      '<div class="scores">'+MODULES.map(function(m){
+        var v=info.scores[m[0]]; return '<div><small>'+m[1]+'</small><b>'+(v==null?'-':v+'%')+'</b></div>';
+      }).join('')+'</div>'+
+      '<div class="total"><span>Skor total</span><b>'+(info.done?info.avg+'%':'-')+'</b></div>'+
+      '<div class="next">'+nextLine+'</div>'+
+      (info.done?'':'<div class="lock-note">Terkunci. Selesaikan ketiga modul di Level '+l+' dulu untuk membukanya.</div>')+
+      '<div class="foot"><span>'+fmtDate(TODAY)+'</span>'+
+      '<button class="dl" data-l="'+l+'"'+(info.done?'':' disabled')+'>Unduh</button></div>'+
+    '</article>';
+  });
+  document.getElementById('certGrid').innerHTML=html;
+}
+
+document.addEventListener('click',function(e){
+  var b=e.target.closest&&e.target.closest('button.dl'); if(!b||b.disabled) return;
+  var l=+b.getAttribute('data-l'), info=levelInfo(l);
+  
+  if(typeof window.downloadSoundWithinCertificate==='function'){
+    try{ window.downloadSoundWithinCertificate({level:l}); return; }catch(err){}
+  }
+  var el=document.getElementById('cert-'+l); el.classList.add('printing'); window.print();
+  setTimeout(function(){ el.classList.remove('printing'); },500);
+});
+
+
+render();
+window.addEventListener('storage',render);
+</script>
+<script src="app.js"></script>
+</body>
+</html>
