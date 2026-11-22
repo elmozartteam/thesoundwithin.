@@ -1,97 +1,382 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#1C2B4D">
-<meta name="description" content="Level 0 The Sound Within: Musical Foundation. Pelajari nama nada, keyboard, notasi, clef, pitch, dan ritme melalui Reading, Listening, dan Speaking.">
+<meta name="description" content="SoundPath Level 0 The Sound Within: fondasi musik interaktif untuk pemula. Pelajari bunyi, nama nada, keyboard, pitch, instrumen, dan pendengaran musik.">
 <title>Level 0 · Musical Foundation — THE SOUND WITHIN</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="home.css"><link rel="stylesheet" href="theme.css"><link rel="stylesheet" href="level.css">
+<!-- File berikut adalah stylesheet bersama milik website TSW yang sudah ada. -->
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="home.css">
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="level.css">
+<link rel="stylesheet" href="instruments.css">
+<link rel="stylesheet" href="level0-enhancements.css">
 </head>
 <body class="home lvl">
-<div id="site-gate"></div><div id="site-header"></div>
+<div id="site-gate"></div>
+<div id="site-header"></div>
+
 <main>
-  <section class="l-hero" id="home"><div class="container">
-    <p class="eyebrow h-eyebrow">LEVEL 0 · SETARA PRE-GRADE · GRATIS</p>
-    <h1 class="l-title">Musical <em>Foundation.</em></h1>
-    <p class="l-lead">Mulai dari cara mengenali bunyi, membaca nada, memahami keyboard, hingga merasakan ritme. Bangun fondasi musikmu melalui tiga jalur belajar: Reading, Listening, dan Speaking.</p>
-    <div class="h-actions"><a class="h-btn" href="#latihan">Mulai eksplorasi <i>↗</i></a><a class="h-link" href="#materi">Jelajahi materi</a></div>
-    <p class="l-hero-note">NINE FOUNDATIONAL CHAPTERS <span>·</span> THREE WAYS TO LEARN</p>
-  </div></section>
+  <section class="l-hero" id="home">
+    <div class="container">
+      <p class="eyebrow h-eyebrow">SOUNDPATH · LEVEL 0 · ABSOLUTE BEGINNER · FREE</p>
+      <h1 class="l-title">Musical <em>Foundation.</em></h1>
+      <p class="l-lead">Sebelum membaca partitur atau membangun chord, kenali dahulu apa yang membuat musik terdengar seperti musik. Mulai dari bunyi, nama nada, pola keyboard, pitch, hingga cara berbagai instrumen menghasilkan suara.</p>
+      <div class="h-actions">
+        <a class="h-btn" href="#materi">Mulai belajar <i>↗</i></a>
+        <a class="h-link" href="#practice">Coba tiga jalur latihan</a>
+      </div>
+      <p class="l-hero-note">9 FOUNDATIONAL UNITS <span>·</span> READING · LISTENING · SPEAKING</p>
+      <div class="l-hero-visual" aria-label="Ilustrasi gelombang suara dan not musik">
+        <svg viewBox="0 0 760 150" role="img" aria-labelledby="heroWaveTitle">
+          <title id="heroWaveTitle">Gelombang suara dan garis musik</title>
+          <g fill="none" stroke="currentColor" stroke-width="1" opacity=".22">
+            <path d="M0 40H760M0 58H760M0 76H760M0 94H760M0 112H760"/>
+          </g>
+          <path class="l-wave-path" d="M0 76 C25 76 25 25 50 25 S75 127 100 127 S125 44 150 44 S175 105 200 105 S225 58 250 58 S275 94 300 94 S325 35 350 35 S375 117 400 117 S425 65 450 65 S475 87 500 87 S525 48 550 48 S575 104 600 104 S625 61 650 61 S675 91 700 91 S725 76 760 76" fill="none" stroke="#D2B16F" stroke-width="3" stroke-linecap="round"/>
+          <g fill="#F4EBDD" font-family="Georgia,serif" font-size="28">
+            <text x="105" y="24">♪</text><text x="340" y="28">♫</text><text x="585" y="30">♩</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
   <div class="h-fade h-fade-to-light" aria-hidden="true"></div>
 
-  <section class="l-materi" id="materi"><div class="container">
-    <p class="eyebrow">THE FIRST NOTES</p><h2 class="l-h2">A language made <em>of sound.</em></h2>
-    <p class="l-section-lead">Musik dimulai dari hal-hal kecil: satu bunyi, satu nada, satu ketukan. Kenali elemen dasarnya sebelum menggabungkannya menjadi musik.</p>
-    <div class="l-topics">
-      <article class="l-topic l-topic-feature"><span class="l-no">0.1 — LISTEN</span><h3>Introduction to Music &amp; Sound</h3>
-        <p>Musik adalah seni mengatur bunyi dan keheningan dalam waktu. Bunyi musik memiliki beberapa unsur utama: <b>pitch</b> (tinggi-rendah nada), <b>duration</b> (lama bunyi), <b>rhythm</b> (pola ketukan), <b>dynamics</b> (keras-lembut), <b>tempo</b> (cepat-lambat), dan <b>timbre</b> (warna suara). Contohnya, nada C yang dimainkan piano dan gitar dapat memiliki pitch sama, tetapi warna suaranya berbeda.</p>
-        <p><b>Melody</b> adalah rangkaian nada yang terdengar berurutan. <b>Harmony</b> adalah beberapa nada yang terdengar bersamaan. <b>Texture</b> menjelaskan bagaimana melodi dan harmoni disusun, sedangkan <b>form</b> adalah susunan bagian musik seperti intro, verse, chorus, dan outro.</p>
-        <div class="l-concept-row"><div><span class="l-concept-mark">♪</span><b>Melody</b><small>Nada berurutan</small></div><div><span class="l-concept-mark">♫</span><b>Harmony</b><small>Nada bersamaan</small></div><div><span class="l-concept-mark">Ⅱ</span><b>Silence</b><small>Ruang dalam musik</small></div></div>
-      </article>
-      <article class="l-topic"><span class="l-no">0.2 — IDENTIFY</span><h3>The Musical Alphabet</h3>
-        <p>Musik dasar menggunakan tujuh nama nada: <b>C, D, E, F, G, A, B</b>. Setelah B, urutannya kembali ke C pada oktaf berikutnya. Jarak dari satu C ke C berikutnya disebut <b>octave</b>. Nada-nada tanpa tanda kres atau mol disebut <i>natural notes</i>.</p>
-        <p>Di antara beberapa nada natural terdapat nada berjarak satu <b>semitone</b> (setengah langkah) atau dua semitone yang disebut <b>whole tone</b> (satu langkah). Tanda <b>sharp (♯)</b> menaikkan nada satu semitone, sedangkan <b>flat (♭)</b> menurunkannya satu semitone. Contoh: C♯ berada satu semitone di atas C.</p>
-        <div class="l-keys" id="demoKeys" role="group" aria-label="Tuts C sampai B"></div><small class="l-hint">Tekan setiap tuts untuk mendengar rekaman nada piano akustik.</small>
-      </article>
-      <article class="l-topic"><span class="l-no">0.3 — EXPLORE</span><h3>Introduction to the Keyboard</h3>
-        <p>Keyboard tersusun dari pola tuts putih dan hitam yang berulang. Tuts hitam membentuk kelompok dua dan tiga. Temukan kelompok dua tuts hitam: tuts putih tepat di sebelah kirinya adalah <b>C</b>. Dari C, urutan nada berlanjut ke kanan.</p>
-        <div class="l-keyboard-map l-playable-piano" id="playableKeyboard" aria-label="Keyboard interaktif dua oktaf"></div>
-        <small class="l-hint">Tekan tuts putih maupun hitam untuk mendengar rekaman suara grand piano akustik. Pola dua dan tiga tuts hitam membantu menemukan posisi C.</small>
-        <p><b>Octave</b> adalah jarak antara dua nada dengan nama sama. Pada piano, pola 12 tuts (7 putih dan 5 hitam) berulang di setiap octave. Tuts hitam dapat memiliki dua nama, misalnya C♯ dan D♭, yang disebut <i>enharmonic equivalents</i>.</p>
-      </article>
-      <article class="l-topic l-topic-wide"><span class="l-no">0.4 — EXPLORE</span><h3>Meet the Guitar</h3>
-        <p>Gitar menghasilkan bunyi ketika senar dipetik atau digesek. Pada gitar standar enam senar, urutan tuning dari senar paling tebal ke paling tipis adalah <b>E – A – D – G – B – E</b>. Angka fret menunjukkan posisi jari pada leher gitar. Setiap naik satu fret, pitch naik satu semitone.</p>
-        <div class="l-guitar-wrap"><div class="l-guitar-board" id="guitarBoard" aria-label="Fretboard gitar akustik interaktif"></div></div><p class="l-audio-status" id="instrumentAudioStatus" aria-live="polite">Audio instrumen menggunakan sampel rekaman akustik. Klik instrumen untuk mulai memuat suara.</p>
-        <small class="l-hint">Tekan posisi senar atau fret untuk memetik rekaman suara gitar akustik. Baris paling atas adalah senar E rendah, baris paling bawah senar E tinggi.</small>
-        <p>Berbeda dari piano yang setiap tutsnya sudah memiliki posisi nada tetap, gitar menggunakan kombinasi <b>string</b> (senar) dan <b>fret</b>. Nada yang sama dapat ditemukan di beberapa posisi berbeda pada fretboard.</p>
-      </article>
-      <article class="l-topic"><span class="l-no">0.5 — READ</span><h3>Introduction to Musical Notation</h3>
-        <p>Notasi musik adalah sistem untuk menuliskan bunyi agar dapat dibaca dan dimainkan kembali. Not ditempatkan pada <b>staff</b> atau paranada yang terdiri dari lima garis dan empat spasi. Posisi not menunjukkan pitch, sedangkan bentuk not dan tanda lainnya memberi informasi durasi serta cara memainkan musik.</p>
-        <p>Bagian not antara lain <b>notehead</b> (kepala not), <b>stem</b> (tiang), dan <b>flag</b> (bendera). Not dapat berada tepat di garis atau di spasi. Jika nada berada di luar lima garis utama, digunakan <b>ledger line</b> atau garis bantu.</p>
-        <div class="l-staff-note"><span class="l-staff-symbol">𝄞</span><div class="l-staff-lines"><i></i><i></i><i></i><i></i><i></i><b></b></div></div>
-      </article>
-      <article class="l-topic l-topic-wide"><span class="l-no">0.5 — UNDERSTAND</span><h3>Treble Clef &amp; Bass Clef</h3>
-        <p><b>Clef</b> menentukan nama nada pada setiap garis dan spasi. <b>Treble clef (kunci G)</b> menandai garis kedua dari bawah sebagai G dan umumnya dipakai untuk wilayah nada menengah hingga tinggi. <b>Bass clef (kunci F)</b> menandai garis kedua dari atas sebagai F dan umum dipakai untuk wilayah nada rendah.</p>
-        <p>Pada piano, kedua clef sering digunakan bersama dalam <i>grand staff</i>: treble clef untuk tangan kanan dan bass clef untuk tangan kiri. <b>Middle C</b> menjadi penghubung keduanya dan ditulis menggunakan satu ledger line.</p>
-        <div class="l-demo"><div class="paper" id="demoTreble"></div><div class="paper" id="demoBass"></div></div>
-      </article>
-      <article class="l-topic"><span class="l-no">0.6 — COUNT</span><h3>Note Values &amp; Basic Duration</h3>
-        <p>Bentuk not menunjukkan berapa lama nada ditahan. Dalam birama dengan ketukan dasar quarter note, whole note bernilai empat ketuk, half note dua ketuk, quarter note satu ketuk, dan eighth note setengah ketuk. Nilai ini saling berhubungan: satu whole note sama dengan dua half note atau empat quarter note.</p>
-        <p><b>Rest</b> adalah simbol untuk diam selama durasi tertentu. Setiap nilai not memiliki pasangan rest. Saat membaca ritme, hitung juga bagian yang diam, bukan hanya nada yang dimainkan.</p>
-        <ul class="l-values"><li><b>Whole note</b><span>4 ketuk</span></li><li><b>Half note</b><span>2 ketuk</span></li><li><b>Quarter note</b><span>1 ketuk</span></li><li><b>Eighth note</b><span>½ ketuk</span></li></ul>
-      </article>
-      <article class="l-topic"><span class="l-no">0.7 — FEEL</span><h3>Basic Rhythm &amp; Counting</h3>
-        <p><b>Rhythm</b> adalah susunan bunyi dan jeda dalam waktu. Mulailah dengan menghitung <b>1–2–3–4</b> secara stabil. Setiap hitungan dapat diisi bunyi atau rest. Ketukan pertama sering menjadi <i>downbeat</i>, sementara ketukan di antaranya dapat terasa sebagai <i>upbeat</i>.</p>
-        <p><b>Time signature</b> ditulis seperti pecahan di awal lagu. Angka atas menunjukkan jumlah ketukan dalam satu bar, sedangkan angka bawah menunjukkan jenis not yang menjadi satuan ketukan. Contoh <b>4/4</b> berarti empat quarter-note beats dalam satu bar. <b>Tempo</b> diukur dalam BPM (beats per minute): semakin tinggi BPM, semakin cepat ketukannya.</p>
-        <div class="l-count-grid"><span>1</span><span>2</span><span>3</span><span>4</span><small>DOWNBEAT</small><small>BEAT</small><small>BEAT</small><small>BEAT</small></div>
-      </article>
-      <article class="l-topic"><span class="l-no">0.8 — RECOGNIZE</span><h3>Basic Pitch Recognition</h3>
-        <p><b>Pitch recognition</b> adalah kemampuan membedakan tinggi-rendah nada melalui pendengaran. Dengarkan dua nada: apakah nada kedua lebih tinggi, lebih rendah, atau sama? Pitch yang lebih tinggi memiliki frekuensi getaran lebih tinggi. Latihan ini membangun hubungan antara telinga, suara, dan posisi nada.</p>
-        <p>Selain mengenali satu nada, latih juga <b>interval</b>, yaitu jarak antara dua pitch. Mulai dengan membandingkan apakah dua nada sama, bergerak naik, atau bergerak turun. Setelah itu, coba dengarkan apakah jaraknya terasa dekat atau jauh.</p>
-        <div class="l-pitch-visual"><span>LOW</span><div class="l-pitch-line"><i></i><i></i><i></i><i></i><i></i></div><span>HIGH</span></div>
-      </article>
-      <article class="l-topic l-topic-feature"><span class="l-no">0.9 — INTEGRATE</span><h3>Musical Foundation Practice</h3>
-        <p>Gabungkan semua konsep: baca nama nada, temukan posisinya pada keyboard, pahami clef, hitung durasi, dan kenali pitch melalui pendengaran. Gunakan tiga jalur latihan di bawah untuk menguji kemampuan dari sudut yang berbeda.</p>
-        <div class="l-path-preview"><div><b>01 / READING</b><span>Membaca simbol dan notasi.</span></div><div><b>02 / LISTENING</b><span>Mengenali nada melalui telinga.</span></div><div><b>03 / SPEAKING</b><span>Menghasilkan nada melalui suara.</span></div></div>
-      </article>
+  <section class="l-materi" id="materi">
+    <div class="container">
+      <p class="eyebrow">THE FIRST NOTES</p>
+      <h2 class="l-h2">A language made <em>of sound.</em></h2>
+      <p class="l-section-lead">Materi disusun dari konsep yang paling mudah diamati menuju kemampuan mengenali dan menghasilkan bunyi. Setiap unit menggabungkan penjelasan, visual, contoh suara, dan penerapan lintas instrumen.</p>
+
+      <div class="l-learning-map" aria-label="Urutan pembelajaran Level 0">
+        <div><span>01</span><b>Understand</b><small>Sound &amp; music</small></div>
+        <i aria-hidden="true">→</i>
+        <div><span>02–03</span><b>Identify</b><small>Notes &amp; keyboard</small></div>
+        <i aria-hidden="true">→</i>
+        <div><span>04–07</span><b>Explore</b><small>Pitch &amp; instruments</small></div>
+        <i aria-hidden="true">→</i>
+        <div><span>08–09</span><b>Apply</b><small>Ear &amp; practice</small></div>
+      </div>
+
+      <div class="l-topics">
+        <article class="l-topic l-topic-feature" id="unit-01">
+          <span class="l-no">0.1 — UNDERSTAND</span>
+          <h3>Introduction to Music &amp; Sound</h3>
+          <p>Musik berlangsung di dalam waktu. Dalam pembelajaran dasar, musik dapat dipahami sebagai bunyi yang disusun sehingga membentuk pengalaman yang teratur dan bermakna. Bunyi dapat berasal dari suara manusia, instrumen, benda sehari-hari, maupun perangkat elektronik. Keheningan juga dapat menjadi bagian dari musik karena memberi ruang di antara bunyi.</p>
+          <p>Untuk mulai memahami musik, perhatikan beberapa unsur. <b>Pitch</b> adalah kesan tinggi atau rendahnya nada. <b>Duration</b> adalah lamanya bunyi berlangsung. <b>Dynamics</b> berkaitan dengan tingkat keras atau lembut. <b>Timbre</b> adalah warna atau karakter suara yang membuat dua sumber bunyi terdengar berbeda. <b>Tempo</b> adalah laju ketukan, sedangkan <b>rhythm</b> adalah susunan bunyi dan jeda dalam waktu.</p>
+          <p>Ketika beberapa nada disusun satu demi satu, kita dapat mendengar <b>melody</b> atau melodi. Ketika dua atau lebih nada terdengar bersamaan, kita mendengar hubungan <b>harmony</b> atau harmoni. Keduanya dapat muncul dalam satu karya musik, misalnya suara penyanyi sebagai melodi dan gitar sebagai pengiring harmoni.</p>
+          <div class="l-concept-row">
+            <div><span class="l-concept-mark">↗</span><b>Pitch</b><small>Tinggi–rendah</small></div>
+            <div><span class="l-concept-mark">◷</span><b>Duration</b><small>Lama bunyi</small></div>
+            <div><span class="l-concept-mark">♫</span><b>Melody</b><small>Nada berurutan</small></div>
+            <div><span class="l-concept-mark">♬</span><b>Harmony</b><small>Nada bersamaan</small></div>
+          </div>
+          <div class="l-visual-grid">
+            <figure class="l-visual-card">
+              <svg viewBox="0 0 420 150" role="img" aria-label="Ilustrasi gelombang dengan frekuensi berbeda">
+                <g stroke="currentColor" opacity=".18"><path d="M15 35H405M15 75H405M15 115H405"/></g>
+                <path d="M15 75 C35 20 55 20 75 75 S115 130 135 75 S175 20 195 75 S235 130 255 75 S295 20 315 75 S355 130 375 75 S395 20 405 75" fill="none" stroke="#B98778" stroke-width="3"/>
+                <path d="M15 75 C20 20 25 20 30 75 S40 130 45 75 S55 20 60 75 S70 130 75 75 S85 20 90 75 S100 130 105 75 S115 20 120 75 S130 130 135 75 S145 20 150 75 S160 130 165 75 S175 20 180 75 S190 130 195 75 S205 20 210 75 S220 130 225 75 S235 20 240 75 S250 130 255 75 S265 20 270 75 S280 130 285 75 S295 20 300 75 S310 130 315 75 S325 20 330 75 S340 130 345 75 S355 20 360 75 S370 130 375 75 S385 20 390 75 S400 130 405 75" fill="none" stroke="#D2B16F" stroke-width="2.5"/>
+              </svg>
+              <figcaption><b>Gelombang suara</b><span>Gelombang yang lebih rapat berkaitan dengan frekuensi lebih tinggi. Diagram ini bersifat skematis.</span></figcaption>
+            </figure>
+            <figure class="l-visual-card">
+              <svg viewBox="0 0 420 150" role="img" aria-label="Perbandingan melodi dan harmoni">
+                <g stroke="currentColor" opacity=".22"><path d="M20 32H400M20 52H400M20 72H400M20 92H400M20 112H400"/></g>
+                <g fill="#B98778"><circle cx="60" cy="92" r="7"/><circle cx="125" cy="72" r="7"/><circle cx="190" cy="52" r="7"/><circle cx="255" cy="72" r="7"/><circle cx="320" cy="32" r="7"/></g>
+                <g fill="#D2B16F"><rect x="55" y="120" width="14" height="14" rx="2"/><rect x="120" y="120" width="14" height="14" rx="2"/><rect x="185" y="120" width="14" height="14" rx="2"/><rect x="250" y="120" width="14" height="14" rx="2"/><rect x="315" y="120" width="14" height="14" rx="2"/></g>
+                <path d="M60 92L125 72L190 52L255 72L320 32" fill="none" stroke="#B98778" stroke-width="2"/>
+              </svg>
+              <figcaption><b>Melodi dan susunan nada</b><span>Melodi bergerak dari satu nada ke nada berikutnya; harmoni menyatukan nada pada saat yang sama.</span></figcaption>
+            </figure>
+          </div>
+          <div class="l-demo-strip">
+            <div><b>Dengarkan perbedaan sumber bunyi</b><small>Contoh singkat: piano, gitar, dan biola memainkan satu nada target yang sama.</small></div>
+            <button type="button" class="l-play" data-instrument-demo="piano" data-midi="60">▶ Piano</button>
+            <button type="button" class="l-play" data-instrument-demo="guitar" data-midi="60">▶ Gitar</button>
+            <button type="button" class="l-play" data-instrument-demo="violin" data-midi="60">▶ Biola</button>
+          </div>
+          <p class="l-hint">Fokus mendengarkan: meskipun tinggi nadanya sama, karakter suara tiap instrumen dapat berbeda. Perbedaan karakter inilah yang disebut timbre.</p>
+        </article>
+
+        <article class="l-topic" id="unit-02">
+          <span class="l-no">0.2 — IDENTIFY</span>
+          <h3>The Musical Alphabet</h3>
+          <p>Dalam sistem penamaan nada yang digunakan pada materi ini, terdapat tujuh nama nada dasar: <b>C, D, E, F, G, A, dan B</b>. Urutannya terus berulang. Setelah B, nama berikutnya kembali ke C, tetapi berada pada wilayah nada yang lebih tinggi. Tujuh nama ini disebut <i>musical alphabet</i>.</p>
+          <p>Nada tanpa tanda tambahan seperti sharp atau flat disebut <b>natural notes</b>. Pada keyboard, nama-nama natural tersebut berada pada tuts putih. Tuts hitam dapat mewakili nada yang memiliki nama dengan tanda sharp (♯) atau flat (♭). Contohnya, tuts di antara C dan D dapat disebut C-sharp (C♯) atau D-flat (D♭). Pembahasan rinci tentang jarak nada dan penamaan enharmonic akan dikembangkan pada level berikutnya.</p>
+          <div class="l-alphabet" aria-label="Urutan alfabet musik">
+            <span>C</span><i>→</i><span>D</span><i>→</i><span>E</span><i>→</i><span>F</span><i>→</i><span>G</span><i>→</i><span>A</span><i>→</i><span>B</span><i>→</i><span class="l-loop">C</span>
+          </div>
+          <div class="l-mini-practice">
+            <div><b>Explore the natural notes</b><small>Tekan nama nada untuk mendengar contoh bunyinya. Coba sebutkan urutannya sebelum menekan tombol berikutnya.</small></div>
+            <div class="l-natural-keys" id="demoKeys" role="group" aria-label="Tombol nada natural C sampai B"></div>
+          </div>
+          <p class="l-hint">Ingat: nama nada berulang, tetapi tinggi bunyinya berubah ketika berpindah ke octave berikutnya.</p>
+        </article>
+
+        <article class="l-topic l-topic-wide" id="unit-03">
+          <span class="l-no">0.3 — EXPLORE</span>
+          <h3>Introduction to the Keyboard</h3>
+          <p>Keyboard piano memiliki pola tuts putih dan hitam yang berulang dari kiri ke kanan. Tuts putih mewakili tujuh natural notes. Tuts hitam tersusun dalam kelompok dua dan tiga. Pola ini menjadi petunjuk visual untuk menemukan nama nada, bahkan ketika pengguna belum menghafal seluruh keyboard.</p>
+          <p>Perhatikan kelompok dua tuts hitam. Tuts putih yang berada tepat di sebelah kiri kelompok tersebut adalah <b>C</b>. Tuts putih di antara dua tuts hitam adalah D, dan tuts putih di sebelah kanannya adalah E. Kelompok tiga tuts hitam membantu menemukan F, G, A, dan B. Nada bergerak semakin tinggi ketika kita bergerak ke kanan, dan semakin rendah ketika bergerak ke kiri.</p>
+          <div class="l-keyboard-map l-playable-piano" id="playableKeyboard" role="group" aria-label="Keyboard virtual dua octave C4 sampai B5"></div>
+          <div class="l-key-explain">
+            <div><span class="l-key-swatch white"></span><b>White keys</b><small>C · D · E · F · G · A · B</small></div>
+            <div><span class="l-key-swatch black"></span><b>Black keys</b><small>Nama sharp atau flat</small></div>
+            <div><span class="l-key-swatch gold"></span><b>Octave pattern</b><small>12 tuts per pengulangan</small></div>
+          </div>
+          <p class="l-hint">Coba temukan semua tuts C pada keyboard. Pola dua dan tiga tuts hitam akan tetap sama di setiap octave.</p>
+        </article>
+
+        <article class="l-topic" id="unit-04">
+          <span class="l-no">0.4 — UNDERSTAND</span>
+          <h3>Pitch, Frequency &amp; Octaves</h3>
+          <p><b>Pitch</b> adalah persepsi kita terhadap tinggi atau rendahnya bunyi bernada. Pitch berkaitan dengan frekuensi getaran, yang diukur dalam hertz (Hz). Secara umum, frekuensi yang lebih tinggi terdengar sebagai pitch yang lebih tinggi, sedangkan frekuensi yang lebih rendah terdengar lebih rendah. Pitch bukan hal yang sama dengan volume: bunyi dapat keras tetapi bernada rendah, atau lembut tetapi bernada tinggi.</p>
+          <p><b>Octave</b> adalah hubungan antara dua nada yang memiliki nama huruf sama pada register berbeda, misalnya C4 dan C5. Dalam sistem temperamen sama, frekuensi nada yang berjarak satu octave memiliki rasio 2:1. Artinya, jika satu nada memiliki frekuensi 261,6 Hz, nada satu octave di atasnya memiliki frekuensi sekitar 523,3 Hz.</p>
+          <div class="l-visual-grid">
+            <figure class="l-visual-card">
+              <svg viewBox="0 0 420 150" role="img" aria-label="Perbandingan gelombang pitch rendah dan tinggi">
+                <path d="M20 40H400M20 112H400" stroke="currentColor" opacity=".2"/>
+                <path d="M20 40 C45 5 70 5 95 40 S145 75 170 40 S220 5 245 40 S295 75 320 40 S370 5 395 40" fill="none" stroke="#B98778" stroke-width="3"/>
+                <path d="M20 112 C30 80 40 80 50 112 S70 144 80 112 S100 80 110 112 S130 144 140 112 S160 80 170 112 S190 144 200 112 S220 80 230 112 S250 144 260 112 S280 80 290 112 S310 144 320 112 S340 80 350 112 S370 144 380 112 S390 80 400 112" fill="none" stroke="#D2B16F" stroke-width="3"/>
+                <g fill="currentColor" font-size="11"><text x="20" y="18">FREKUENSI LEBIH RENDAH</text><text x="20" y="90">FREKUENSI LEBIH TINGGI</text></g>
+              </svg>
+              <figcaption><b>Frekuensi dan pitch</b><span>Ilustrasi skematis: lebih banyak siklus dalam rentang waktu yang sama berarti frekuensi lebih tinggi.</span></figcaption>
+            </figure>
+            <figure class="l-visual-card">
+              <svg viewBox="0 0 420 150" role="img" aria-label="Hubungan C4 dan C5 satu octave">
+                <g fill="#1C2B4D"><rect x="55" y="42" width="90" height="66" rx="5"/><rect x="275" y="42" width="90" height="66" rx="5"/></g>
+                <g fill="#F7F3EA" font-family="Georgia,serif" text-anchor="middle"><text x="100" y="83" font-size="27">C4</text><text x="320" y="83" font-size="27">C5</text></g>
+                <path d="M155 75H265M255 66L265 75L255 84" stroke="#B98778" stroke-width="3" fill="none"/>
+                <text x="210" y="55" text-anchor="middle" fill="currentColor" font-size="12">1 OCTAVE</text>
+              </svg>
+              <figcaption><b>Nama sama, register berbeda</b><span>C4 dan C5 sama-sama bernama C, tetapi C5 terdengar satu octave lebih tinggi.</span></figcaption>
+            </figure>
+          </div>
+          <div class="l-demo-strip">
+            <div><b>Bandingkan satu octave</b><small>Dengarkan C4, kemudian C5. Perhatikan bahwa nama nadanya sama, tetapi register-nya berbeda.</small></div>
+            <button type="button" class="l-play" data-instrument-demo="piano" data-midi="60">▶ C4</button>
+            <button type="button" class="l-play" data-instrument-demo="piano" data-midi="72">▶ C5</button>
+          </div>
+        </article>
+
+        <article class="l-topic" id="unit-05">
+          <span class="l-no">0.5 — DISCOVER</span>
+          <h3>Musical Instrument Families</h3>
+          <p>Musik tidak hanya dimainkan dengan piano. Instrumen dapat dikelompokkan berdasarkan cara bunyinya dihasilkan. Pengelompokan ini membantu kita memahami mengapa instrumen memiliki karakter suara dan teknik produksi bunyi yang berbeda.</p>
+          <p><b>String instruments</b> menghasilkan bunyi dari getaran senar, misalnya gitar, biola, cello, dan bass. Senar dapat dipetik, digesek, atau dipukul. <b>Wind instruments</b> menghasilkan bunyi melalui getaran udara di dalam instrumen, misalnya flute, saxophone, trumpet, dan clarinet. <b>Percussion instruments</b> menghasilkan bunyi melalui pukulan, goyangan, atau gesekan, misalnya drum, cymbal, dan tambourine. <b>Keyboard instruments</b> mencakup instrumen dengan tuts seperti piano dan organ. Suara manusia juga merupakan sumber musikal yang penting.</p>
+          <div class="l-family-grid">
+            <div class="l-family-card"><div class="l-family-icon">♬</div><b>Strings</b><small>Senar bergetar</small><span>Gitar · Biola · Bass</span></div>
+            <div class="l-family-card"><div class="l-family-icon">◖</div><b>Winds</b><small>Kolom udara bergetar</small><span>Flute · Saxophone · Trumpet</span></div>
+            <div class="l-family-card"><div class="l-family-icon">◉</div><b>Percussion</b><small>Permukaan/benda bergetar</small><span>Drum · Cymbal · Tambourine</span></div>
+            <div class="l-family-card"><div class="l-family-icon">▥</div><b>Keyboard</b><small>Tuts mengendalikan bunyi</small><span>Piano · Organ · Digital keys</span></div>
+            <div class="l-family-card"><div class="l-family-icon">◎</div><b>Voice</b><small>Pita suara bergetar</small><span>Singing · Humming · Vocal</span></div>
+          </div>
+          <p class="l-hint">Pengelompokan instrumen dapat memiliki variasi menurut tradisi musik dan konteks. Di sini, kelompok digunakan sebagai pengantar cara produksi bunyi.</p>
+        </article>
+
+        <article class="l-topic l-topic-wide" id="unit-06">
+          <span class="l-no">0.6 — EXPLORE</span>
+          <h3>How Instruments Produce Sound</h3>
+          <p>Setiap instrumen membutuhkan sumber getaran. Pada gitar, senar bergetar setelah dipetik dan getarannya diperkuat oleh badan gitar. Pada biola, gesekan bow mempertahankan getaran senar. Pada drum, membran atau permukaan instrumen bergetar setelah dipukul. Pada piano, palu kecil memukul senar ketika tuts ditekan. Pada suara manusia, aliran udara dari paru-paru membuat pita suara bergetar.</p>
+          <p>Perbedaan sumber getaran, bentuk instrumen, bahan, dan cara memainkan menghasilkan <b>timbre</b> yang berbeda. Itulah sebabnya nada dengan pitch sama tetap dapat dikenali sebagai suara piano, gitar, biola, atau suara manusia.</p>
+          <div class="l-production-flow" aria-label="Alur sederhana produksi bunyi">
+            <div><b>ENERGY</b><small>Tekan · Petik · Tiup · Pukul · Gesek</small></div><i>→</i>
+            <div><b>VIBRATION</b><small>Bagian instrumen bergetar</small></div><i>→</i>
+            <div><b>SOUND</b><small>Gelombang merambat melalui udara</small></div><i>→</i>
+            <div><b>HEARING</b><small>Telinga menerima bunyi</small></div>
+          </div>
+          <div class="l-demo-strip l-demo-wrap">
+            <div><b>Bandingkan timbre</b><small>Tekan instrumen untuk mendengar nada MIDI yang sama. Sampel instrumen dimuat saat dibutuhkan; koneksi internet diperlukan untuk memuat SoundFont.</small></div>
+            <button type="button" class="l-play" data-instrument-demo="piano" data-midi="64">▶ Piano</button>
+            <button type="button" class="l-play" data-instrument-demo="guitar" data-midi="64">▶ Gitar</button>
+            <button type="button" class="l-play" data-instrument-demo="violin" data-midi="64">▶ Biola</button>
+            <button type="button" class="l-play" data-instrument-demo="drum" data-drum="snare">▶ Snare</button>
+          </div>
+        </article>
+
+        <article class="l-topic" id="unit-07">
+          <span class="l-no">0.7 — CONNECT</span>
+          <h3>Melody, Harmony &amp; Musical Texture</h3>
+          <p><b>Melody</b> adalah rangkaian pitch yang terdengar secara berurutan dan membentuk gagasan musikal. Melodi dapat bergerak naik, turun, atau mengulang nada yang sama. Melodi sering menjadi bagian yang paling mudah dinyanyikan atau diingat, tetapi tidak semua musik harus memiliki melodi yang menonjol.</p>
+          <p><b>Harmony</b> berkaitan dengan nada-nada yang terdengar bersamaan dan hubungan di antara nada tersebut. Pada lagu, penyanyi dapat membawakan melodi sementara gitar atau piano memainkan beberapa nada sebagai pengiring. <b>Texture</b> menjelaskan bagaimana lapisan-lapisan musik disusun: satu garis suara, melodi dengan iringan, atau beberapa garis melodi yang bergerak bersama.</p>
+          <div class="l-texture-visual">
+            <div><span class="l-texture-label">MELODY</span><svg viewBox="0 0 300 80" role="img" aria-label="Melodi berupa nada berurutan"><path d="M12 60L72 44L132 24L192 43L252 14" fill="none" stroke="#B98778" stroke-width="3"/><g fill="#B98778"><circle cx="12" cy="60" r="5"/><circle cx="72" cy="44" r="5"/><circle cx="132" cy="24" r="5"/><circle cx="192" cy="43" r="5"/><circle cx="252" cy="14" r="5"/></g></svg><small>Satu nada setelah nada lainnya</small></div>
+            <div><span class="l-texture-label">HARMONY</span><svg viewBox="0 0 300 80" role="img" aria-label="Harmoni berupa beberapa nada bersamaan"><g fill="#D2B16F"><rect x="28" y="18" width="42" height="44" rx="4"/><rect x="112" y="18" width="42" height="44" rx="4"/><rect x="196" y="18" width="42" height="44" rx="4"/></g><g fill="#1C2B4D"><path d="M36 30h26M36 42h26M120 30h26M120 42h26M204 30h26M204 42h26"/></g></svg><small>Beberapa nada terdengar bersamaan</small></div>
+          </div>
+          <p class="l-hint">Level 0 memperkenalkan perbedaan mendengar melodi dan harmoni. Pembentukan chord dan progresi harmoni dipelajari lebih lanjut pada Level 3.</p>
+        </article>
+
+        <article class="l-topic" id="unit-08">
+          <span class="l-no">0.8 — LISTEN</span>
+          <h3>Basic Pitch Recognition</h3>
+          <p><b>Pitch recognition</b> adalah kemampuan mendengar dan membedakan tinggi-rendah nada. Mulailah dengan tiga pertanyaan: apakah nada kedua lebih tinggi, lebih rendah, atau sama dengan nada pertama? Latihan ini tidak meminta kamu langsung menebak nama nada. Fokus awalnya adalah menangkap arah dan perbedaan bunyi.</p>
+          <p>Ketika mendengarkan, hindari menilai pitch hanya dari keras atau pelannya suara. Volume berkaitan dengan amplitudo, sedangkan pitch berkaitan dengan frekuensi dan persepsi tinggi-rendah. Dengarkan dengan volume nyaman dan ulangi contoh jika diperlukan.</p>
+          <div class="l-pitch-scale" aria-label="Skala visual pitch rendah ke tinggi">
+            <span>LOW</span><div><i style="height:18%"></i><i style="height:30%"></i><i style="height:44%"></i><i style="height:58%"></i><i style="height:74%"></i><i style="height:92%"></i></div><span>HIGH</span>
+          </div>
+          <div class="l-callout"><b>Catatan latihan:</b> kemampuan mengenali nama nada secara absolut tidak menjadi syarat Level 0. Yang utama adalah mampu membedakan perubahan pitch dan mencocokkan nada acuan secara bertahap.</div>
+        </article>
+
+        <article class="l-topic l-topic-feature" id="unit-09">
+          <span class="l-no">0.9 — INTEGRATE</span>
+          <h3>Musical Foundation Practice</h3>
+          <p>Di unit terakhir, hubungkan semua konsep yang sudah dipelajari. Kenali nama nada, temukan posisinya pada keyboard, bandingkan pitch, dengarkan warna suara instrumen, dan coba hasilkan nada yang sama melalui humming. Kemampuan musikal tumbuh ketika pengetahuan, pendengaran, dan tindakan saling terhubung.</p>
+          <div class="l-path-preview">
+            <div><b>01 / READING</b><span>Memahami konsep, simbol dasar, dan nama nada.</span></div>
+            <div><b>02 / LISTENING</b><span>Mengenali perbedaan pitch dan timbre melalui audio.</span></div>
+            <div><b>03 / SPEAKING</b><span>Mencocokkan nada acuan melalui humming.</span></div>
+          </div>
+          <div class="l-next-level"><span>NEXT STEP</span><b>Level 1 — Notation &amp; Rhythm</b><small>Di level berikutnya, kamu akan mempelajari staff, clef, bentuk not, rest, beat, meter, dan pembacaan ritme dengan lebih terstruktur.</small></div>
+        </article>
+      </div>
+
+      <div class="l-outcomes">
+        <p class="l-no">LEVEL 0 LEARNING OUTCOMES</p>
+        <h3>By the end of this level, you can…</h3>
+        <ul>
+          <li>Menjelaskan unsur dasar musik seperti pitch, duration, dynamics, timbre, tempo, melody, dan harmony.</li>
+          <li>Menyebutkan tujuh nama nada natural secara berurutan.</li>
+          <li>Menemukan pola kelompok dua dan tiga tuts hitam serta mengenali posisi C pada keyboard.</li>
+          <li>Memahami hubungan dasar pitch, frekuensi, dan octave.</li>
+          <li>Mengenali keluarga instrumen dan cara umum bunyi dihasilkan.</li>
+          <li>Membedakan melodi dan harmoni secara sederhana.</li>
+          <li>Mengenali apakah nada kedua lebih tinggi, lebih rendah, atau sama.</li>
+          <li>Mencoba mencocokkan pitch acuan melalui humming.</li>
+        </ul>
+      </div>
+      <section class="l-references" aria-labelledby="level0-sources-title">
+        <p class="l-no">LEARNING REFERENCES</p>
+        <h3 id="level0-sources-title">Explore the sources.</h3>
+        <p>Materi fondasi ini disusun ulang dengan bahasa pembelajaran mandiri. Diagram pada halaman merupakan ilustrasi SVG orisinal; tautan berikut digunakan sebagai rujukan konsep dan bacaan lanjutan.</p>
+        <ul>
+          <li><a href="https://alg.manifoldapp.org/read/understanding-music-past-and-present/section/f3cceec7-fb3a-4c1a-8653-d7150a01739d/resource/7d48bdff-ccc2-47ca-8f1e-f672185e2907" target="_blank" rel="noopener">Understanding Music: Past and Present — Music Fundamentals</a></li>
+          <li><a href="https://www.yamaha.com/en/musical_instrument_guide/piano/play/" target="_blank" rel="noopener">Yamaha Musical Instrument Guide — Piano: Playing Notes</a></li>
+          <li><a href="https://openbooks.library.baylor.edu/pianobasics/chapter/orientation-to-the-keyboard/" target="_blank" rel="noopener">Baylor Piano Basics — Orientation to the Keyboard</a></li>
+          <li><a href="https://www.nidcd.nih.gov/health/how-do-we-hear" target="_blank" rel="noopener">NIH / NIDCD — How Do We Hear?</a></li>
+          <li><a href="https://musictheory.pugetsound.edu/mt21c/" target="_blank" rel="noopener">University of Puget Sound — Music Theory for the 21st-Century Classroom</a></li>
+        </ul>
+      </section>
     </div>
-    <div class="l-outcomes"><p class="l-no">BY THE END OF LEVEL 0</p><h3>You will be able to…</h3><ul><li>Mengenali tujuh nama nada, octave, semitone, sharp, dan flat.</li><li>Menemukan nada pada keyboard dan fretboard gitar.</li><li>Membaca nada dasar pada treble dan bass clef.</li><li>Memahami nilai not, rest, time signature, dan tempo dasar.</li><li>Membedakan pitch tinggi-rendah melalui pendengaran.</li></ul></div>
-  </div></section>
+  </section>
   <div class="h-fade h-fade-to-dark" aria-hidden="true"></div>
 
-  <section class="l-lab" id="latihan"><div class="container">
-    <p class="eyebrow">PRACTICE STUDIO · LEVEL 0</p><h2 class="l-h2">Learn it. Hear it. <em>Make it.</em></h2>
-    <p class="l-lab-lead">Pilih jalur latihan. Setiap sesi menghasilkan soal baru untuk membantumu membangun fondasi secara bertahap.</p>
-    <div class="l-tabs" role="tablist" aria-label="Pilih jalur latihan">
-      <button role="tab" data-mode="reading" aria-selected="true">Reading</button>
-      <button role="tab" data-mode="listening" aria-selected="false">Listening</button>
-      <button role="tab" data-mode="speaking" aria-selected="false">Speaking</button>
+  <!-- Interactive instruments: actual playable components, not decorative pictures. -->
+  <section class="h-instruments tsx" id="instruments" aria-label="Studio instrumen virtual Level 0">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">INTERACTIVE INSTRUMENT STUDIO</p>
+        <h2>Play the sound.<br><em>Explore the source.</em></h2>
+        <p class="sub">Coba bagaimana setiap instrumen menghasilkan bunyi. Semua kontrol dapat digunakan dengan mouse atau layar sentuh. Piano, gitar, dan biola menggunakan sampel SoundFont ketika tersedia; drum memakai sintesis perkusi dan diberi label dengan jelas.</p>
+      </div>
+      <div class="tsx-tabs" role="tablist" aria-label="Pilih instrumen virtual">
+        <button class="tsx-tab active" role="tab" aria-selected="true" data-tab="piano" type="button">Piano</button>
+        <button class="tsx-tab" role="tab" aria-selected="false" data-tab="guitar" type="button">Gitar</button>
+        <button class="tsx-tab" role="tab" aria-selected="false" data-tab="violin" type="button">Biola</button>
+        <button class="tsx-tab" role="tab" aria-selected="false" data-tab="drum" type="button">Drum</button>
+        <button class="tsx-tab" role="tab" aria-selected="false" data-tab="mic" type="button">Mikrofon</button>
+      </div>
+      <div class="tsx-bar">
+        <label for="tsxVol">Volume</label>
+        <input type="range" id="tsxVol" min="0" max="1" step="0.05" value="0.8">
+        <button type="button" class="tsx-btn" id="tsxStop">Hentikan suara</button>
+        <span class="tsx-status" id="tsxStatus" aria-live="polite">Audio belum dimulai. Pilih instrumen untuk memuat sampel.</span>
+      </div>
+      <div class="tsx-panel active" id="tsx-piano" role="tabpanel">
+        <div class="tsx-card">
+          <div class="tsx-top"><b>Acoustic grand piano</b><span class="tsx-read" id="pnNote">—</span></div>
+          <div class="tsx-piano" id="tsxPiano" role="group" aria-label="Keyboard piano dua octave, C3 sampai B4"></div>
+          <div class="tsx-row" id="pnChords"></div>
+        </div>
+        <p class="tsx-hint">Klik atau sentuh tuts. Kamu dapat menekan beberapa nada untuk mendengar bunyi bersamaan. Shortcut keyboard: A S D F G H J untuk C4–B4, W E T Y U untuk tuts hitam.</p>
+      </div>
+      <div class="tsx-panel" id="tsx-guitar" role="tabpanel">
+        <div class="tsx-card">
+          <div class="tsx-top">
+            <div class="tsx-seg" role="group" aria-label="Pilih jenis gitar">
+              <button type="button" class="on" data-gmode="steel">Akustik</button>
+              <button type="button" data-gmode="clean">Listrik (clean)</button>
+            </div>
+            <span class="tsx-read" id="gtNote">—</span>
+          </div>
+          <div id="tsxGuitar"></div>
+          <div class="tsx-row" id="gtChords"></div>
+          <div class="tsx-row"><button type="button" class="tsx-btn" id="gtDown">Genjreng ↓</button><button type="button" class="tsx-btn" id="gtUp">Genjreng ↑</button></div>
+        </div>
+        <p class="tsx-hint">Klik senar untuk memetik, klik posisi fret untuk memilih nada, atau gunakan tombol genjreng. Pilih chord untuk melihat posisi jari pada diagram.</p>
+      </div>
+      <div class="tsx-panel" id="tsx-violin" role="tabpanel">
+        <div class="tsx-card">
+          <div class="tsx-top"><b>Violin · bowed strings</b><span class="tsx-read" id="vnNote">—</span></div>
+          <div id="tsxViolin" class="tsx-narrow"></div>
+        </div>
+        <p class="tsx-hint">Tahan dan geser pada area senar untuk memilih senar dan posisi nada. Lepaskan untuk menghentikan bunyi.</p>
+      </div>
+      <div class="tsx-panel" id="tsx-drum" role="tabpanel">
+        <div class="tsx-card">
+          <div class="tsx-top"><b>Drum kit demonstration</b><span class="tsx-read" id="drNote">—</span></div>
+          <div id="tsxDrum"></div>
+          <div class="tsx-row"><button type="button" class="tsx-btn" id="drPattern">Putar pola rock dasar</button></div>
+        </div>
+        <p class="tsx-hint">Tekan bagian drum atau gunakan shortcut Q/W/E/R/A/S/D/F. Suara drum pada versi ini adalah simulasi sintesis perkusi, bukan sampel drum akustik asli.</p>
+      </div>
+      <div class="tsx-panel" id="tsx-mic" role="tabpanel">
+        <div class="tsx-card">
+          <div class="tsx-top"><b>Microphone · live pitch input</b><span class="tsx-read" id="micNote">—</span></div>
+          <div class="tsx-micstage" id="micStage">
+            <svg class="tsx-micsvg" viewBox="0 0 160 190" role="img" aria-label="Ilustrasi mikrofon dengan gelombang suara">
+              <circle class="mic-ring r1" cx="80" cy="80" r="56"/><circle class="mic-ring r2" cx="80" cy="80" r="56"/><circle class="mic-ring r3" cx="80" cy="80" r="56"/>
+              <rect x="57" y="15" width="46" height="94" rx="23" fill="#D2B16F" stroke="#6E5130" stroke-width="3"/>
+              <path d="M45 76V87C45 111 61 127 80 127S115 111 115 87V76M80 127V157M58 158H102" fill="none" stroke="#D2B16F" stroke-width="7" stroke-linecap="round"/>
+              <path d="M67 34H93M67 47H93M67 60H93" stroke="#263F68" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+            <div class="tsx-badge rec">LIVE INPUT</div>
+            <div class="tsx-badge play">PITCH MONITOR</div>
+          </div>
+          <canvas id="micWave" width="720" height="130" aria-label="Visualisasi gelombang input mikrofon"></canvas>
+          <div class="tsx-meter" aria-hidden="true"><i id="micMeter"></i></div>
+          <div class="tsx-row">
+            <button type="button" class="tsx-btn" id="micOn">Aktifkan mikrofon</button>
+            <button type="button" class="tsx-btn" id="micRec" disabled>Rekam contoh lokal</button>
+            <button type="button" class="tsx-btn" id="micStop" disabled>Berhenti</button>
+            <button type="button" class="tsx-btn" id="micClear" disabled>Hapus rekaman</button>
+            <span class="tsx-lot" id="micLot" aria-hidden="true"></span>
+          </div>
+          <audio id="micPlay" controls hidden></audio>
+        </div>
+        <p class="tsx-hint">Pitch dianalisis langsung di browser menggunakan sinyal mikrofon, bukan speech-to-text. Akses mikrofon hanya dimulai setelah kamu menekan tombol dan menyetujui izin browser. Rekaman opsional hanya tersimpan sementara di memori halaman dan tidak diunggah.</p>
+      </div>
     </div>
-    <div class="l-panel" id="lab" aria-live="polite"></div>
-  </div></section>
+  </section>
+  <div class="h-fade h-fade-to-light" aria-hidden="true"></div>
+
+  <section class="l-lab" id="practice">
+    <div class="container">
+      <p class="eyebrow">PRACTICE STUDIO · LEVEL 0</p>
+      <h2 class="l-h2">Read it. Hear it. <em>Produce it.</em></h2>
+      <p class="l-lab-lead">Tiga jalur latihan menguji fondasi yang berbeda. Reading memeriksa pemahaman konsep, Listening memakai audio sungguhan, dan Speaking memakai pitch input dari mikrofon jika kamu mengizinkannya.</p>
+      <div class="l-tabs" role="tablist" aria-label="Pilih jalur latihan Level 0">
+        <button role="tab" data-mode="reading" aria-selected="true" type="button">Reading</button>
+        <button role="tab" data-mode="listening" aria-selected="false" type="button">Listening</button>
+        <button role="tab" data-mode="speaking" aria-selected="false" type="button">Speaking</button>
+      </div>
+      <div class="l-panel" id="lab" aria-live="polite"></div>
+      <div class="l-progress-summary" id="level0Progress" aria-live="polite"></div>
+    </div>
+  </section>
 </main>
 <div id="site-footer"></div>
-<script src="app.js"></script><script src="audio-engine.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script><script src="level0.js"></script>
-</body></html>
+
+<!-- app.js, style.css, home.css, theme.css, dan level.css berasal dari proyek TSW utama. -->
+<script src="app.js"></script>
+<script src="audio-engine.js"></script>
+<script src="instruments.js"></script>
+<script src="level0.js"></script>
+</body>
+</html>
