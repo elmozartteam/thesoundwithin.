@@ -27,9 +27,12 @@
     <div id="site-header"></div>
 
     <main>
-        <!-- HERO -->
+
+        <!-- ═══ HERO ═══ -->
         <section class="h-hero" id="home">
             <div class="container h-hero-grid">
+
+                <!-- Teks utama -->
                 <div class="h-hero-text">
                     <p class="eyebrow h-eyebrow">SELAMAT DATANG DI THE SOUND WITHIN</p>
                     <h1 class="h-title" aria-label="The Sound Within.">
@@ -45,46 +48,46 @@
                     <p class="h-kicker">RUANG UNTUK MUSIK DAN PEMAHAMAN</p>
                 </div>
 
-                <!-- Ornamen: cincin bunyi + paranada dengan arpeggio naik (E–G–B–D). Gambar asli, bukan ikon generik. -->
+                <!-- Ornamen SVG notasi -->
                 <svg class="h-ornament" viewBox="0 0 560 560" aria-hidden="true" focusable="false">
                     <g fill="none" stroke="#DCC795">
-                        <circle class="h-orn-ring" cx="360" cy="280" r="60"  pathLength="1" stroke-opacity=".55" />
-                        <circle class="h-orn-ring" cx="360" cy="280" r="110" pathLength="1" stroke-opacity=".40" />
-                        <circle class="h-orn-ring" cx="360" cy="280" r="160" pathLength="1" stroke-opacity=".28" />
-                        <circle class="h-orn-ring" cx="360" cy="280" r="215" pathLength="1" stroke-opacity=".18" />
-                        <circle class="h-orn-dash" cx="360" cy="280" r="188" stroke="#D79AA4" stroke-opacity=".55" stroke-dasharray="2 9" />
+                        <circle cx="360" cy="280" r="60"  stroke-opacity=".55" />
+                        <circle cx="360" cy="280" r="110" stroke-opacity=".40" />
+                        <circle cx="360" cy="280" r="160" stroke-opacity=".28" />
+                        <circle cx="360" cy="280" r="215" stroke-opacity=".18" />
+                        <circle cx="360" cy="280" r="188" stroke="#D79AA4" stroke-opacity=".55" stroke-dasharray="2 9" />
                     </g>
-                    <circle class="h-orn-ripple" cx="360" cy="280" r="8" fill="none" stroke="#D79AA4" stroke-width="1.2" opacity="0" />
-
-                    <path class="h-orn-line" pathLength="1" d="M10 220 H550" />
-                    <path class="h-orn-line" pathLength="1" d="M10 240 H550" />
-                    <path class="h-orn-line" pathLength="1" d="M10 260 H550" />
-                    <path class="h-orn-line" pathLength="1" d="M10 280 H550" />
-                    <path class="h-orn-line" pathLength="1" d="M10 300 H550" />
-                    <path class="h-orn-line" pathLength="1" d="M40 220 V300" style="stroke-width:1.6" />
-
-                    <g class="h-orn-note" fill="#DCC795" stroke="#DCC795">
-                        <ellipse cx="100" cy="300" rx="12" ry="8.5" transform="rotate(-20 100 300)" stroke="none" />
-                        <path d="M111 298 V238" fill="none" stroke-width="1.6" />
+                    <!-- Garis paranada -->
+                    <path d="M10 220 H550" stroke="rgba(210,199,149,.15)" stroke-width="1" fill="none"/>
+                    <path d="M10 240 H550" stroke="rgba(210,199,149,.15)" stroke-width="1" fill="none"/>
+                    <path d="M10 260 H550" stroke="rgba(210,199,149,.15)" stroke-width="1" fill="none"/>
+                    <path d="M10 280 H550" stroke="rgba(210,199,149,.15)" stroke-width="1" fill="none"/>
+                    <path d="M10 300 H550" stroke="rgba(210,199,149,.15)" stroke-width="1" fill="none"/>
+                    <!-- Garis kunci -->
+                    <path d="M40 220 V300" stroke="rgba(210,199,149,.2)" stroke-width="1.6" fill="none"/>
+                    <!-- Not-not arpeggio E–G–B–D -->
+                    <g fill="#DCC795">
+                        <ellipse cx="100" cy="300" rx="12" ry="8.5" transform="rotate(-20 100 300)"/>
+                        <path d="M111 298 V238" stroke="#DCC795" stroke-width="1.6" fill="none"/>
                     </g>
-                    <g class="h-orn-note" fill="#DCC795" stroke="#DCC795">
-                        <ellipse cx="165" cy="280" rx="12" ry="8.5" transform="rotate(-20 165 280)" stroke="none" />
-                        <path d="M176 278 V218" fill="none" stroke-width="1.6" />
+                    <g fill="#DCC795">
+                        <ellipse cx="165" cy="280" rx="12" ry="8.5" transform="rotate(-20 165 280)"/>
+                        <path d="M176 278 V218" stroke="#DCC795" stroke-width="1.6" fill="none"/>
                     </g>
-                    <g class="h-orn-note" fill="#DCC795" stroke="#DCC795">
-                        <ellipse cx="230" cy="260" rx="12" ry="8.5" transform="rotate(-20 230 260)" stroke="none" />
-                        <path d="M219 262 V322" fill="none" stroke-width="1.6" />
+                    <g fill="#DCC795">
+                        <ellipse cx="230" cy="260" rx="12" ry="8.5" transform="rotate(-20 230 260)"/>
+                        <path d="M219 262 V322" stroke="#DCC795" stroke-width="1.6" fill="none"/>
                     </g>
-                    <g class="h-orn-note" fill="#D79AA4" stroke="#D79AA4">
-                        <ellipse cx="295" cy="240" rx="12" ry="8.5" transform="rotate(-20 295 240)" stroke="none" />
-                        <path d="M284 242 V302" fill="none" stroke-width="1.6" />
+                    <g fill="#D79AA4">
+                        <ellipse cx="295" cy="240" rx="12" ry="8.5" transform="rotate(-20 295 240)"/>
+                        <path d="M284 242 V302" stroke="#D79AA4" stroke-width="1.6" fill="none"/>
                     </g>
-
-                    <circle class="h-orn-dot" cx="360" cy="280" r="5" fill="#D79AA4" />
+                    <circle cx="360" cy="280" r="5" fill="#D79AA4"/>
                 </svg>
 
+                <!-- Piano mini interaktif -->
                 <div class="h-instrument">
-                    <div class="h-keys" role="group" aria-label="Piano mini, tekan tuts untuk mendengar nada">
+                    <div class="h-keys" id="heroPiano" role="group" aria-label="Piano mini, tekan tuts untuk mendengar nada">
                         <button class="h-key-w" type="button" data-note="C4" data-freq="261.63" aria-label="Nada C"><span>C</span></button>
                         <button class="h-key-w" type="button" data-note="D4" data-freq="293.66" aria-label="Nada D"><span>D</span></button>
                         <button class="h-key-w" type="button" data-note="E4" data-freq="329.63" aria-label="Nada E"><span>E</span></button>
@@ -93,7 +96,6 @@
                         <button class="h-key-w" type="button" data-note="A4" data-freq="440.00" aria-label="Nada A"><span>A</span></button>
                         <button class="h-key-w" type="button" data-note="B4" data-freq="493.88" aria-label="Nada B"><span>B</span></button>
                         <button class="h-key-w" type="button" data-note="C5" data-freq="523.25" aria-label="Nada C oktaf atas"><span>C</span></button>
-
                         <button class="h-key-b" type="button" style="--i:1" data-note="C#4" data-freq="277.18" aria-label="Nada C kres"></button>
                         <button class="h-key-b" type="button" style="--i:2" data-note="D#4" data-freq="311.13" aria-label="Nada D kres"></button>
                         <button class="h-key-b" type="button" style="--i:4" data-note="F#4" data-freq="369.99" aria-label="Nada F kres"></button>
@@ -102,27 +104,264 @@
                     </div>
                     <div class="h-inst-foot">
                         <span>DENGAR · PAHAMI · MAINKAN</span>
-                        <span class="h-now" id="noteReadout" aria-live="polite">Tekan tuts untuk mencoba</span>
+                        <span id="noteReadout" aria-live="polite">Tekan tuts untuk mencoba</span>
                     </div>
                 </div>
+
             </div>
         </section>
 
-        <!-- ALUR BELAJAR -->
+        <!-- ═══ ALUR BELAJAR ═══ -->
         <section class="h-ritual" aria-label="Alur belajar">
             <div class="container">
+                <p class="eyebrow">CARA BELAJAR DI TSW</p>
+                <h2 class="h-ritual-title">Empat langkah sederhana.</h2>
                 <ol class="h-steps">
-                    <li><span class="h-step-no">01</span><strong>Dengar.</strong><p>Latih telinga mengenali progresi chord lewat Listening.</p></li>
-                    <li><span class="h-step-no">02</span><strong>Pahami.</strong><p>Baca teori, notasi, dan family chord lewat Reading.</p></li>
-                    <li><span class="h-step-no">03</span><strong>Mainkan.</strong><p>Kenali nada dasar lewat humming di Speaking.</p></li>
-                    <li><span class="h-step-no">04</span><strong>Ulangi.</strong><p>Soal selalu baru, jadi latihan tidak pernah habis.</p></li>
+                    <li>
+                        <span class="h-step-no">01</span>
+                        <strong>Dengar.</strong>
+                        <p>Latih telinga mengenali progresi chord lewat latihan Listening yang selalu berubah.</p>
+                    </li>
+                    <li>
+                        <span class="h-step-no">02</span>
+                        <strong>Pahami.</strong>
+                        <p>Baca teori, notasi, dan family chord lewat materi Reading yang terstruktur.</p>
+                    </li>
+                    <li>
+                        <span class="h-step-no">03</span>
+                        <strong>Mainkan.</strong>
+                        <p>Kenali nada dasar lewat humming dan latihan vokal di Speaking.</p>
+                    </li>
+                    <li>
+                        <span class="h-step-no">04</span>
+                        <strong>Ulangi.</strong>
+                        <p>Soal selalu baru, latihan tidak pernah habis. Musik butuh konsistensi.</p>
+                    </li>
                 </ol>
             </div>
         </section>
 
         <div class="h-fade h-fade-to-light" aria-hidden="true"></div>
 
-        <!-- PILIH LEVEL -->
+        <!-- ═══ INSTRUMEN SECTION ═══ -->
+        <section class="h-instruments" id="instruments" aria-label="Coba instrumen virtual">
+            <div class="container">
+                <div class="section-head">
+                    <p class="eyebrow">INSTRUMEN VIRTUAL</p>
+                    <h2>Dengar langsung.<br><em>Rasakan nadanya.</em></h2>
+                    <p class="sub">Klik, sentuh, atau tekan keyboard untuk membunyikan instrumen. Setiap instrumen menghasilkan suara berbeda agar kamu bisa merasakan karakter masing-masing.</p>
+                </div>
+
+                <!-- Tab selector -->
+                <div class="inst-tabs" role="tablist" aria-label="Pilih instrumen">
+                    <button class="inst-tab active" role="tab" aria-selected="true" aria-controls="panel-piano" data-tab="piano">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 3H4C2.9 3 2 3.9 2 5v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H4V5h16v14zm-9-2h2V7h-2v10zM7 17h2V7H7v10z"/></svg>
+                        Piano
+                    </button>
+                    <button class="inst-tab" role="tab" aria-selected="false" aria-controls="panel-guitar" data-tab="guitar">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11 2.07V13c-.5.2-.9.6-1.1 1.1L7.6 13.8C7.2 13.3 6.5 13 5.8 13 4.3 13 3 14.3 3 15.8s1.3 2.8 2.8 2.8c1.1 0 2.1-.7 2.5-1.6l2.3.3c.3 1.1 1.3 2 2.4 2 1.4 0 2.5-1.1 2.5-2.5 0-.4-.1-.8-.3-1.1L17 14v-1.5h2V11h-2V9h2V7h-2V5h2V3h-4v-.93L11 2.07z"/></svg>
+                        Gitar
+                    </button>
+                    <button class="inst-tab" role="tab" aria-selected="false" aria-controls="panel-drum" data-tab="drum">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 4.24 2 7v10c0 2.76 4.48 5 10 5s10-2.24 10-5V7c0-2.76-4.48-5-10-5zm0 2c4.42 0 8 1.57 8 3.5S16.42 11 12 11 4 9.43 4 7.5 7.58 4 12 4zm0 16c-4.42 0-8-1.57-8-3.5V15c1.74 1.57 4.69 2.5 8 2.5s6.26-.93 8-2.5v1.5c0 1.93-3.58 3.5-8 3.5z"/></svg>
+                        Drum
+                    </button>
+                    <button class="inst-tab" role="tab" aria-selected="false" aria-controls="panel-violin" data-tab="violin">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.71 3.29l-4-4-14 14a1 1 0 000 1.41l3.59 3.59a1 1 0 001.41 0l13-13a1 1 0 00.29-.71 1 1 0 00-.29-.7zM9.59 16L8 14.41l9.59-9.58L19 6.41z"/></svg>
+                        Biola
+                    </button>
+                </div>
+
+                <!-- ── PANEL PIANO ── -->
+                <div class="inst-panel active" id="panel-piano" role="tabpanel" aria-labelledby="tab-piano">
+                    <div class="inst-layout">
+                        <div>
+                            <div class="piano-wrap">
+                                <div class="piano-label">
+                                    <span class="p-name">🎹 Piano Virtual</span>
+                                    <span class="p-note-display" id="pianoNoteDisplay">—</span>
+                                </div>
+                                <!-- Keyboard dua oktaf (C3–B4, 14 tuts putih) -->
+                                <div class="piano-keys-full" id="pianoFull" role="group" aria-label="Keyboard piano virtual, dua oktaf"></div>
+                                <div class="piano-ctrl">
+                                    <div style="display:flex;align-items:center;gap:10px;">
+                                        <label for="pianoVol">Volume</label>
+                                        <input type="range" class="piano-vol" id="pianoVol" min="0" max="1" step="0.05" value="0.6">
+                                    </div>
+                                    <button class="piano-stop" id="pianoStop" type="button">⬛ Hentikan suara</button>
+                                </div>
+                            </div>
+                            <p style="text-align:center;font-size:11px;letter-spacing:1.5px;color:rgba(26,48,85,.4);margin-top:12px;text-transform:uppercase;">Klik tuts · Keyboard komputer (A–K = C–B) · Sentuhan layar</p>
+                        </div>
+
+                        <div class="inst-info">
+                            <h3>Piano</h3>
+                            <p class="inst-desc">Piano adalah instrumen dengan rentang nada terluas yang digunakan dalam hampir semua genre musik. Memahami piano berarti memahami teori musik secara visual: setiap tangga nada, interval, dan akor dapat dilihat langsung di atas keyboard.</p>
+                            <div class="inst-facts">
+                                <div class="inst-fact">
+                                    <div class="fact-label">Rentang nada</div>
+                                    <div class="fact-val">A0 – C8</div>
+                                </div>
+                                <div class="inst-fact">
+                                    <div class="fact-label">Jumlah tuts</div>
+                                    <div class="fact-val">88 tuts</div>
+                                </div>
+                                <div class="inst-fact">
+                                    <div class="fact-label">Jenis</div>
+                                    <div class="fact-val">Harmonis</div>
+                                </div>
+                                <div class="inst-fact">
+                                    <div class="fact-label">Cocok untuk</div>
+                                    <div class="fact-val">Semua level</div>
+                                </div>
+                            </div>
+                            <div class="inst-img-wrap">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Steinway_%26_Sons_model_D_at_Walferdange.jpg/640px-Steinway_%26_Sons_model_D_at_Walferdange.jpg"
+                                     alt="Piano grand Steinway & Sons"
+                                     loading="lazy"
+                                     onerror="this.style.display='none';this.parentNode.innerHTML+='<div style=\'text-align:center;color:#6E6B66;font-size:48px;padding:32px\'>🎹</div>'">
+                            </div>
+                            <p style="font-size:11px;color:#A8A49E;margin-top:6px;">Steinway &amp; Sons Model D · Wikimedia Commons</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── PANEL GITAR ── -->
+                <div class="inst-panel" id="panel-guitar" role="tabpanel" aria-labelledby="tab-guitar">
+                    <div class="inst-layout">
+                        <div>
+                            <div class="guitar-strings" id="guitarPanel" aria-label="Gitar virtual, petik senar untuk membunyikan">
+                                <!-- Dirender oleh JS -->
+                            </div>
+                            <div style="margin-top:20px;padding:16px 20px;background:rgba(26,48,85,.06);border-radius:8px;border:1px solid rgba(185,135,120,.2);">
+                                <p style="margin:0 0 10px;font-size:13px;font-weight:600;color:var(--navy);">Chord cepat</p>
+                                <div style="display:flex;flex-wrap:wrap;gap:8px;" id="guitarChords"></div>
+                            </div>
+                            <p style="text-align:center;font-size:11px;letter-spacing:1.5px;color:rgba(26,48,85,.4);margin-top:12px;text-transform:uppercase;">Klik senar untuk memetiknya</p>
+                        </div>
+
+                        <div class="inst-info">
+                            <h3>Gitar Akustik</h3>
+                            <p class="inst-desc">Gitar adalah instrumen paling populer di dunia. Dengan enam senar dan sistem fret, gitar memungkinkan pemain untuk membawakan melodi, akor, dan ritme sekaligus dalam satu instrumen.</p>
+                            <div class="inst-facts">
+                                <div class="inst-fact">
+                                    <div class="fact-label">Jumlah senar</div>
+                                    <div class="fact-val">6 senar</div>
+                                </div>
+                                <div class="inst-fact">
+                                    <div class="fact-label">Tuning standar</div>
+                                    <div class="fact-val">E–A–D–G–B–E</div>
+                                </div>
+                                <div class="inst-fact">
+                                    <div class="fact-label">Jenis</div>
+                                    <div class="fact-val">Chordophones</div>
+                                </div>
+                                <div class="inst-fact">
+                                    <div class="fact-label">Cocok untuk</div>
+                                    <div class="fact-val">Level 1+</div>
+                                </div>
+                            </div>
+                            <div class="inst-img-wrap">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/GuitareClassique5.png/400px-GuitareClassique5.png"
+                                     alt="Gitar akustik klasik"
+                                     loading="lazy"
+                                     onerror="this.style.display='none';this.parentNode.innerHTML+='<div style=\'text-align:center;color:#6E6B66;font-size:48px;padding:32px\'>🎸</div>'">
+                            </div>
+                            <p style="font-size:11px;color:#A8A49E;margin-top:6px;">Gitar klasik · Wikimedia Commons</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── PANEL DRUM ── -->
+                <div class="inst-panel" id="panel-drum" role="tabpanel" aria-labelledby="tab-drum">
+                    <div class="inst-layout">
+                        <div>
+                            <div class="drum-kit-wrap" aria-label="Drum kit virtual">
+                                <div class="drum-grid" id="drumGrid"></div>
+                                <p class="drum-hint">Klik pad · Keyboard: Q W E R A S D F</p>
+                            </div>
+                        </div>
+
+                        <div class="inst-info">
+                            <h3>Drum Kit</h3>
+                            <p class="inst-desc">Drum adalah fondasi ritme dalam hampir semua genre musik. Memahami pola drum membantu musisi dari instrumen apapun untuk merasakan dan mempertahankan ketukan yang stabil.</p>
+                            <div class="inst-facts">
+                                <div class="inst-fact">
+                                    <div class="fact-label">Komponen utama</div>
+                                    <div class="fact-val">8 bagian</div>
+                                </div>
+                                <div class="inst-fact">
+                                    <div class="fact-label">Keyboard</div>
+                                    <div class="fact-val">Q W E R A S D F</div>
+                                </div>
+                                <div class="inst-fact">
+                                    <div class="fact-label">Jenis</div>
+                                    <div class="fact-val">Perkusi</div>
+                                </div>
+                                <div class="inst-fact">
+                                    <div class="fact-label">Cocok untuk</div>
+                                    <div class="fact-val">Semua level</div>
+                                </div>
+                            </div>
+                            <div class="inst-img-wrap">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Drumsatz.jpg/640px-Drumsatz.jpg"
+                                     alt="Drum kit lengkap"
+                                     loading="lazy"
+                                     onerror="this.style.display='none';this.parentNode.innerHTML+='<div style=\'text-align:center;color:#6E6B66;font-size:48px;padding:32px\'>🥁</div>'">
+                            </div>
+                            <p style="font-size:11px;color:#A8A49E;margin-top:6px;">Drum kit standar · Wikimedia Commons</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── PANEL BIOLA ── -->
+                <div class="inst-panel" id="panel-violin" role="tabpanel" aria-labelledby="tab-violin">
+                    <div class="inst-layout">
+                        <div>
+                            <div class="guitar-strings" id="violinPanel" aria-label="Biola virtual, klik senar untuk membunyikan" style="background:var(--navy);">
+                                <!-- Dirender oleh JS -->
+                            </div>
+                            <p style="text-align:center;font-size:11px;letter-spacing:1.5px;color:rgba(26,48,85,.4);margin-top:16px;text-transform:uppercase;">Klik senar untuk memainkan nada</p>
+                        </div>
+
+                        <div class="inst-info">
+                            <h3>Biola</h3>
+                            <p class="inst-desc">Biola adalah instrumen gesek dengan suara yang paling mendekati suara manusia. Digunakan dalam orkestra, musik klasik, folk, hingga jazz. Biola memainkan satu nada dalam satu waktu, sehingga sangat baik untuk melatih melodi dan interval.</p>
+                            <div class="inst-facts">
+                                <div class="inst-fact">
+                                    <div class="fact-label">Jumlah senar</div>
+                                    <div class="fact-val">4 senar</div>
+                                </div>
+                                <div class="inst-fact">
+                                    <div class="fact-label">Tuning</div>
+                                    <div class="fact-val">G–D–A–E</div>
+                                </div>
+                                <div class="inst-fact">
+                                    <div class="fact-label">Jenis</div>
+                                    <div class="fact-val">Chordophones</div>
+                                </div>
+                                <div class="inst-fact">
+                                    <div class="fact-label">Rentang nada</div>
+                                    <div class="fact-val">G3 – A7</div>
+                                </div>
+                            </div>
+                            <div class="inst-img-wrap">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Violin_VL100.png/400px-Violin_VL100.png"
+                                     alt="Biola"
+                                     loading="lazy"
+                                     onerror="this.style.display='none';this.parentNode.innerHTML+='<div style=\'text-align:center;color:#6E6B66;font-size:48px;padding:32px\'>🎻</div>'">
+                            </div>
+                            <p style="font-size:11px;color:#A8A49E;margin-top:6px;">Biola modern · Wikimedia Commons</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /container -->
+        </section>
+
+        <div class="h-fade h-fade-to-dark" aria-hidden="true"></div>
+
+        <!-- ═══ PILIH LEVEL ═══ -->
         <section class="h-paths" id="menu">
             <div class="container">
                 <header class="h-paths-head">
@@ -140,9 +379,9 @@
                             <h3>Level 0.</h3>
                             <span class="h-level-name">Musical Foundation</span>
                             <p>Nama nada C sampai B, treble dan bass clef, posisi nada di keyboard, serta nilai not dasar.</p>
-                            <span class="h-level-meta">Setara Pre-Grade <b>Gratis</b></span>
+                            <span class="h-level-meta">Setara Pre-Grade &nbsp;·&nbsp; <b>Gratis</b></span>
                         </span>
-                        <span class="h-path-go">Masuk Level 0 <i>↗</i></span>
+                        <span class="h-path-go">Masuk Level 0 ↗</span>
                     </a>
                     <a class="h-path h-level" href="level-1.html">
                         <span class="h-path-no">01</span>
@@ -150,9 +389,9 @@
                             <h3>Level 1.</h3>
                             <span class="h-level-name">Notation &amp; Rhythm</span>
                             <p>Notasi dan ritme, birama 2/4, 3/4, 4/4, key signature dasar, interval, dan tonic triad.</p>
-                            <span class="h-level-meta">Setara ABRSM Grade 1–2 <b>Gratis</b></span>
+                            <span class="h-level-meta">Setara ABRSM Grade 1–2 &nbsp;·&nbsp; <b>Gratis</b></span>
                         </span>
-                        <span class="h-path-go">Masuk Level 1 <i>↗</i></span>
+                        <span class="h-path-go">Masuk Level 1 ↗</span>
                     </a>
                     <a class="h-path h-level" href="level-2.html">
                         <span class="h-path-no">02</span>
@@ -160,9 +399,9 @@
                             <h3>Level 2.</h3>
                             <span class="h-level-name">Scales, Keys &amp; Intervals</span>
                             <p>Compound time, tangga nada mayor dan minor, interval, transposisi, dan chromatic scale.</p>
-                            <span class="h-level-meta">Setara ABRSM Grade 3–4 <b>Gratis</b></span>
+                            <span class="h-level-meta">Setara ABRSM Grade 3–4 &nbsp;·&nbsp; <b>Gratis</b></span>
                         </span>
-                        <span class="h-path-go">Masuk Level 2 <i>↗</i></span>
+                        <span class="h-path-go">Masuk Level 2 ↗</span>
                     </a>
                     <a class="h-path h-level" href="level-3.html">
                         <span class="h-path-no">03</span>
@@ -170,9 +409,9 @@
                             <h3>Level 3.</h3>
                             <span class="h-level-name">Basic Harmony</span>
                             <p>Triad I, IV, V, family chord di 12 tangga nada, inversi, cadence, dan chord progression.</p>
-                            <span class="h-level-meta">Setara ABRSM Grade 4–5 <b>Gratis</b></span>
+                            <span class="h-level-meta">Setara ABRSM Grade 4–5 &nbsp;·&nbsp; <b>Gratis</b></span>
                         </span>
-                        <span class="h-path-go">Masuk Level 3 <i>↗</i></span>
+                        <span class="h-path-go">Masuk Level 3 ↗</span>
                     </a>
                     <a class="h-path h-level" href="level-4.html">
                         <span class="h-path-no">04</span>
@@ -180,9 +419,9 @@
                             <h3>Level 4.</h3>
                             <span class="h-level-name">Intermediate Harmony</span>
                             <p>Dominant 7th, chord VI, VII, dan III, harmoni SATB, figured bass, dan modulasi ke kunci terdekat.</p>
-                            <span class="h-level-meta">Setara ABRSM Grade 6 <b class="premium">Premium</b></span>
+                            <span class="h-level-meta">Setara ABRSM Grade 6 &nbsp;·&nbsp; <b class="premium">Premium</b></span>
                         </span>
-                        <span class="h-path-go">Masuk Level 4 <i>↗</i></span>
+                        <span class="h-path-go">Masuk Level 4 ↗</span>
                     </a>
                     <a class="h-path h-level" href="level-5.html">
                         <span class="h-path-no">05</span>
@@ -190,17 +429,15 @@
                             <h3>Level 5.</h3>
                             <span class="h-level-name">Advanced Harmony</span>
                             <p>Diminished 7th, Neapolitan 6th, secondary dominant, augmented 6th, modal interchange, dan reharmonisasi.</p>
-                            <span class="h-level-meta">Setara ABRSM Grade 7–8 <b class="premium">Premium</b></span>
+                            <span class="h-level-meta">Setara ABRSM Grade 7–8 &nbsp;·&nbsp; <b class="premium">Premium</b></span>
                         </span>
-                        <span class="h-path-go">Masuk Level 5 <i>↗</i></span>
+                        <span class="h-path-go">Masuk Level 5 ↗</span>
                     </a>
                 </div>
             </div>
         </section>
 
-        <div class="h-fade h-fade-to-dark" aria-hidden="true"></div>
-
-        <!-- PENUTUP -->
+        <!-- ═══ PENUTUP ═══ -->
         <section class="h-closing">
             <div class="container">
                 <p class="eyebrow">MULAI DARI SATU NADA</p>
@@ -214,17 +451,636 @@
                 </div>
             </div>
         </section>
+
     </main>
 
     <div id="site-footer"></div>
 
+    <!-- Script utama (gate, navbar, footer, progress) — tidak diubah -->
     <script src="app.js"></script>
-    <script src="audio-engine.js"></script>
+    <!-- Audio engine lama (kalau ada) -->
+    <script src="audio-engine.js" onerror="console.log('audio-engine.js tidak ditemukan, menggunakan engine baru')"></script>
 
-    <!-- Animasi: GSAP + ScrollTrigger + Lenis (gratis). Semua logika ada di animations.js -->
+    <!-- Script instrumen baru (inline, tidak bergantung pada file lain) -->
+    <script>
+    /* ═══════════════════════════════════════════════════════
+       TSW INSTRUMENT ENGINE — Web Audio API
+       Piano, Gitar, Drum, Biola
+       ═══════════════════════════════════════════════════════ */
+    (function () {
+        'use strict';
+
+        let ctx = null;
+        let masterGain = null;
+
+        function getCtx() {
+            if (!ctx) {
+                ctx = new (window.AudioContext || window.webkitAudioContext)();
+                masterGain = ctx.createGain();
+                masterGain.gain.value = 0.6;
+                masterGain.connect(ctx.destination);
+            }
+            if (ctx.state === 'suspended') ctx.resume();
+            return ctx;
+        }
+
+        // ── Suara piano (tone sintetis dengan envelope) ──
+        function playPianoNote(freq, duration, vol) {
+            const c = getCtx();
+            const gain = c.createGain();
+            gain.connect(masterGain);
+
+            const osc1 = c.createOscillator();
+            osc1.type = 'triangle';
+            osc1.frequency.value = freq;
+
+            const osc2 = c.createOscillator();
+            osc2.type = 'sine';
+            osc2.frequency.value = freq * 2;
+
+            const g2 = c.createGain();
+            g2.gain.value = 0.15;
+
+            osc1.connect(gain);
+            osc2.connect(g2);
+            g2.connect(gain);
+
+            const v = (vol !== undefined ? vol : 0.6) * 0.7;
+            const now = c.currentTime;
+            gain.gain.setValueAtTime(0, now);
+            gain.gain.linearRampToValueAtTime(v, now + 0.012);
+            gain.gain.exponentialRampToValueAtTime(v * 0.6, now + 0.1);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + (duration || 1.6));
+
+            osc1.start(now); osc1.stop(now + (duration || 1.6) + .05);
+            osc2.start(now); osc2.stop(now + (duration || 1.6) + .05);
+
+            return { gain, osc1, osc2, stop: function() {
+                gain.gain.cancelScheduledValues(c.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + .1);
+                osc1.stop(c.currentTime + .12);
+                osc2.stop(c.currentTime + .12);
+            }};
+        }
+
+        // ── Suara gitar (plucked string — Karplus–Strong sederhana) ──
+        function playGuitarNote(freq, duration) {
+            const c = getCtx();
+            const bufSize = Math.round(c.sampleRate / freq);
+            const buf = c.createBuffer(1, bufSize, c.sampleRate);
+            const data = buf.getChannelData(0);
+            for (let i = 0; i < bufSize; i++) data[i] = Math.random() * 2 - 1;
+
+            const src = c.createBufferSource();
+            src.buffer = buf;
+            src.loop = true;
+
+            const gain = c.createGain();
+            gain.connect(masterGain);
+
+            const filter = c.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.value = freq * 3;
+
+            src.connect(filter);
+            filter.connect(gain);
+
+            const now = c.currentTime;
+            gain.gain.setValueAtTime(0.5, now);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + (duration || 1.8));
+            src.start(now);
+            src.stop(now + (duration || 1.8) + .05);
+        }
+
+        // ── Suara drum (noise burst dengan filter) ──
+        function playDrumSound(type) {
+            const c = getCtx();
+            const now = c.currentTime;
+
+            if (type === 'kick') {
+                const osc = c.createOscillator();
+                const gain = c.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(150, now);
+                osc.frequency.exponentialRampToValueAtTime(0.01, now + .5);
+                gain.gain.setValueAtTime(0.9, now);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + .5);
+                osc.connect(gain); gain.connect(masterGain);
+                osc.start(now); osc.stop(now + .5);
+            } else if (type === 'snare') {
+                const nBuf = c.createBuffer(1, c.sampleRate * .2, c.sampleRate);
+                const nd = nBuf.getChannelData(0);
+                for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+                const nSrc = c.createBufferSource();
+                nSrc.buffer = nBuf;
+                const nGain = c.createGain();
+                nGain.gain.setValueAtTime(0.6, now);
+                nGain.gain.exponentialRampToValueAtTime(0.0001, now + .2);
+                const hpf = c.createBiquadFilter();
+                hpf.type = 'highpass'; hpf.frequency.value = 1200;
+                nSrc.connect(hpf); hpf.connect(nGain); nGain.connect(masterGain);
+                nSrc.start(now); nSrc.stop(now + .22);
+
+                const osc = c.createOscillator();
+                const oGain = c.createGain();
+                osc.type = 'triangle'; osc.frequency.value = 180;
+                oGain.gain.setValueAtTime(0.4, now);
+                oGain.gain.exponentialRampToValueAtTime(0.0001, now + .08);
+                osc.connect(oGain); oGain.connect(masterGain);
+                osc.start(now); osc.stop(now + .1);
+            } else if (type === 'hihat') {
+                const nBuf = c.createBuffer(1, c.sampleRate * .08, c.sampleRate);
+                const nd = nBuf.getChannelData(0);
+                for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+                const nSrc = c.createBufferSource();
+                nSrc.buffer = nBuf;
+                const nGain = c.createGain();
+                nGain.gain.setValueAtTime(0.4, now);
+                nGain.gain.exponentialRampToValueAtTime(0.0001, now + .08);
+                const hpf = c.createBiquadFilter();
+                hpf.type = 'highpass'; hpf.frequency.value = 7000;
+                nSrc.connect(hpf); hpf.connect(nGain); nGain.connect(masterGain);
+                nSrc.start(now); nSrc.stop(now + .1);
+            } else if (type === 'crash') {
+                const nBuf = c.createBuffer(1, c.sampleRate * 1.2, c.sampleRate);
+                const nd = nBuf.getChannelData(0);
+                for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+                const nSrc = c.createBufferSource();
+                nSrc.buffer = nBuf;
+                const nGain = c.createGain();
+                nGain.gain.setValueAtTime(0.5, now);
+                nGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
+                const hpf = c.createBiquadFilter();
+                hpf.type = 'highpass'; hpf.frequency.value = 5000;
+                nSrc.connect(hpf); hpf.connect(nGain); nGain.connect(masterGain);
+                nSrc.start(now); nSrc.stop(now + 1.3);
+            } else if (type === 'ride') {
+                const nBuf = c.createBuffer(1, c.sampleRate * .6, c.sampleRate);
+                const nd = nBuf.getChannelData(0);
+                for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+                const nSrc = c.createBufferSource();
+                nSrc.buffer = nBuf;
+                const nGain = c.createGain();
+                nGain.gain.setValueAtTime(0.35, now);
+                nGain.gain.exponentialRampToValueAtTime(0.0001, now + .6);
+                const bpf = c.createBiquadFilter();
+                bpf.type = 'bandpass'; bpf.frequency.value = 4500; bpf.Q.value = 2;
+                nSrc.connect(bpf); bpf.connect(nGain); nGain.connect(masterGain);
+                nSrc.start(now); nSrc.stop(now + .65);
+            } else {
+                // tom (htom, mtom, ftom)
+                const freqs = { htom: 220, mtom: 160, ftom: 110 };
+                const f = freqs[type] || 180;
+                const osc = c.createOscillator();
+                const gain = c.createGain();
+                osc.type = 'sine'; osc.frequency.setValueAtTime(f, now);
+                osc.frequency.exponentialRampToValueAtTime(f * .5, now + .3);
+                gain.gain.setValueAtTime(0.7, now);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + .35);
+                osc.connect(gain); gain.connect(masterGain);
+                osc.start(now); osc.stop(now + .4);
+            }
+        }
+
+        // ── Suara biola (FM synthesis) ──
+        function playViolinNote(freq, duration) {
+            const c = getCtx();
+            const gain = c.createGain();
+            gain.connect(masterGain);
+
+            const carrier = c.createOscillator();
+            carrier.type = 'sawtooth';
+            carrier.frequency.value = freq;
+
+            const mod = c.createOscillator();
+            mod.frequency.value = freq * 2;
+            const modGain = c.createGain();
+            modGain.gain.value = freq * 0.3;
+            mod.connect(modGain);
+            modGain.connect(carrier.frequency);
+
+            const filter = c.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.value = freq * 4;
+            filter.Q.value = 1.5;
+
+            carrier.connect(filter);
+            filter.connect(gain);
+
+            const now = c.currentTime;
+            const dur = duration || 1.2;
+            gain.gain.setValueAtTime(0, now);
+            gain.gain.linearRampToValueAtTime(0.4, now + 0.08);
+            gain.gain.setValueAtTime(0.4, now + dur - 0.1);
+            gain.gain.linearRampToValueAtTime(0, now + dur);
+
+            carrier.start(now); carrier.stop(now + dur + .05);
+            mod.start(now); mod.stop(now + dur + .05);
+        }
+
+        // ── Export ke window ──
+        window.TSWAudio = { playPianoNote, playGuitarNote, playDrumSound, playViolinNote, getCtx };
+
+        /* ─────────────────────────────────────────────
+           PIANO VIRTUAL (panel instrumen)
+        ───────────────────────────────────────────── */
+        const NOTE_MAP = [
+            { note: 'C3',  freq: 130.81, type: 'w', key: null },
+            { note: 'C#3', freq: 138.59, type: 'b', key: null },
+            { note: 'D3',  freq: 146.83, type: 'w', key: null },
+            { note: 'D#3', freq: 155.56, type: 'b', key: null },
+            { note: 'E3',  freq: 164.81, type: 'w', key: null },
+            { note: 'F3',  freq: 174.61, type: 'w', key: null },
+            { note: 'F#3', freq: 185.00, type: 'b', key: null },
+            { note: 'G3',  freq: 196.00, type: 'w', key: null },
+            { note: 'G#3', freq: 207.65, type: 'b', key: null },
+            { note: 'A3',  freq: 220.00, type: 'w', key: null },
+            { note: 'A#3', freq: 233.08, type: 'b', key: null },
+            { note: 'B3',  freq: 246.94, type: 'w', key: null },
+            { note: 'C4',  freq: 261.63, type: 'w', key: 'a' },
+            { note: 'C#4', freq: 277.18, type: 'b', key: 'w' },
+            { note: 'D4',  freq: 293.66, type: 'w', key: 's' },
+            { note: 'D#4', freq: 311.13, type: 'b', key: 'e' },
+            { note: 'E4',  freq: 329.63, type: 'w', key: 'd' },
+            { note: 'F4',  freq: 349.23, type: 'w', key: 'f' },
+            { note: 'F#4', freq: 369.99, type: 'b', key: 't' },
+            { note: 'G4',  freq: 392.00, type: 'w', key: 'g' },
+            { note: 'G#4', freq: 415.30, type: 'b', key: 'y' },
+            { note: 'A4',  freq: 440.00, type: 'w', key: 'h' },
+            { note: 'A#4', freq: 466.16, type: 'b', key: 'u' },
+            { note: 'B4',  freq: 493.88, type: 'w', key: 'j' },
+            { note: 'C5',  freq: 523.25, type: 'w', key: 'k' },
+        ];
+
+        function buildPiano() {
+            const container = document.getElementById('pianoFull');
+            if (!container) return;
+
+            const whites = NOTE_MAP.filter(n => n.type === 'w');
+            const whiteCount = whites.length;
+
+            container.style.position = 'relative';
+            container.style.height = '160px';
+            container.style.display = 'flex';
+            container.style.gap = '2px';
+
+            // Buat tuts putih dulu
+            whites.forEach((n, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'pk-white';
+                btn.setAttribute('data-freq', n.freq);
+                btn.setAttribute('data-note', n.note);
+                btn.setAttribute('aria-label', 'Nada ' + n.note);
+                btn.style.flex = '1';
+                btn.textContent = n.note.replace('#', '♯');
+                container.appendChild(btn);
+            });
+
+            // Buat tuts hitam (posisi absolut di atas tuts putih)
+            const blacks = NOTE_MAP.filter(n => n.type === 'b');
+            blacks.forEach(n => {
+                const whiteIndex = whites.findIndex(w => {
+                    const octW = parseInt(w.note.slice(-1));
+                    const octB = parseInt(n.note.slice(-1));
+                    const noteW = w.note.slice(0, -1);
+                    const noteB = n.note.slice(0, 1);
+                    return octW === octB && noteB === noteW;
+                });
+                if (whiteIndex < 0) return;
+
+                const btn = document.createElement('button');
+                btn.className = 'pk-black';
+                btn.setAttribute('data-freq', n.freq);
+                btn.setAttribute('data-note', n.note);
+                btn.setAttribute('aria-label', 'Nada ' + n.note);
+
+                // Posisi: letakkan di antara tuts putih
+                // Gunakan persentase berdasarkan index
+                const whiteW = 100 / whiteCount; // % lebar tuts putih
+                const leftPct = (whiteIndex + 0.65) * whiteW;
+                btn.style.left = leftPct + '%';
+                btn.style.width = (whiteW * 0.65) + '%';
+                container.appendChild(btn);
+            });
+
+            // Event interaksi piano besar
+            const noteDisplay = document.getElementById('pianoNoteDisplay');
+            let vol = 0.6;
+
+            const volSlider = document.getElementById('pianoVol');
+            if (volSlider) {
+                volSlider.addEventListener('input', e => {
+                    vol = parseFloat(e.target.value);
+                    if (masterGain) masterGain.gain.value = vol;
+                });
+            }
+
+            container.querySelectorAll('button').forEach(btn => {
+                function play() {
+                    const freq = parseFloat(btn.getAttribute('data-freq'));
+                    const note = btn.getAttribute('data-note');
+                    if (!freq) return;
+                    btn.classList.add('pressed');
+                    playPianoNote(freq, 1.4, vol);
+                    if (noteDisplay) noteDisplay.textContent = note;
+                }
+                function release() { btn.classList.remove('pressed'); }
+
+                btn.addEventListener('mousedown', e => { e.preventDefault(); play(); });
+                btn.addEventListener('mouseup', release);
+                btn.addEventListener('mouseleave', release);
+                btn.addEventListener('touchstart', e => { e.preventDefault(); play(); }, { passive: false });
+                btn.addEventListener('touchend', release);
+            });
+
+            // Stop button
+            const stopBtn = document.getElementById('pianoStop');
+            if (stopBtn) {
+                stopBtn.addEventListener('click', () => {
+                    if (masterGain) {
+                        masterGain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + .1);
+                        setTimeout(() => { masterGain.gain.value = vol; }, 200);
+                    }
+                });
+            }
+
+            // Keyboard mapping
+            const keyMap = {};
+            NOTE_MAP.forEach(n => {
+                if (n.key) {
+                    const btn = container.querySelector('[data-note="' + n.note + '"]');
+                    if (btn) keyMap[n.key] = btn;
+                }
+            });
+
+            document.addEventListener('keydown', e => {
+                if (e.repeat || e.target.tagName === 'INPUT') return;
+                const btn = keyMap[e.key.toLowerCase()];
+                if (btn && !btn.classList.contains('pressed')) {
+                    btn.classList.add('pressed');
+                    const freq = parseFloat(btn.getAttribute('data-freq'));
+                    const note = btn.getAttribute('data-note');
+                    playPianoNote(freq, 1.4, vol);
+                    if (noteDisplay) noteDisplay.textContent = note;
+                }
+            });
+            document.addEventListener('keyup', e => {
+                const btn = keyMap[e.key.toLowerCase()];
+                if (btn) btn.classList.remove('pressed');
+            });
+        }
+
+        /* ─────────────────────────────────────────────
+           PIANO MINI HERO
+        ───────────────────────────────────────────── */
+        function initHeroPiano() {
+            const container = document.getElementById('heroPiano');
+            const readout = document.getElementById('noteReadout');
+            if (!container) return;
+
+            container.querySelectorAll('button').forEach(btn => {
+                function play() {
+                    const freq = parseFloat(btn.getAttribute('data-freq'));
+                    const note = btn.getAttribute('data-note');
+                    if (!freq) return;
+                    btn.classList.add('active');
+                    playPianoNote(freq, 1.2);
+                    if (readout) readout.textContent = note;
+                    setTimeout(() => btn.classList.remove('active'), 300);
+                }
+                btn.addEventListener('mousedown', e => { e.preventDefault(); play(); });
+                btn.addEventListener('touchstart', e => { e.preventDefault(); play(); }, { passive: false });
+            });
+        }
+
+        /* ─────────────────────────────────────────────
+           GITAR VIRTUAL
+        ───────────────────────────────────────────── */
+        const GUITAR_STRINGS = [
+            { name: 'E', freq: 329.63, color: '#D2B16F' },
+            { name: 'B', freq: 246.94, color: '#B98778' },
+            { name: 'G', freq: 196.00, color: '#DFC48A' },
+            { name: 'D', freq: 146.83, color: '#CFA090' },
+            { name: 'A', freq: 110.00, color: '#B2C4D8' },
+            { name: 'E', freq:  82.41, color: '#8FA8C0' },
+        ];
+
+        const GUITAR_CHORDS = {
+            'C Major': [261.63, 329.63, 392.00, 523.25, 659.25],
+            'G Major': [196.00, 246.94, 293.66, 392.00, 493.88],
+            'Am':      [220.00, 261.63, 329.63, 440.00, 554.37],
+            'F Major': [174.61, 220.00, 261.63, 349.23, 440.00],
+        };
+
+        function buildGuitar() {
+            const container = document.getElementById('guitarPanel');
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            GUITAR_STRINGS.forEach((str, i) => {
+                const row = document.createElement('div');
+                row.className = 'guitar-string-row';
+
+                const nameEl = document.createElement('span');
+                nameEl.className = 'g-str-name';
+                nameEl.textContent = str.name;
+
+                const lineEl = document.createElement('div');
+                lineEl.className = 'g-str-line';
+                lineEl.style.background = str.color;
+                lineEl.style.height = (2 + i * 0.5) + 'px';
+                lineEl.setAttribute('role', 'button');
+                lineEl.setAttribute('aria-label', 'Petik senar ' + str.name);
+                lineEl.setAttribute('tabindex', '0');
+
+                const noteEl = document.createElement('span');
+                noteEl.className = 'g-str-note';
+                noteEl.textContent = str.name + (i === 0 ? '4' : i === 1 ? '3' : i === 2 ? '3' : i === 3 ? '3' : i === 4 ? '2' : '2');
+
+                function pluck() {
+                    lineEl.classList.add('plucked');
+                    playGuitarNote(str.freq, 1.5);
+                    setTimeout(() => lineEl.classList.remove('plucked'), 400);
+                }
+
+                lineEl.addEventListener('click', pluck);
+                lineEl.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') pluck(); });
+
+                row.appendChild(nameEl);
+                row.appendChild(lineEl);
+                row.appendChild(noteEl);
+                container.appendChild(row);
+            });
+
+            const hint = document.createElement('p');
+            hint.className = 'guitar-hint';
+            hint.textContent = 'Klik senar untuk memetiknya';
+            container.appendChild(hint);
+
+            // Chord buttons
+            const chordContainer = document.getElementById('guitarChords');
+            if (chordContainer) {
+                Object.entries(GUITAR_CHORDS).forEach(([name, freqs]) => {
+                    const btn = document.createElement('button');
+                    btn.style.cssText = 'padding:8px 16px;background:var(--navy);color:var(--gold);border:1px solid rgba(210,177,111,.4);border-radius:4px;font-size:12px;font-weight:700;font-family:var(--body);transition:.2s;cursor:pointer;';
+                    btn.textContent = name;
+                    btn.addEventListener('mouseover', () => btn.style.background = 'var(--navy-mid)');
+                    btn.addEventListener('mouseout', () => btn.style.background = 'var(--navy)');
+                    btn.addEventListener('click', () => {
+                        freqs.forEach((f, i) => setTimeout(() => playGuitarNote(f, 1.2), i * 60));
+                    });
+                    chordContainer.appendChild(btn);
+                });
+            }
+        }
+
+        /* ─────────────────────────────────────────────
+           DRUM KIT VIRTUAL
+        ───────────────────────────────────────────── */
+        const DRUM_PADS = [
+            { type: 'crash',  label: 'Crash',    emoji: '🔔', key: 'q', cls: 'crash' },
+            { type: 'hihat',  label: 'Hi-Hat',   emoji: '🎵', key: 'w', cls: 'hihat' },
+            { type: 'ride',   label: 'Ride',     emoji: '🔔', key: 'e', cls: 'ride'  },
+            { type: 'htom',   label: 'High Tom', emoji: '🥁', key: 'r', cls: 'htom'  },
+            { type: 'kick',   label: 'Kick',     emoji: '💥', key: 'a', cls: 'kick'  },
+            { type: 'snare',  label: 'Snare',    emoji: '🥁', key: 's', cls: 'snare' },
+            { type: 'mtom',   label: 'Mid Tom',  emoji: '🥁', key: 'd', cls: 'mtom'  },
+            { type: 'ftom',   label: 'Floor Tom',emoji: '🥁', key: 'f', cls: 'ftom'  },
+        ];
+
+        function buildDrum() {
+            const grid = document.getElementById('drumGrid');
+            if (!grid) return;
+
+            const keyToPad = {};
+
+            DRUM_PADS.forEach(pad => {
+                const btn = document.createElement('button');
+                btn.className = 'drum-pad ' + pad.cls;
+                btn.setAttribute('aria-label', pad.label + ' (key: ' + pad.key + ')');
+                btn.setAttribute('type', 'button');
+                btn.innerHTML = `
+                    <svg viewBox="0 0 36 36" aria-hidden="true"><text y="28" font-size="28">${pad.emoji}</text></svg>
+                    <span class="drum-label">${pad.label}</span>
+                `;
+
+                function hit() {
+                    btn.classList.add('hit');
+                    playDrumSound(pad.type);
+                    setTimeout(() => btn.classList.remove('hit'), 120);
+                }
+
+                btn.addEventListener('mousedown', e => { e.preventDefault(); hit(); });
+                btn.addEventListener('touchstart', e => { e.preventDefault(); hit(); }, { passive: false });
+                keyToPad[pad.key] = hit;
+                grid.appendChild(btn);
+            });
+
+            document.addEventListener('keydown', e => {
+                if (e.target.tagName === 'INPUT') return;
+                const fn = keyToPad[e.key.toLowerCase()];
+                if (fn) fn();
+            });
+        }
+
+        /* ─────────────────────────────────────────────
+           BIOLA VIRTUAL
+        ───────────────────────────────────────────── */
+        const VIOLIN_STRINGS = [
+            { name: 'E', freq: 659.25, color: '#D2B16F' },
+            { name: 'A', freq: 440.00, color: '#B98778' },
+            { name: 'D', freq: 293.66, color: '#DFC48A' },
+            { name: 'G', freq: 196.00, color: '#8FA8C0' },
+        ];
+
+        function buildViolin() {
+            const container = document.getElementById('violinPanel');
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            VIOLIN_STRINGS.forEach((str, i) => {
+                const row = document.createElement('div');
+                row.className = 'guitar-string-row';
+
+                const nameEl = document.createElement('span');
+                nameEl.className = 'g-str-name';
+                nameEl.textContent = str.name;
+
+                const lineEl = document.createElement('div');
+                lineEl.className = 'g-str-line';
+                lineEl.style.background = str.color;
+                lineEl.style.height = (3 + i * 0.8) + 'px';
+                lineEl.setAttribute('role', 'button');
+                lineEl.setAttribute('aria-label', 'Gesek senar ' + str.name);
+                lineEl.setAttribute('tabindex', '0');
+
+                const noteEl = document.createElement('span');
+                noteEl.className = 'g-str-note';
+                noteEl.textContent = str.name + (i === 0 ? '5' : i === 1 ? '4' : i === 2 ? '3' : '3');
+
+                function bow() {
+                    lineEl.classList.add('plucked');
+                    playViolinNote(str.freq, 1.5);
+                    setTimeout(() => lineEl.classList.remove('plucked'), 400);
+                }
+
+                lineEl.addEventListener('click', bow);
+                lineEl.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') bow(); });
+
+                row.appendChild(nameEl);
+                row.appendChild(lineEl);
+                row.appendChild(noteEl);
+                container.appendChild(row);
+            });
+
+            const hint = document.createElement('p');
+            hint.className = 'guitar-hint';
+            hint.textContent = 'Klik senar untuk memainkan nada biola';
+            container.appendChild(hint);
+        }
+
+        /* ─────────────────────────────────────────────
+           TAB SWITCHER INSTRUMEN
+        ───────────────────────────────────────────── */
+        function initTabs() {
+            const tabs = document.querySelectorAll('.inst-tab');
+            const panels = document.querySelectorAll('.inst-panel');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = tab.getAttribute('data-tab');
+                    tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+                    panels.forEach(p => p.classList.remove('active'));
+                    tab.classList.add('active');
+                    tab.setAttribute('aria-selected', 'true');
+                    const panel = document.getElementById('panel-' + target);
+                    if (panel) panel.classList.add('active');
+                });
+            });
+        }
+
+        /* ─────────────────────────────────────────────
+           INIT semua
+        ───────────────────────────────────────────── */
+        document.addEventListener('DOMContentLoaded', function () {
+            initHeroPiano();
+            buildPiano();
+            buildGuitar();
+            buildDrum();
+            buildViolin();
+            initTabs();
+        });
+
+    })();
+    </script>
+
+    <!-- GSAP + Lenis (opsional, untuk animasi) -->
     <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
-    <script defer src="animations.js"></script>
+    <script defer src="animations.js" onerror="console.log('animations.js belum tersedia')"></script>
+
 </body>
 </html>
