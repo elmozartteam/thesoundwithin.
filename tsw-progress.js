@@ -124,14 +124,14 @@
     '.tp *{box-sizing:border-box}' +
     '.tp-head{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;padding:22px 26px;border-radius:16px 16px 0 0;background:linear-gradient(135deg,#14233F 0%,#27406B 100%);color:#FBF7EE}' +
     '.tp-eyebrow{margin:0 0 6px;font:700 11px Lora,serif;letter-spacing:.2em;color:#E6CB8C}' +
-    '.tp-title{margin:0;font:600 28px "Cormorant Garamond",Georgia,serif;color:#FBF7EE}' +
+    '.tp .tp-title{margin:0;font:600 28px "Cormorant Garamond",Georgia,serif;color:#FBF7EE !important}' +
     '.tp-badge{display:inline-block;margin-top:8px;padding:5px 14px;border-radius:999px;font:700 12px Lora,serif;background:#FBF7EE;color:#14233F}' +
     '.tp-badge.ok{background:#CFEBDB;color:#124B2F}' +
     '.tp-big{text-align:right}.tp-big b{display:block;font:600 54px/1 "Cormorant Garamond",Georgia,serif;color:#F1DDA7}.tp-big span{font-size:12px;letter-spacing:.14em;color:#DCE4F2}' +
     '.tp-body{padding:20px 22px 22px;border:1px solid rgba(20,35,63,.18);border-top:0;border-radius:0 0 16px 16px;background:linear-gradient(180deg,#FBF7EE 0%,#F1EADA 100%)}' +
     '.tp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}' +
     '.tp-card{padding:18px;border:1px solid rgba(20,35,63,.2);border-radius:14px;background:#fff;box-shadow:0 2px 10px rgba(20,35,63,.07)}' +
-    '.tp-card h4{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 4px;font:700 13px Lora,serif;letter-spacing:.14em;color:#14233F}' +
+    '.tp .tp-card h4{color:#14233F !important;display:flex;justify-content:space-between;align-items:baseline;margin:0 0 4px;font:700 13px Lora,serif;letter-spacing:.14em;color:#14233F}' +
     '.tp-card h4 em{font:600 28px "Cormorant Garamond",Georgia,serif;font-style:normal;color:#27406B}' +
     '.tp-pill{display:inline-block;margin:2px 0 10px;padding:3px 11px;border-radius:999px;font:700 11px Lora,serif;background:#F3E4C0;color:#5E4308}' +
     '.tp-pill.ok{background:#CFEBDB;color:#124B2F}' +
