@@ -1,0 +1,75 @@
+/* TSW — level0-practice.css
+   Gaya Practice Studio Level 0: campuran ivory + gradasi navy, kontras tinggi (teks gelap di atas ivory, teks terang di atas navy).
+   Dimuat SETELAH level.css dan level0-enhancements.css. */
+
+/* ── latar section: ivory → biru keabuan → navy lembut ── */
+section.l-lab{
+  background:linear-gradient(165deg,#FBF7EE 0%,#F4ECDB 30%,#DCE3EF 62%,#9FB1CE 88%,#6F86AD 100%) !important;
+  color:#14233F !important;
+  padding-block:clamp(56px,8vw,96px);
+}
+section.l-lab .eyebrow,section.l-lab .l-no{color:#7A5A16 !important}
+section.l-lab .l-h2{color:#14233F !important}
+section.l-lab .l-h2 em{color:#8A6417 !important}
+section.l-lab .l-lab-lead,section.l-lab > .container > p{color:#26385A !important;max-width:70ch}
+
+/* ── tab jalur ── */
+section.l-lab .l-tabs{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 18px}
+section.l-lab .l-tabs [role=tab]{padding:11px 24px;border:1.5px solid #14233F !important;border-radius:999px;background:#FBF7EE !important;color:#14233F !important;font:700 13px Lora,Georgia,serif;letter-spacing:.04em;cursor:pointer;transition:.18s}
+section.l-lab .l-tabs [role=tab]:hover{background:#F1E3BC !important}
+section.l-lab .l-tabs [role=tab][aria-selected=true],section.l-lab .l-tabs [role=tab].active{background:linear-gradient(135deg,#14233F,#27406B) !important;color:#FBF7EE !important;border-color:#14233F !important;box-shadow:0 4px 14px rgba(20,35,63,.28)}
+section.l-lab .l-tabs [role=tab]:focus-visible{outline:3px solid #B8923F;outline-offset:2px}
+
+/* ── kartu soal ── */
+section.l-lab .l-panel{min-height:300px;border:0;background:transparent}
+.lp-card{max-width:880px;border:1.5px solid rgba(20,35,63,.35);border-radius:18px;overflow:hidden;background:#FFFDF8;box-shadow:0 12px 34px rgba(20,35,63,.2)}
+.lp-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 16px;padding:14px 22px;background:linear-gradient(120deg,#14233F 0%,#27406B 100%);color:#FBF7EE}
+.lp-chip{font:700 11px Lora,Georgia,serif;letter-spacing:.16em;color:#F1DDA7}
+.lp-count{font:600 12.5px Lora,Georgia,serif;color:#E8EEF8}
+.lp-body{padding:22px 24px 24px;background:linear-gradient(180deg,#FFFDF8 0%,#F7F0E0 100%);color:#14233F}
+.lp-in{animation:lpIn .35s ease both}
+@keyframes lpIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.lp-in{animation:none}}
+
+.lp-score{margin:0 0 16px;font:500 12.5px Lora,Georgia,serif;color:#33466A}
+.lp-score b{color:#14233F}
+.lp-bar{position:relative;height:9px;margin-top:7px;border-radius:6px;background:#D5DCE9}
+.lp-bar i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,#27406B,#B8923F)}
+.lp-bar u{position:absolute;left:70%;top:-4px;width:2px;height:17px;background:#A8574A}
+
+.lp-prompt{margin:0 0 16px;font:600 clamp(20px,2.6vw,26px)/1.35 "Cormorant Garamond",Georgia,serif;color:#14233F}
+.lp-visual{margin:0 0 18px;padding:14px;border:1px solid rgba(20,35,63,.2);border-radius:14px;background:#fff;text-align:center}
+.lp-kbd{display:block;width:100%;max-width:460px;height:auto;margin:0 auto}
+.lp-audiorow{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 8px}
+.lp-play{padding:12px 20px;border:0;border-radius:12px;background:linear-gradient(135deg,#14233F,#27406B);color:#FBF7EE;font:700 14px Lora,Georgia,serif;cursor:pointer;box-shadow:0 3px 10px rgba(20,35,63,.25);transition:.15s}
+.lp-play:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(20,35,63,.32)}
+.lp-play.lp-alt{background:#F1E3BC;color:#14233F;border:1.5px solid #B8923F;box-shadow:none}
+.lp-play.lp-rec{background:linear-gradient(135deg,#8E3A33,#B5524A)}
+.lp-play:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.lp-hint{margin:6px 0 14px;font:400 12.5px/1.55 Lora,Georgia,serif;color:#33466A}
+.lp-target{display:inline-block;margin:0 0 14px;padding:14px 30px;border:2px solid #B8923F;border-radius:14px;background:#fff;text-align:center}
+.lp-target span{display:block;font:600 46px/1 "Cormorant Garamond",Georgia,serif;color:#14233F}
+.lp-target small{font:700 10px Lora,serif;letter-spacing:.2em;color:#7A5A16}
+
+.lp-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px;margin:8px 0 6px}
+.lp-options button{display:flex;align-items:center;gap:12px;min-height:56px;padding:12px 16px;border:1.5px solid #14233F;border-radius:12px;background:#fff;color:#14233F;font:600 15px/1.35 Lora,Georgia,serif;text-align:left;cursor:pointer;transition:.15s}
+.lp-options button kbd{flex:none;display:inline-grid;place-items:center;width:24px;height:24px;border-radius:7px;background:#E7ECF5;color:#14233F;font:700 12px Lora,serif}
+.lp-options button:hover:not(:disabled){background:#F1E3BC;border-color:#8A6417;transform:translateY(-1px)}
+.lp-options button:focus-visible,.lp-play:focus-visible,.lp-next:focus-visible,.lp-skip:focus-visible{outline:3px solid #B8923F;outline-offset:2px}
+.lp-options button:disabled{cursor:default;opacity:1;color:#14233F}
+.lp-options button.ok{background:#D5EFDF !important;border-color:#1F7A4D !important;color:#0F3F27 !important}
+.lp-options button.bad{background:#F9DAD6 !important;border-color:#A12D2D !important;color:#661B1B !important}
+.lp-options button.ok kbd{background:#1F7A4D;color:#fff}.lp-options button.bad kbd{background:#A12D2D;color:#fff}
+
+.lp-fb{min-height:24px;margin:14px 0 0;padding:0;font:500 14.5px/1.6 Lora,Georgia,serif;color:#14233F}
+.lp-fb.ok{padding:12px 14px;border-left:5px solid #1F7A4D;border-radius:8px;background:#E3F3EA;color:#0F3F27}
+.lp-fb.err{padding:12px 14px;border-left:5px solid #A12D2D;border-radius:8px;background:#FCE6E3;color:#5E1818}
+.lp-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-top:16px}
+.lp-next{margin-left:auto;padding:13px 26px;border:0;border-radius:12px;background:linear-gradient(135deg,#B8923F,#D9B45E);color:#14233F;font:800 15px Lora,Georgia,serif;cursor:pointer;box-shadow:0 4px 14px rgba(120,88,20,.35)}
+.lp-next:hover{filter:brightness(1.06)}
+.lp-skip{padding:9px 14px;border:1px dashed #5B6B88;border-radius:10px;background:transparent;color:#33466A;font:600 12.5px Lora,Georgia,serif;cursor:pointer}
+.lp-skip:hover{background:#E7ECF5}
+
+section.l-lab .l-progress-summary{margin-top:44px;max-width:1100px}
+
+@media (max-width:600px){.lp-body{padding:18px 16px 20px}.lp-top{padding:12px 16px}.lp-options{grid-template-columns:1fr}.lp-next{width:100%}}
