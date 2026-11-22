@@ -383,139 +383,312 @@
     button.addEventListener('click', () => playInstrumentDemo(button));
   });
 
-  function shuffleOptions(correct, pool) {
-    const values = [...new Set([correct, ...pool])];
-    for (let i = values.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [values[i], values[j]] = [values[j], values[i]];
-    }
-    return values;
+  /* ═══════════════════════════════════════════════════════════════════════
+     PRACTICE STUDIO v2 — soal tanpa batas, selalu baru, dibuat secara prosedural.
+     Reading / Listening / Speaking. Setiap jawaban langsung tercatat di TSWProgress.
+     ═══════════════════════════════════════════════════════════════════════ */
+  const LEVEL = 0;
+  const NAMES_SHARP = pitchClassNames;
+  const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+  const pickOne = arr => arr[Math.floor(Math.random() * arr.length)];
+  const shuffle = arr => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const sampleN = (arr, n) => shuffle(arr).slice(0, n);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  /* Buat pilihan: jawaban benar + pengecoh, diacak. Mengembalikan { options, correct (indeks) }. */
+  function makeChoices(answer, pool, n) {
+    n = n || 4;
+    const wrong = sampleN(pool.filter(x => String(x) !== String(answer)), n - 1);
+    const options = shuffle([answer].concat(wrong)).map(String);
+    return { options, correct: options.indexOf(String(answer)) };
+  }
+  function choice(topic, prompt, answer, pool, explanation, extra) {
+    const c = makeChoices(answer, pool, extra && extra.n);
+    return Object.assign({ kind: 'choice', topic, prompt, options: c.options, correct: c.correct, explanation }, extra || {});
   }
 
-  const readingBank = [
-    { prompt: 'Dalam alfabet musik, nada apa yang muncul setelah E?', answer: 'F', options: ['D', 'F', 'G', 'A'], explanation: 'Urutan natural notes adalah C–D–E–F–G–A–B, lalu kembali ke C.' },
-    { prompt: 'Nada apa yang muncul setelah B dalam urutan alfabet musik?', answer: 'C', options: ['A', 'C', 'D', 'E'], explanation: 'Setelah B, urutan nama nada kembali ke C pada octave berikutnya.' },
-    { prompt: 'Pada keyboard, tuts putih di sebelah kiri kelompok dua tuts hitam adalah…', answer: 'C', options: ['A', 'C', 'E', 'G'], explanation: 'Kelompok dua tuts hitam menjadi penanda visual. Tuts putih tepat di sebelah kirinya adalah C.' },
-    { prompt: 'Istilah untuk karakter atau warna khas suatu suara adalah…', answer: 'Timbre', options: ['Tempo', 'Timbre', 'Pitch', 'Duration'], explanation: 'Timbre membedakan karakter suara piano, gitar, biola, dan suara manusia.' },
-    { prompt: 'Dua nada bernama C tetapi berada pada register berbeda memiliki hubungan…', answer: 'Octave', options: ['Timbre', 'Octave', 'Dynamics', 'Texture'], explanation: 'C4 dan C5 memiliki nama huruf sama dan berjarak satu octave.' },
-    { prompt: 'Susunan beberapa nada yang terdengar satu demi satu disebut…', answer: 'Melody', options: ['Harmony', 'Melody', 'Timbre', 'Dynamics'], explanation: 'Melodi adalah rangkaian nada yang terdengar secara berurutan.' },
-    { prompt: 'Instrumen yang menghasilkan bunyi dari senar yang dipetik atau digesek termasuk keluarga…', answer: 'Strings', options: ['Winds', 'Strings', 'Percussion', 'Voice'], explanation: 'Gitar, biola, cello, dan bass merupakan contoh instrumen bersenar.' }
+  /* ── audio ── */
+  let timers = [];
+  const later = (fn, ms) => { timers.push(window.setTimeout(fn, ms)); };
+  function clearTimers() { timers.forEach(t => window.clearTimeout(t)); timers = []; }
+  function tone(inst, midi, dur, vel) {
+    try {
+      if (window.TSWAudio && typeof window.TSWAudio.note === 'function') {
+        const h = window.TSWAudio.note(inst, midi, { dur: dur || 1.2, vel: vel == null ? 0.8 : vel });
+        if (h) activeHandles.push(h);
+        return true;
+      }
+    } catch (e) { console.warn(e); }
+    audioWarn();
+    return false;
+  }
+  function drum(type) {
+    try { if (window.TSWInstruments && window.TSWInstruments.drumSound) { window.TSWInstruments.drumSound(type); return true; } } catch (e) {}
+    audioWarn(); return false;
+  }
+  function audioWarn() { const a = $('lpAudio'); if (a) a.textContent = 'Audio instrumen belum siap. Pastikan instruments.js termuat dan koneksi internet aktif, lalu coba lagi.'; }
+  function preload(names) { try { names.forEach(n => window.TSWInstruments && window.TSWInstruments.loadBank && window.TSWInstruments.loadBank(n)); } catch (e) {} }
+  const INST_LABEL = { piano: 'Piano', steel: 'Gitar akustik', clean: 'Gitar listrik', violin: 'Biola' };
+
+  /* ── gambar: keyboard satu oktaf (C–B + C) dengan satu tuts disorot ── */
+  function keyboardSvg(pc) {
+    const white = [0, 2, 4, 5, 7, 9, 11], blackAfter = { 0: 1, 1: 3, 3: 6, 4: 8, 5: 10 };
+    let s = '<svg viewBox="0 0 330 140" class="lp-kbd" role="img" aria-label="Keyboard satu oktaf, satu tuts disorot. Tentukan namanya.">';
+    white.forEach((p, i) => { s += '<rect x="' + (i * 40 + 5) + '" y="5" width="38" height="125" rx="4" fill="' + (p === pc ? '#D9A93A' : '#FFFFFF') + '" stroke="#14233F" stroke-width="1.5"/>'; });
+    s += '<rect x="' + (7 * 40 + 5) + '" y="5" width="38" height="125" rx="4" fill="#FFFFFF" stroke="#14233F" stroke-width="1.5"/>';
+    Object.keys(blackAfter).forEach(i => { const bp = blackAfter[i]; s += '<rect x="' + ((+i + 1) * 40 - 10 + 5) + '" y="5" width="26" height="78" rx="3" fill="' + (bp === pc ? '#C0524A' : '#14233F') + '" stroke="#0B1426" stroke-width="1.5"/>'; });
+    return s + '</svg>';
+  }
+
+  /* ═════════ READING ═════════ */
+  const FAMILIES = {
+    Strings: ['gitar', 'biola', 'cello', 'harpa', 'kontrabas', 'ukulele', 'viola'],
+    Winds: ['flute', 'klarinet', 'saksofon', 'oboe', 'trompet', 'trombon', 'tuba', 'French horn', 'recorder'],
+    Percussion: ['snare drum', 'cymbal', 'xylophone', 'timpani', 'tamborin', 'kick drum', 'marimba', 'triangle'],
+    Keyboard: ['piano', 'organ', 'harpsichord', 'celesta', 'synthesizer'],
+    Voice: ['soprano', 'alto', 'tenor', 'bass (penyanyi)', 'paduan suara']
+  };
+  const PRODUCE = [
+    ['gitar', 'Senar bergetar ketika dipetik atau digenjreng'],
+    ['biola', 'Senar bergetar ketika digesek dengan bow'],
+    ['flute', 'Udara ditiup melintasi lubang dan menggetarkan kolom udara'],
+    ['klarinet', 'Reed bergetar ketika udara ditiup'],
+    ['trompet', 'Bibir pemain bergetar di dalam mouthpiece'],
+    ['snare drum', 'Membran (kulit drum) dipukul sehingga bergetar'],
+    ['piano', 'Hammer memukul senar ketika tuts ditekan'],
+    ['xylophone', 'Bilah kayu atau logam dipukul sehingga bergetar'],
+    ['penyanyi', 'Pita suara bergetar ketika udara dari paru-paru melewatinya'],
+    ['cello', 'Senar bergetar ketika digesek dengan bow']
+  ];
+  const ELEMENTS = [
+    ['pitch', 'tinggi-rendahnya nada', 'pitch'], ['dynamics', 'keras-lembutnya bunyi', 'elements'], ['tempo', 'cepat-lambatnya musik', 'elements'],
+    ['timbre', 'warna atau karakter suara', 'elements'], ['duration', 'lama sebuah bunyi ditahan', 'elements'], ['rhythm', 'pola ketukan dan jeda dalam waktu', 'elements'],
+    ['melody', 'rangkaian nada yang terdengar berurutan', 'elements'], ['harmony', 'beberapa nada yang terdengar bersamaan', 'elements'],
+    ['texture', 'cara melodi dan harmoni disusun bersama', 'elements'], ['form', 'susunan bagian musik seperti intro, verse, chorus, outro', 'elements']
+  ];
+  const ENHARM = { 'C♯': 'D♭', 'D♯': 'E♭', 'F♯': 'G♭', 'G♯': 'A♭', 'A♯': 'B♭' };
+  const FLATS = ['D♭', 'E♭', 'G♭', 'A♭', 'B♭'];
+  const SHARPS = ['C♯', 'D♯', 'F♯', 'G♯', 'A♯'];
+  const GSTR = [['E rendah', 40], ['A', 45], ['D', 50], ['G', 55], ['B', 59], ['E tinggi', 64]];
+
+  const readingGens = [
+    function nextNote() { const i = rnd(0, 6), n = natural[i];
+      return choice('alphabet', 'Dalam alfabet musik, nada apa yang muncul tepat setelah ' + n + '?', natural[(i + 1) % 7], natural, 'Urutan natural notes: C–D–E–F–G–A–B, lalu kembali ke C pada octave berikutnya.'); },
+    function prevNote() { const i = rnd(0, 6), n = natural[i];
+      return choice('alphabet', 'Nada apa yang muncul tepat sebelum ' + n + ' dalam alfabet musik?', natural[(i + 6) % 7], natural, 'Urutannya C–D–E–F–G–A–B. Sebelum C adalah B dari octave di bawahnya.'); },
+    function stepsNote() { const i = rnd(0, 6), k = rnd(2, 4);
+      return choice('alphabet', 'Mulai dari ' + natural[i] + ', naik ' + k + ' nama huruf (hitung ' + natural[i] + ' sebagai 0). Sampai di nada…', natural[(i + k) % 7], natural, 'Hitung maju ' + k + ' langkah pada urutan C–D–E–F–G–A–B, dan kembali ke C setelah B.'); },
+    function keyboardWhite() { const pc = pickOne([0, 2, 4, 5, 7, 9, 11]);
+      return choice('keyboard', 'Tuts putih yang disorot pada keyboard di bawah adalah nada…', NAMES_SHARP[pc], natural, 'Cari kelompok dua tuts hitam: tuts putih di kirinya adalah C. Dari sana lanjutkan C–D–E; kelompok tiga tuts hitam membantumu menemukan F–G–A–B.',
+        { visual: keyboardSvg(pc), after: () => tone('piano', 60 + pc, 1.4) }); },
+    function keyboardBlack() { const pc = pickOne([1, 3, 6, 8, 10]);
+      return choice('keyboard', 'Tuts hitam yang disorot adalah… (gunakan nama dengan sharp)', NAMES_SHARP[pc], SHARPS, 'Tuts hitam di kanan sebuah tuts putih adalah sharp (♯) dari nada putih itu. ' + NAMES_SHARP[pc] + ' juga bisa disebut ' + ENHARM[NAMES_SHARP[pc]] + '.',
+        { visual: keyboardSvg(pc), after: () => tone('piano', 60 + pc, 1.4) }); },
+    function enharmonic() { const s = pickOne(SHARPS);
+      return choice('keyboard', s + ' memiliki nama lain (enharmonic) yaitu…', ENHARM[s], FLATS, 'Satu tuts hitam bisa punya dua nama: ' + s + ' = ' + ENHARM[s] + '. Nadanya sama, hanya penulisannya berbeda.'); },
+    function semitoneUp() { const i = rnd(0, 6), pc = naturalPitchClasses[i], t = (pc + 1) % 12;
+      return choice('pitch', 'Satu semitone (setengah langkah) di atas ' + natural[i] + ' adalah…', NAMES_SHARP[t], NAMES_SHARP, natural[i] === 'E' || natural[i] === 'B' ? 'Antara E–F dan B–C tidak ada tuts hitam, jadi jaraknya sudah satu semitone.' : 'Sharp menaikkan nada satu semitone, dan tuts hitam berada tepat di antara dua tuts putih tersebut.'); },
+    function semitoneDown() { const i = rnd(0, 6), pc = naturalPitchClasses[i], t = (pc + 11) % 12;
+      return choice('pitch', 'Satu semitone di bawah ' + natural[i] + ' adalah…', NAMES_SHARP[t], NAMES_SHARP, 'Turun satu semitone berarti bergerak ke tuts terdekat di sebelah kiri, baik putih maupun hitam.'); },
+    function octaveFacts() {
+      const T = [
+        ['Berapa jumlah semitone dalam satu octave?', '12', ['7', '8', '10', '12', '14'], 'Satu octave berisi 12 semitone: 7 tuts putih + 5 tuts hitam pada piano.'],
+        ['Berapa nama huruf natural dalam alfabet musik?', '7', ['5', '6', '7', '8', '12'], 'Nama natural: C, D, E, F, G, A, B.'],
+        ['C4 dan C5 memiliki hubungan…', 'Octave', ['Octave', 'Timbre', 'Semitone', 'Chord'], 'Dua nada bernama sama pada register berbeda berjarak satu octave.'],
+        ['Pada piano, pola tuts hitam yang berulang adalah…', 'Kelompok 2 dan 3', ['Kelompok 2 dan 3', 'Kelompok 1 dan 4', 'Semua berpasangan', 'Selalu berkelompok 5'], 'Dua dan tiga tuts hitam berulang di setiap octave dan membantu menemukan posisi nada.']
+      ]; const t = pickOne(T);
+      return choice('keyboard', t[0], t[1], t[2], t[3]); },
+    function frequency() { const k = rnd(0, 3);
+      if (k === 0) return choice('pitch', 'Nada dengan frekuensi lebih tinggi akan terdengar…', 'Lebih tinggi (pitch naik)', ['Lebih tinggi (pitch naik)', 'Lebih rendah', 'Lebih keras saja', 'Berubah timbre saja'], 'Frekuensi adalah jumlah getaran per detik. Semakin cepat getarannya, semakin tinggi pitch.');
+      if (k === 1) return choice('pitch', 'Nada standar A4 untuk menyetel instrumen memiliki frekuensi…', '440 Hz', ['220 Hz', '261 Hz', '440 Hz', '880 Hz', '523 Hz'], 'A4 = 440 Hz adalah acuan penyetelan standar.');
+      const f = pickOne([110, 196, 220, 262, 330, 440]), up = Math.random() < 0.6;
+      return choice('pitch', 'Nada satu octave ' + (up ? 'di atas' : 'di bawah') + ' ' + (up ? f : f * 2) + ' Hz memiliki frekuensi…', (up ? f * 2 : f) + ' Hz', [(up ? f * 2 : f) + ' Hz', (up ? f * 3 : f * 3) + ' Hz', (up ? f * 1.5 : f / 2) + ' Hz', (up ? f + 100 : f * 4) + ' Hz', (up ? f / 2 : f + 50) + ' Hz'], 'Naik satu octave berarti frekuensi dikali 2, turun satu octave berarti dibagi 2.'); },
+    function families() { const fam = pickOne(Object.keys(FAMILIES)), ins = pickOne(FAMILIES[fam]);
+      return choice('families', ins.charAt(0).toUpperCase() + ins.slice(1) + ' termasuk keluarga instrumen…', fam, Object.keys(FAMILIES), 'Strings: senar. Winds: tiupan. Percussion: dipukul atau digoyang. Keyboard: bertuts. Voice: suara manusia.'); },
+    function familyReverse() { const fam = pickOne(Object.keys(FAMILIES)), others = Object.keys(FAMILIES).filter(f => f !== fam), ans = pickOne(FAMILIES[fam]);
+      const wrong = others.map(o => pickOne(FAMILIES[o]));
+      return choice('families', 'Manakah yang termasuk keluarga ' + fam + '?', ans, wrong.concat([ans]), ans + ' termasuk ' + fam + '; pengecoh berasal dari keluarga lain.'); },
+    function production() { const p = pickOne(PRODUCE);
+      return choice('production', 'Bagaimana ' + p[0] + ' menghasilkan bunyi?', p[1], PRODUCE.map(x => x[1]), 'Hampir semua bunyi musik berasal dari getaran. Yang berbeda adalah apa yang digetarkan: ' + p[1].toLowerCase() + '.'); },
+    function elementDef() { const e = pickOne(ELEMENTS);
+      if (Math.random() < 0.5) return choice(e[2], 'Unsur musik yang berkaitan dengan ' + e[1] + ' disebut…', e[0], ELEMENTS.map(x => x[0]), e[0].charAt(0).toUpperCase() + e[0].slice(1) + ' = ' + e[1] + '.');
+      return choice(e[2], 'Apa arti "' + e[0] + '" dalam musik?', e[1], ELEMENTS.map(x => x[1]), e[0].charAt(0).toUpperCase() + e[0].slice(1) + ' = ' + e[1] + '.'); },
+    function textureQ() {
+      const T = [
+        ['Beberapa nada dibunyikan bersamaan disebut…', 'Harmony', ['Harmony', 'Melody', 'Rhythm', 'Tempo'], 'Harmony adalah nada-nada yang terdengar bersamaan; melody berurutan.'],
+        ['Satu garis melodi tanpa iringan memiliki tekstur…', 'Monophonic', ['Monophonic', 'Homophonic', 'Polyphonic', 'Silent'], 'Monophonic: hanya satu garis melodi.'],
+        ['Melodi utama dengan iringan akor memiliki tekstur…', 'Homophonic', ['Monophonic', 'Homophonic', 'Polyphonic', 'Staccato'], 'Homophonic: satu melodi dominan dengan iringan.'],
+        ['Beberapa melodi independen yang dimainkan bersamaan memiliki tekstur…', 'Polyphonic', ['Monophonic', 'Homophonic', 'Polyphonic', 'Dynamic'], 'Polyphonic: beberapa garis melodi berjalan sendiri-sendiri sekaligus.']
+      ]; const t = pickOne(T); return choice('elements', t[0], t[1], t[2], t[3]); },
+    function guitarFret() { const s = pickOne(GSTR.slice(0, 5)), f = rnd(1, 7), m = s[1] + f;
+      return choice('guitar', 'Pada gitar standar, senar ' + s[0] + ' ditekan di fret ' + f + '. Nada yang berbunyi adalah…', NAMES_SHARP[m % 12], NAMES_SHARP, 'Setiap naik satu fret, pitch naik satu semitone. Mulai dari nada senar kosong lalu hitung ' + f + ' semitone.', { after: () => tone('steel', m, 1.8) }); },
+    function guitarFacts() {
+      const T = [
+        ['Urutan senar gitar standar dari yang paling tebal ke paling tipis adalah…', 'E – A – D – G – B – E', ['E – A – D – G – B – E', 'C – D – E – F – G – A', 'A – B – C – D – E – F', 'G – D – A – E – B – F'], 'Tuning standar: E A D G B E.'],
+        ['Naik satu fret pada gitar berarti pitch naik…', 'Satu semitone', ['Satu semitone', 'Satu octave', 'Dua octave', 'Tidak berubah'], 'Jarak antar-fret adalah satu semitone.'],
+        ['Senar gitar yang kosong (open string) berarti…', 'Dipetik tanpa menekan fret', ['Dipetik tanpa menekan fret', 'Senar putus', 'Ditekan di fret 12', 'Digesek dengan bow'], 'Open string dibunyikan tanpa jari menekan fret.']
+      ]; const t = pickOne(T); return choice('guitar', t[0], t[1], t[2], t[3]); }
   ];
 
-  function makeReadingQuestion() {
-    const source = readingBank[Math.floor(Math.random() * readingBank.length)];
-    return { ...source, type: 'choice', options: shuffleOptions(source.answer, source.options) };
-  }
+  /* ═════════ LISTENING ═════════ */
+  const listeningGens = [
+    function contour() {
+      const a = rnd(55, 77), d = pickOne([-7, -5, -3, -2, 0, 2, 3, 5, 7]), b = a + d, ans = d === 0 ? 'Sama' : d > 0 ? 'Lebih tinggi' : 'Lebih rendah';
+      return { kind: 'choice', topic: 'contour', prompt: 'Dengarkan dua nada. Dibanding nada pertama, nada kedua terdengar…', ...makeChoices(ans, ['Sama', 'Lebih tinggi', 'Lebih rendah'], 3),
+        explanation: d === 0 ? 'Kedua nada memiliki pitch yang sama.' : d > 0 ? 'Nada kedua memiliki frekuensi lebih tinggi, jadi pitch naik.' : 'Nada kedua memiliki frekuensi lebih rendah, jadi pitch turun.',
+        play: () => { tone('piano', a, 1.1); later(() => tone('piano', b, 1.1), 1000); } }; },
+    function interval() {
+      const near = Math.random() < 0.5, d = near ? pickOne([1, 2]) : pickOne([7, 8, 9, 12]), a = rnd(55, 70), b = Math.random() < 0.5 ? a + d : a - d, ans = near ? 'Dekat' : 'Jauh';
+      return { kind: 'choice', topic: 'interval', prompt: 'Dengarkan dua nada. Seberapa jauh jarak keduanya?', ...makeChoices(ans, ['Dekat', 'Jauh'], 2),
+        explanation: near ? 'Jaraknya hanya ' + d + ' semitone, jadi terdengar dekat.' : 'Jaraknya ' + d + ' semitone, jadi terdengar jauh.',
+        play: () => { tone('piano', a, 1.1); later(() => tone('piano', b, 1.1), 1000); } }; },
+    function melodyShape() {
+      const base = rnd(58, 68), P = { 'Naik': [0, 3, 7], 'Turun': [7, 3, 0], 'Naik lalu turun': [0, 5, 0], 'Turun lalu naik': [5, 0, 5] }, k = pickOne(Object.keys(P)), seq = P[k].map(x => base + x);
+      return { kind: 'choice', topic: 'melodyshape', prompt: 'Dengarkan tiga nada berurutan. Arah melodinya…', ...makeChoices(k, Object.keys(P), 4),
+        explanation: 'Perhatikan apakah tiap nada lebih tinggi atau lebih rendah dari nada sebelumnya.',
+        play: () => seq.forEach((m, i) => later(() => tone('piano', m, 0.9), i * 750)) }; },
+    function noteName() {
+      const pc = pickOne([0, 2, 4, 5, 7, 9, 11]), m = 60 + pc, ans = NAMES_SHARP[pc];
+      return { kind: 'choice', topic: 'notename', prompt: 'Dengarkan nada ini. Tekan "Nada acuan C" bila perlu sebagai pembanding. Nada apa ini?', ...makeChoices(ans, natural, 4),
+        explanation: 'Nada yang kamu dengar adalah ' + ans + '4. Bandingkan dengan C4: semakin jauh dari C, semakin tinggi terdengar.',
+        play: () => tone('piano', m, 1.6), ref: () => tone('piano', 60, 1.4), refLabel: 'Nada acuan C' }; },
+    function octave() {
+      const pc = pickOne([0, 2, 4, 5, 7, 9, 11]), a = 60 + pc, k = pickOne(['up', 'down', 'diff']);
+      const b = k === 'up' ? a + 12 : k === 'down' ? a - 12 : a + pickOne([2, 3, 4, 5, 7]);
+      const A = 'Nama sama, satu octave lebih tinggi', B = 'Nama sama, satu octave lebih rendah', C = 'Nama nada berbeda', ans = k === 'up' ? A : k === 'down' ? B : C;
+      return { kind: 'choice', topic: 'octave', prompt: 'Dengarkan dua nada. Bagaimana hubungan nada kedua dengan nada pertama?', ...makeChoices(ans, [A, B, C], 3),
+        explanation: k === 'diff' ? 'Kedua nada berbeda nama, bukan octave.' : 'Dua nada bernama sama terdengar "mirip" tetapi berbeda register; frekuensinya berkelipatan dua.',
+        play: () => { tone('piano', a, 1.2); later(() => tone('piano', b, 1.2), 1100); } }; },
+    function timbre() {
+      const ins = pickOne(['piano', 'steel', 'violin', 'clean']), m = pickOne([55, 60, 64, 67]), all = ['piano', 'steel', 'violin', 'clean'].map(i => INST_LABEL[i]);
+      return { kind: 'choice', topic: 'timbre', prompt: 'Dengarkan instrumen ini. Instrumen apa yang berbunyi?', ...makeChoices(INST_LABEL[ins], all, 4),
+        explanation: 'Pitch bisa sama, tetapi timbre (warna suara) membedakan piano, gitar, dan biola. Bila sampel belum termuat, suara memakai simulasi sintetis.',
+        play: () => tone(ins, m, 2.0), preload: ['piano', 'steel', 'violin', 'clean'] }; },
+    function texture() {
+      const base = rnd(55, 68), iv = pickOne([4, 7]), harm = Math.random() < 0.5, ans = harm ? 'Harmony (bersamaan)' : 'Melody (berurutan)';
+      return { kind: 'choice', topic: 'texture', prompt: 'Dengarkan dua nada. Apakah ini melody atau harmony?', ...makeChoices(ans, ['Harmony (bersamaan)', 'Melody (berurutan)'], 2),
+        explanation: harm ? 'Dua nada terdengar bersamaan = harmony.' : 'Dua nada terdengar satu demi satu = melody.',
+        play: () => { if (harm) { tone('piano', base, 1.8); tone('piano', base + iv, 1.8); } else { tone('piano', base, 1.0); later(() => tone('piano', base + iv, 1.0), 900); } } }; },
+    function dynamics() {
+      const m = rnd(57, 69), loud2 = Math.random() < 0.5, ans = loud2 ? 'Lebih keras' : 'Lebih lembut', v1 = loud2 ? 0.2 : 0.95, v2 = loud2 ? 0.95 : 0.2;
+      return { kind: 'choice', topic: 'dynamics', prompt: 'Dengarkan dua nada yang sama. Nada kedua terdengar…', ...makeChoices(ans, ['Lebih keras', 'Lebih lembut', 'Sama keras'], 3),
+        explanation: 'Dynamics adalah keras-lembutnya bunyi. Pitch tetap sama, hanya volumenya berubah.',
+        play: () => { tone('piano', m, 1.2, v1); later(() => tone('piano', m, 1.2, v2), 1100); } }; },
+    function tempo() {
+      const slow = [0, 900, 1800, 2700], fast = [0, 380, 760, 1140], second = Math.random() < 0.5 ? 'fast' : 'slow', ans = second === 'fast' ? 'Lebih cepat' : 'Lebih lambat';
+      const A = second === 'fast' ? slow : fast, B = second === 'fast' ? fast : slow;
+      return { kind: 'choice', topic: 'tempo', prompt: 'Dengarkan dua rangkaian ketukan. Rangkaian kedua terdengar…', ...makeChoices(ans, ['Lebih cepat', 'Lebih lambat', 'Sama cepat'], 3),
+        explanation: 'Tempo adalah cepat-lambatnya ketukan, diukur dalam BPM. Jarak antar-ketukan yang lebih pendek berarti tempo lebih cepat.',
+        play: () => { A.forEach(t => later(() => drum('hihat'), t)); B.forEach(t => later(() => drum('hihat'), 3900 + t)); } }; },
+    function percussion() {
+      const T = { kick: 'Kick drum', snare: 'Snare drum', hihat: 'Hi-hat', crash: 'Cymbal crash' }, k = pickOne(Object.keys(T));
+      return { kind: 'choice', topic: 'percussion', prompt: 'Dengarkan perkusi ini. Bunyi apa yang kamu dengar?', ...makeChoices(T[k], Object.keys(T).map(x => T[x]), 4),
+        explanation: 'Kick: rendah dan berdebum. Snare: renyah. Hi-hat: tipis dan singkat. Crash: panjang dan berdesis. (Suara drum adalah simulasi sintetis.)',
+        play: () => drum(k) }; }
+  ];
 
-  function makeListeningQuestion() {
-    const type = Math.random() < 0.72 ? 'contour' : 'timbre';
-    if (type === 'contour') {
-      const first = 60 + Math.floor(Math.random() * 8);
-      const movement = [-3, -2, 0, 2, 3][Math.floor(Math.random() * 5)];
-      const second = first + movement;
-      const answer = movement === 0 ? 'Sama' : movement > 0 ? 'Lebih tinggi' : 'Lebih rendah';
-      return {
-        type, first, second, answer,
-        options: shuffleOptions(answer, ['Sama', 'Lebih tinggi', 'Lebih rendah']),
-        prompt: 'Dengarkan dua nada. Bagaimana pitch nada kedua dibandingkan dengan nada pertama?',
-        explanation: movement === 0 ? 'Kedua nada memiliki pitch yang sama.' : movement > 0 ? 'Nada kedua memiliki pitch lebih tinggi.' : 'Nada kedua memiliki pitch lebih rendah.'
-      };
+  /* ═════════ SPEAKING (mikrofon) ═════════ */
+  const speakingGens = [
+    function matchPitch() {
+      const midi = pickOne([60, 62, 64, 65, 67, 69, 71]);
+      return { kind: 'sing', topic: 'match', midi, prompt: 'Dengarkan nada acuan, lalu humming nada yang sama.', target: noteName(midi),
+        explanation: 'Pitch matching berarti menghasilkan nada sedekat mungkin dengan nada acuan. Octave mana pun diterima agar sesuai rentang suaramu.',
+        play: () => tone('piano', midi, 2.2) }; },
+    function singInterval() {
+      const midi = pickOne([60, 62, 64, 65, 67]), up = pickOne([2, 4, 5, 7]), target = midi + up;
+      return { kind: 'sing', topic: 'interval', midi: target, prompt: 'Dengarkan nada acuan ' + noteName(midi) + '. Lalu nyanyikan nada ' + up + ' semitone di atasnya (' + NAMES_SHARP[target % 12] + ').', target: NAMES_SHARP[target % 12],
+        explanation: 'Dari ' + NAMES_SHARP[midi % 12] + ' naik ' + up + ' semitone sampai ' + NAMES_SHARP[target % 12] + '. Octave mana pun diterima.',
+        play: () => tone('piano', midi, 2.2), playTarget: () => tone('piano', target, 2.2) }; }
+  ];
+
+  const GENS = { reading: readingGens, listening: listeningGens, speaking: speakingGens };
+  let q = null, answered = false, lastGen = -1, history = [], sess = { n: 0, ok: 0, streak: 0 }, busy = false;
+
+  function newQuestion() {
+    const gens = GENS[currentMode];
+    let cand = null;
+    for (let tries = 0; tries < 40; tries++) {
+      const gi = rnd(0, gens.length - 1);
+      if (gi === lastGen && gens.length > 1 && tries < 25) continue;
+      cand = gens[gi]();
+      const sig = currentMode + '|' + cand.prompt + '|' + (cand.options ? cand.options[cand.correct] : '') + '|' + (cand.midi || '') + '|' + (cand.visual ? cand.visual.length : '');
+      lastGen = gi;
+      if (history.indexOf(sig) === -1 || tries >= 39) { history.push(sig); if (history.length > 14) history.shift(); return cand; }
     }
-    const firstInstrument = ['piano', 'guitar', 'violin'][Math.floor(Math.random() * 3)];
-    let secondInstrument = ['piano', 'guitar', 'violin'][Math.floor(Math.random() * 3)];
-    while (secondInstrument === firstInstrument) secondInstrument = ['piano', 'guitar', 'violin'][Math.floor(Math.random() * 3)];
-    return {
-      type, first: 64, second: 64, firstInstrument, secondInstrument,
-      answer: 'Timbre', options: ['Pitch', 'Timbre', 'Tempo'],
-      prompt: 'Dua instrumen memainkan nada yang sama. Unsur apa yang paling jelas berubah?',
-      explanation: 'Pitch targetnya sama. Yang berubah adalah timbre atau karakter warna suara instrumen.'
-    };
+    return cand || gens[0]();
   }
 
-  function playListeningQuestion(question) {
-    stopLessonAudio();
-    if (question.type === 'contour') {
-      playNote(question.first, 'piano', 1.1);
-      window.setTimeout(() => playNote(question.second, 'piano', 1.1), 850);
-    } else {
-      playNote(question.first, question.firstInstrument === 'guitar' ? 'steel' : question.firstInstrument, 1.4);
-      window.setTimeout(() => playNote(question.second, question.secondInstrument === 'guitar' ? 'steel' : question.secondInstrument, 1.4), 1250);
-    }
+  function moduleStatsNow() { return window.TSWProgress ? window.TSWProgress.moduleStats(LEVEL, currentMode) : null; }
+
+  function scoreBar() {
+    const s = moduleStatsNow(); if (!s) return '';
+    const p = s.recentN ? s.recentPct : 0;
+    return '<div class="lp-score"><span>Skor terkini <b>' + p + '%</b> · ' + s.recentN + ' jawaban terakhir · target ≥70% dari minimal 10 jawaban</span>' +
+      '<div class="lp-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + p + '"><i style="width:' + p + '%"></i><u></u></div></div>';
   }
 
-  function makeSpeakingQuestion() {
-    const midi = [60, 62, 64, 65, 67, 69, 71][Math.floor(Math.random() * 7)];
-    return {
-      type: 'pitch-match',
-      midi,
-      answer: noteName(midi),
-      prompt: 'Dengarkan nada acuan, lalu coba humming dengan pitch yang sama.',
-      explanation: 'Pitch matching berarti menghasilkan nada yang sedekat mungkin dengan nada acuan.'
-    };
-  }
-
-  function renderQuestionHeader() {
-    const total = sessions[currentMode];
-    return '<div class="l-meta"><span>SOAL ' + (session.index + 1) + ' / ' + total + '</span><span>BENAR ' + session.correct + '</span></div>' +
-      '<div class="l-bar" role="progressbar" aria-valuemin="0" aria-valuemax="' + total + '" aria-valuenow="' + session.index + '"><i style="width:' + (session.index / total * 100) + '%"></i></div>';
-  }
+  const TOPIC_LABEL = () => { const c = window.TSWProgress && window.TSWProgress.config[LEVEL]; return c ? c.modules[currentMode].topics : {}; };
 
   function renderQuestion() {
-    if (!session || !session.questions.length) return;
-    if (session.index >= session.questions.length) return finishSession();
-    const q = session.questions[session.index];
-    let content = renderQuestionHeader() + '<p class="l-prompt">' + q.prompt + '</p>';
-    if (currentMode === 'reading') {
-      content += '<div class="l-stage"><div class="l-reading-card"><span class="l-reading-symbol">♪</span><small>FOUNDATION CONCEPT</small><b>READ &amp; UNDERSTAND</b></div></div>';
-      content += renderOptions(q);
-    } else if (currentMode === 'listening') {
-      content += '<div class="l-stage"><button class="l-play l-big-play" type="button" id="playQuestion">▶ Dengarkan contoh audio</button></div>';
-      content += '<p class="l-hint">Audio tidak diputar otomatis. Tekan tombol untuk mendengar contoh, dan ulangi jika perlu.</p>';
-      content += renderOptions(q);
-    } else {
-      content += '<div class="l-stage"><div class="l-target-note"><span>' + q.answer + '</span><small>TARGET PITCH</small></div></div>';
-      content += '<div class="l-speaking-actions"><button class="l-play" type="button" id="playTarget">▶ Dengarkan nada acuan</button><button class="l-play" type="button" id="startPitch">● Mulai humming</button></div>';
-      content += '<p class="l-hint">Mikrofon hanya aktif setelah tombol ditekan dan izin diberikan. Suara dianalisis sementara di perangkat, tidak direkam atau diunggah.</p>';
+    stopLessonAudio(); clearTimers(); busy = false;
+    q = newQuestion(); answered = false; q.locked = false;
+    if (q.preload) preload(q.preload); else if (currentMode === 'reading') preload(['piano', 'steel']); else preload(['piano']);
+    const tl = TOPIC_LABEL()[q.topic] || q.topic;
+    let h = '<div class="lp-card"><div class="lp-top"><span class="lp-chip">' + currentMode.toUpperCase() + ' · ' + esc(tl) + '</span>' +
+      '<span class="lp-count">Soal ke-' + (sess.n + 1) + ' · benar ' + sess.ok + (sess.streak > 1 ? ' · 🔥 ' + sess.streak + ' beruntun' : '') + '</span></div><div class="lp-body">' + scoreBar() +
+      '<p class="lp-prompt">' + esc(q.prompt) + '</p>';
+    if (q.visual) h += '<div class="lp-visual">' + q.visual + '</div>';
+    if (q.kind === 'choice' && currentMode === 'listening') {
+      h += '<div class="lp-audiorow"><button type="button" class="lp-play" id="lpPlay">▶ Dengarkan' + (q.topic === 'timbre' ? ' instrumen' : ' soal') + '</button>' +
+        (q.ref ? '<button type="button" class="lp-play lp-alt" id="lpRef">♪ ' + esc(q.refLabel) + '</button>' : '') + '</div>' +
+        '<p class="lp-hint" id="lpAudio">Tekan tombol untuk mendengar. Boleh diulang sebanyak yang kamu mau.</p>';
     }
-    $('lab').innerHTML = content + '<p class="l-fb" id="feedback" aria-live="polite"></p><div id="nextQuestion"></div>';
-    if (currentMode === 'reading' || currentMode === 'listening') {
-      $('answers').addEventListener('click', event => {
-        const button = event.target.closest('button[data-answer]');
-        if (!button || button.disabled) return;
-        answerQuestion(button.dataset.answer === String(q.answer), button, q.explanation);
-      });
+    if (q.kind === 'sing') {
+      h += '<div class="lp-target"><span>' + esc(q.target) + '</span><small>NADA TARGET</small></div><div class="lp-audiorow"><button type="button" class="lp-play" id="lpPlay">▶ Dengarkan nada acuan</button>' +
+        (q.playTarget ? '<button type="button" class="lp-play lp-alt" id="lpTarget">♪ Dengarkan nada target</button>' : '') +
+        '<button type="button" class="lp-play lp-rec" id="lpMic">● Mulai humming (3 dtk)</button></div>' +
+        '<p class="lp-hint" id="lpAudio">Mikrofon hanya aktif setelah kamu menekan tombol dan memberi izin. Suara dianalisis sementara di perangkatmu dan tidak direkam atau diunggah.</p>';
     }
-    if ($('playQuestion')) $('playQuestion').addEventListener('click', () => playListeningQuestion(q));
-    if ($('playTarget')) $('playTarget').addEventListener('click', () => playNote(q.midi, 'piano', 1.8));
-    if ($('startPitch')) $('startPitch').addEventListener('click', () => runPitchMatch(q));
+    if (q.kind === 'choice') h += '<div class="lp-options" id="answers" style="--n:' + q.options.length + '">' + q.options.map((o, i) => '<button type="button" data-i="' + i + '"><kbd>' + (i + 1) + '</kbd>' + esc(o) + '</button>').join('') + '</div>';
+    h += '<p class="lp-fb" id="feedback" role="status" aria-live="polite"></p><div class="lp-actions"><button type="button" class="lp-skip" id="lpSkip">Lewati soal (tidak dihitung)</button><button type="button" class="lp-next" id="lpNext" hidden>Soal berikutnya →</button></div></div></div>';
+    $('lab').innerHTML = h;
+    $('lab').classList.remove('lp-in'); void $('lab').offsetWidth; $('lab').classList.add('lp-in');
+    if ($('lpPlay')) $('lpPlay').addEventListener('click', () => { stopLessonAudio(); clearTimers(); q.play(); });
+    if ($('lpRef')) $('lpRef').addEventListener('click', () => { stopLessonAudio(); clearTimers(); q.ref(); });
+    if ($('lpTarget')) $('lpTarget').addEventListener('click', () => { stopLessonAudio(); q.playTarget(); });
+    if ($('lpMic')) $('lpMic').addEventListener('click', () => runPitchMatch(q));
+    if ($('answers')) $('answers').addEventListener('click', e => { const b = e.target.closest('button[data-i]'); if (b && !b.disabled) onChoice(+b.dataset.i, b); });
+    $('lpSkip').addEventListener('click', () => { renderQuestion(); });
+    $('lpNext').addEventListener('click', renderQuestion);
   }
 
-  function renderOptions(q) {
-    return '<div class="l-ans" id="answers">' + q.options.map(option =>
-      '<button type="button" data-answer="' + String(option).replace(/"/g, '&quot;') + '">' + option + '</button>'
-    ).join('') + '</div>';
+  function onChoice(i, btn) { finishAnswer(i === q.correct, q.explanation, btn); }
+
+  function finishAnswer(correct, explanation, btn, prefix) {
+    if (answered) return; answered = true; q.locked = true;
+    sess.n++; if (correct) { sess.ok++; sess.streak++; } else sess.streak = 0;
+    if (window.TSWProgress) window.TSWProgress.record(LEVEL, currentMode, q.topic, correct);
+    document.querySelectorAll('#answers button').forEach((b, i) => { b.disabled = true; if (i === q.correct) b.classList.add('ok'); });
+    if (btn) btn.classList.add(correct ? 'ok' : 'bad');
+    const fb = $('feedback'); fb.className = 'lp-fb ' + (correct ? 'ok' : 'err');
+    fb.textContent = (correct ? 'Tepat. ' : 'Belum tepat. ') + (prefix ? prefix + ' ' : '') + explanation;
+    $('lpSkip').hidden = true; const nx = $('lpNext'); nx.hidden = false; nx.focus();
+    const top = document.querySelector('.lp-count'); if (top) top.textContent = 'Soal ke-' + sess.n + ' · benar ' + sess.ok + (sess.streak > 1 ? ' · 🔥 ' + sess.streak + ' beruntun' : '');
+    const sc = document.querySelector('.lp-score'); if (sc) sc.outerHTML = scoreBar();
+    if (q.after) later(() => q.after(), 350);
+    updateProgress();
+    if (sess.n % 10 === 0) fb.textContent += ' · Checkpoint ' + sess.n + ' soal: ' + sess.ok + ' benar. Lihat rincian kemampuanmu di bawah.';
   }
 
-  function answerQuestion(correct, selectedButton, explanation, detectedName) {
-    if (session.locked) return;
-    session.locked = true;
-    if (correct) session.correct++;
-    const feedback = $('feedback');
-    if (selectedButton) selectedButton.classList.add(correct ? 'ok' : 'bad');
-    const answerButtons = document.querySelectorAll('#answers button');
-    answerButtons.forEach(button => {
-      button.disabled = true;
-      if (button.dataset.answer === String(session.questions[session.index].answer)) button.classList.add('ok');
-    });
-    feedback.className = 'l-fb ' + (correct ? 'ok' : 'err');
-    feedback.textContent = (correct ? 'Tepat. ' : 'Belum tepat. ') + (detectedName ? detectedName + ' · ' : '') + explanation;
-    session.index++;
-    const next = $('nextQuestion');
-    next.innerHTML = '<button class="h-btn l-next" type="button">' +
-      (session.index >= session.questions.length ? 'Lihat hasil' : 'Soal berikutnya') + ' <i>↗</i></button>';
-    next.querySelector('button').addEventListener('click', renderQuestion);
-  }
+  document.addEventListener('keydown', e => {
+    if (!q || e.ctrlKey || e.metaKey || e.altKey) return;
+    const t = e.target; if (t && /INPUT|TEXTAREA|SELECT/.test(t.tagName)) return;
+    if (!$('lab') || !$('lab').contains(document.activeElement) && document.activeElement !== document.body) return;
+    if (!answered && q.kind === 'choice' && /^[1-9]$/.test(e.key)) { const b = document.querySelector('#answers button[data-i="' + (+e.key - 1) + '"]'); if (b) { e.preventDefault(); b.click(); } }
+    else if (answered && (e.key === 'ArrowRight' || e.key === 'n')) { e.preventDefault(); renderQuestion(); }
+  });
 
+  /* ── pitch dari mikrofon (YIN) ── */
   function median(values) {
     const sorted = values.slice().sort((a, b) => a - b);
     return sorted.length ? sorted[Math.floor(sorted.length / 2)] : null;
@@ -568,161 +741,53 @@
     return refinedLag > 0 ? sampleRate / refinedLag : null;
   }
 
+
   async function runPitchMatch(question) {
-    const button = $('startPitch');
-    button.disabled = true;
-    button.textContent = '● Meminta izin mikrofon…';
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      showMicError('Browser ini tidak menyediakan akses mikrofon. Gunakan browser modern melalui HTTPS atau localhost.');
-      button.disabled = false;
-      button.textContent = '● Coba lagi';
-      return;
-    }
+    if (busy || answered) return;
+    const button = $('lpMic'); busy = true; button.disabled = true; button.textContent = '● Meminta izin mikrofon…';
+    const reset = msg => { busy = false; if ($('lpMic')) { $('lpMic').disabled = false; $('lpMic').textContent = '● Coba lagi'; } showMicError(msg); };
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return reset('Browser ini tidak menyediakan akses mikrofon. Gunakan browser modern lewat HTTPS atau localhost. Kamu bisa menekan "Lewati soal".');
     let stream;
     try {
-      stream = await navigator.mediaDevices.getUserMedia({
-        audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false }
-      });
+      stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } });
       activeMicStream = stream;
-      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-      audioContext = audioContext || new AudioContextClass();
+      const AC = window.AudioContext || window.webkitAudioContext;
+      audioContext = audioContext || new AC();
       if (audioContext.state === 'suspended') await audioContext.resume();
-      const analyser = audioContext.createAnalyser();
-      analyser.fftSize = 4096;
-      analyser.smoothingTimeConstant = 0;
-      const source = audioContext.createMediaStreamSource(stream);
-      source.connect(analyser);
-      const buffer = new Float32Array(analyser.fftSize);
-      const readings = [];
-      button.textContent = '● Dengarkan humming…';
-      $('feedback').textContent = 'Humming nada dengan nyaman dan stabil selama beberapa detik.';
+      const analyser = audioContext.createAnalyser(); analyser.fftSize = 4096; analyser.smoothingTimeConstant = 0;
+      const source = audioContext.createMediaStreamSource(stream), buffer = new Float32Array(analyser.fftSize), readings = [];
+      button.textContent = '● Dengarkan humming…'; $('feedback').className = 'lp-fb'; $('feedback').textContent = 'Humming nada dengan stabil selama 3 detik.';
       const started = performance.now();
-      await new Promise(resolve => {
-        const sample = () => {
-          if (performance.now() - started >= 3200) return resolve();
-          analyser.getFloatTimeDomainData(buffer);
-          const hz = detectPitchYIN(buffer, audioContext.sampleRate);
-          if (hz && hz > 0) readings.push(69 + 12 * Math.log2(hz / 440));
-          window.setTimeout(sample, 80);
-        };
-        sample();
-      });
-      const stableMidi = median(readings);
-      stream.getTracks().forEach(track => track.stop());
-      activeMicStream = null;
-      source.disconnect();
-      analyser.disconnect();
-      if (stableMidi == null || readings.length < 5) {
-        $('feedback').textContent = 'Nada belum terdeteksi dengan cukup stabil. Coba lagi di tempat yang lebih tenang dan humming secara berkelanjutan.';
-        button.disabled = false;
-        button.textContent = '● Coba lagi';
-        return;
-      }
-      const nearest = Math.round(stableMidi);
-      const cents = Math.round((stableMidi - nearest) * 100);
-      const target = question.midi;
-      const difference = stableMidi - target;
-      const correct = Math.abs(difference) <= 0.5;
-      const detected = noteName(nearest) + ' (' + (cents > 0 ? '+' : '') + cents + ' cents)';
-      const detail = Math.abs(difference) <= 0.5
-        ? 'Pitch kamu berada dekat dengan nada acuan ' + noteName(target) + '.'
-        : difference > 0
-          ? 'Pitch terdeteksi lebih tinggi dari target ' + noteName(target) + '. Coba turunkan sedikit.'
-          : 'Pitch terdeteksi lebih rendah dari target ' + noteName(target) + '. Coba naikkan sedikit.';
-      answerQuestion(correct, null, detail, 'Terdeteksi ' + detected + '.');
-      button.textContent = 'Humming selesai';
+      await new Promise(resolve => { const sample = () => { if (performance.now() - started >= 3200) return resolve(); analyser.getFloatTimeDomainData(buffer); const hz = detectPitchYIN(buffer, audioContext.sampleRate); if (hz && hz > 0) readings.push(69 + 12 * Math.log2(hz / 440)); window.setTimeout(sample, 80); }; sample(); });
+      stream.getTracks().forEach(t => t.stop()); activeMicStream = null; source.disconnect(); analyser.disconnect();
+      const stable = median(readings);
+      if (stable == null || readings.length < 5) return reset('Nada belum terdeteksi stabil. Coba lagi di tempat tenang dan humming secara berkelanjutan. Percobaan ini tidak dihitung.');
+      /* octave-folded: selisih ke target diukur modulo 12 agar cocok dengan rentang suara siapa pun */
+      let diff = ((stable - question.midi) % 12 + 12) % 12; if (diff > 6) diff -= 12;
+      const nearest = Math.round(stable), cents = Math.round((stable - nearest) * 100), ok = Math.abs(diff) <= 0.6;
+      const detected = 'Terdeteksi ' + noteName(nearest) + ' (' + (cents > 0 ? '+' : '') + cents + ' cents).';
+      const detail = ok ? 'Pitch kamu dekat dengan target ' + question.target + '. ' + question.explanation
+        : (diff > 0 ? 'Pitch terdengar sedikit lebih tinggi dari ' + question.target + '. Turunkan sedikit.' : 'Pitch terdengar sedikit lebih rendah dari ' + question.target + '. Naikkan sedikit.');
+      busy = false; if ($('lpMic')) { $('lpMic').textContent = 'Humming selesai'; $('lpMic').disabled = true; }
+      finishAnswer(ok, detail, null, detected);
     } catch (error) {
-      if (stream) stream.getTracks().forEach(track => track.stop());
-      activeMicStream = null;
-      showMicError(error && error.name === 'NotAllowedError'
-        ? 'Izin mikrofon ditolak. Kamu tetap bisa belajar tanpa mengaktifkan mikrofon.'
-        : 'Mikrofon tidak dapat digunakan saat ini. Periksa izin browser dan coba lagi.');
-      button.disabled = false;
-      button.textContent = '● Coba lagi';
+      if (stream) stream.getTracks().forEach(t => t.stop()); activeMicStream = null;
+      reset(error && error.name === 'NotAllowedError' ? 'Izin mikrofon ditolak. Kamu tetap bisa belajar tanpa mikrofon; tekan "Lewati soal".' : 'Mikrofon tidak dapat digunakan. Periksa izin browser lalu coba lagi.');
     }
   }
-
-  function showMicError(message) {
-    const feedback = $('feedback');
-    if (feedback) {
-      feedback.className = 'l-fb err';
-      feedback.textContent = message;
-    }
-  }
-
-  function startSession() {
-    stopLessonAudio();
-    session = {
-      index: 0,
-      correct: 0,
-      locked: false,
-      questions: Array.from({ length: sessions[currentMode] }, () => {
-        if (currentMode === 'reading') return makeReadingQuestion();
-        if (currentMode === 'listening') return makeListeningQuestion();
-        return makeSpeakingQuestion();
-      })
-    };
-    renderQuestion();
-  }
-
-  function saveScore(mode, percent, points) {
-    const key = 'tsw_score_' + mode;
-    let previous = null;
-    try { previous = JSON.parse(localStorage.getItem(key) || 'null'); } catch (_) {}
-    const oldPercent = previous
-      ? Number(previous.percent != null ? previous.percent : parseFloat(previous.accuracy)) || 0
-      : -1;
-    if (percent < oldPercent) return;
-    const record = mode === 'reading'
-      ? { percent, score: points }
-      : mode === 'listening'
-        ? { accuracy: percent, score: points }
-        : { accuracy: percent + '%', score: points + ' points', band: (percent / 100 * 9).toFixed(1) + ' / 9' };
-    try {
-      localStorage.setItem(key, JSON.stringify(record));
-      localStorage.setItem('tsw_level0_' + mode, JSON.stringify({ percent, points, completedAt: new Date().toISOString() }));
-    } catch (_) {}
-    if (percent >= 70 && window.trackSoundProgress) {
-      try { window.trackSoundProgress(mode); } catch (_) {}
-    }
-  }
+  function showMicError(msg) { const fb = $('feedback'); if (fb) { fb.className = 'lp-fb err'; fb.textContent = msg; } }
 
   function updateProgress() {
-    const holder = $('level0Progress');
-    if (!holder) return;
-    const labels = ['reading', 'listening', 'speaking'];
-    const items = labels.map(mode => {
-      let result = null;
-      try { result = JSON.parse(localStorage.getItem('tsw_level0_' + mode) || 'null'); } catch (_) {}
-      return { mode, percent: result ? Number(result.percent) : 0, completed: !!result && Number(result.percent) >= 70 };
-    });
-    holder.innerHTML = '<p class="l-no">YOUR LEVEL 0 PRACTICE RECORD</p><div class="l-progress-cards">' +
-      items.map(item => '<div><b>' + item.mode.toUpperCase() + '</b><span>' + (item.completed ? 'Completed' : 'In progress') + '</span><i><em style="width:' + Math.max(0, Math.min(100, item.percent)) + '%"></em></i><small>' + item.percent + '% best score</small></div>').join('') +
-      '</div><p class="l-hint">Jalur latihan ditandai selesai jika skor terbaik mencapai minimal 70%. Catatan tersimpan secara lokal di browser ini.</p>';
-  }
-
-  function finishSession() {
-    const total = session.questions.length;
-    const percent = Math.round(session.correct / total * 100);
-    const points = session.correct * 10;
-    saveScore(currentMode, percent, points);
-    $('lab').innerHTML = '<div class="l-result"><p class="l-meta"><span>SESSION COMPLETE</span><span>' + points + ' POINTS</span></p>' +
-      '<div class="l-score">' + percent + '%</div><p class="l-fb">' + session.correct + ' dari ' + total + ' jawaban benar.</p>' +
-      '<p class="l-result-note">' + (percent >= 70 ? 'Bagus. Jalur ini mencapai kriteria penyelesaian Level 0.' : 'Ulangi sesi dengan soal baru untuk memperkuat pemahamanmu. Target penyelesaian adalah 70%.') + '</p>' +
-      '<button class="h-btn" type="button" id="again">Sesi baru, soal baru <i>↗</i></button></div>';
-    $('again').addEventListener('click', startSession);
-    updateProgress();
+    const holder = $('level0Progress'); if (!holder) return;
+    if (window.TSWProgress) window.TSWProgress.renderTracker(holder, LEVEL);
+    else holder.innerHTML = '<p class="l-hint">Modul tsw-progress.js belum dimuat, sehingga hasil latihan belum bisa disimpan.</p>';
   }
 
   document.querySelectorAll('.l-tabs [role="tab"]').forEach(tab => {
     tab.addEventListener('click', () => {
-      currentMode = tab.dataset.mode;
-      document.querySelectorAll('.l-tabs [role="tab"]').forEach(item => {
-        const active = item === tab;
-        item.setAttribute('aria-selected', String(active));
-        item.classList.toggle('active', active);
-      });
-      startSession();
+      currentMode = tab.dataset.mode; sess = { n: 0, ok: 0, streak: 0 }; history = []; lastGen = -1;
+      document.querySelectorAll('.l-tabs [role="tab"]').forEach(item => { const on = item === tab; item.setAttribute('aria-selected', String(on)); item.classList.toggle('active', on); });
+      renderQuestion();
     });
   });
 
@@ -731,10 +796,9 @@
   buildLessonKeyboard();
   buildMiniGuitar();
 
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) stopLessonAudio();
-  });
+  document.addEventListener('visibilitychange', () => { if (document.hidden) { stopLessonAudio(); clearTimers(); } });
+  window.TSWPractice = { current: () => q, mode: () => currentMode };
 
   updateProgress();
-  startSession();
+  renderQuestion();
 })();
