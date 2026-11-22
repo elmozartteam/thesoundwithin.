@@ -1,0 +1,81 @@
+/* ═══════════════════════════════════════════════════════
+   THE SOUND WITHIN — theme.css
+   Design tokens · warna, tipografi, shadow, spacing
+   ═══════════════════════════════════════════════════════ */
+
+:root {
+    /* ── Palet utama ── */
+    --navy:        #263F68;
+    --navy-mid:    #2F4F7C;
+    --navy-light:  #3B5E8C;
+    --navy-pale:   #4A6B99;
+    --navy-deep:   #1A3055;
+
+    /* ── Ivory & Beige ── */
+    --ivory:       #F5F0E6;
+    --ivory-warm:  #EDE7D9;
+    --beige:       #DCCDB8;
+    --beige-light: #E8DFCF;
+
+    /* ── Aksen ── */
+    --gold:        #D2B16F;
+    --gold-light:  #DFC48A;
+    --gold-pale:   #EDD9A5;
+    --rosegold:    #B98778;
+    --rosegold-lt: #CFA090;
+
+    /* ── Netral ── */
+    --white:       #FFFFFF;
+    --soft-black:  #191919;
+    --gray-100:    #F0EDE8;
+    --gray-200:    #D8D4CE;
+    --gray-400:    #A8A49E;
+    --gray-600:    #6E6B66;
+
+    /* ── Tipografi ── */
+    --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    --body:  "Lora", Georgia, "Times New Roman", serif;
+
+    /* ── Spacing ── */
+    --r: 6px;
+    --r-lg: 12px;
+
+    /* ── Shadow ── */
+    --shadow-sm: 0 2px 12px rgba(26,48,85,.18);
+    --shadow-md: 0 8px 32px rgba(26,48,85,.24);
+    --shadow-lg: 0 20px 60px rgba(26,48,85,.35);
+
+    /* ── Transition ── */
+    --t: .25s cubic-bezier(.4,0,.2,1);
+
+    /* ── Legacy aliases (agar style.css lama tetap jalan) ── */
+    --bg:           var(--navy);
+    --surface:      var(--navy-mid);
+    --surface-light: var(--navy-light);
+    --line:         rgba(255,255,255,.12);
+    --gray:         var(--gray-200);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: var(--body);
+    line-height: 1.72;
+    -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; }
+img, svg { display: block; }
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+}
