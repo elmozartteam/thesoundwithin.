@@ -44,15 +44,20 @@
   /* ---- Bar unit (Home · 1 · 2 · 3 · 4 · Latihan) ikut mengambang di atas saat di-scroll ---- */
   function stickyUnitBar() {
     if (cur < 0 || document.body.hasAttribute('data-nosticky')) return;
-    var bar = null, all = document.body.querySelectorAll('nav, div, section, ul, aside');
-    for (var i = 0; i < all.length && !bar; i++) {
-      var el = all[i], t = el.textContent || '';
-      if (t.indexOf('Home') < 0 || t.indexOf('Latihan') < 0 || t.length > 400) continue;
-      if (el.classList.contains('lvlnav')) continue;
-      var r = el.getBoundingClientRect();
-      if (r.height < 30 || r.height > 140 || r.width < window.innerWidth * 0.6) continue;
-      bar = el;
+    var bar = null, items = document.body.querySelectorAll('a, button, li, span, div');
+    for (var i = 0; i < items.length && !bar; i++) {
+      var tx = (items[i].textContent || '').trim();
+      if (tx.length > 25 || !/Latihan$/.test(tx)) continue;          // tombol terakhir di bar unit
+      var el = items[i], best = null;
+      while (el && el !== document.body) {                            // naik ke wadah bar terluar yang masih "bar"
+        var r = el.getBoundingClientRect();
+        if (r.height > 140) break;
+        if (r.width >= window.innerWidth * 0.9 && r.height >= 30) best = el;
+        el = el.parentElement;
+      }
+      if (best) bar = best;
     }
+    if (!bar) { if (window.console) console.warn('[levelnav] bar unit tidak ditemukan, mengambang dilewati'); return; }
     if (!bar || bar.getAttribute('data-sticky-ready')) return;
     bar.setAttribute('data-sticky-ready', '1');
     var spacer = document.createElement('div'); spacer.style.display = 'none';
