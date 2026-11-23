@@ -1,10 +1,10 @@
 /* THE SOUND WITHIN · navigasi antar level (dipakai di level-0.html, level-1.html, level-2.html, dst.)
    Cara pakai: taruh <div id="levelSwitch" data-levelnav="chips"></div> di tempat yang diinginkan
    lalu muat <script src="levelnav.js"></script> sebelum </body>.
-   Level yang sudah rilis: ubah READY. Total level: ubah TOTAL. Pola nama file: level-N.html */
+   Level yang bisa diklik: ubah READY. Total level: ubah TOTAL. Pola nama file: level-N.html */
 (function () {
   'use strict';
-  var TOTAL = 5, READY = [0, 1, 2];
+  var TOTAL = 5, READY = [0, 1, 2, 3, 4, 5];  // 4 & 5 terbuka, isinya halaman "segera hadir"
   var m = /level-(\d+)/i.exec(location.pathname), cur = m ? +m[1] : -1;
   var file = function (n) { return 'level-' + n + '.html'; };
   var ready = function (n) { return READY.indexOf(n) >= 0; };
@@ -40,4 +40,40 @@
   Array.prototype.forEach.call(hosts, function (h) {
     var kind = h.getAttribute('data-levelnav'); h.classList.add('lvlnav'); h.setAttribute('aria-label', h.getAttribute('aria-label') || 'Pindah level'); h.innerHTML = html(kind);
   });
+
+  /* ---- Bar unit (Home · 1 · 2 · 3 · 4 · Latihan) ikut mengambang di atas saat di-scroll ---- */
+  function stickyUnitBar() {
+    if (cur < 0 || document.body.hasAttribute('data-nosticky')) return;
+    var bar = null, all = document.body.querySelectorAll('nav, div, section, ul, aside');
+    for (var i = 0; i < all.length && !bar; i++) {
+      var el = all[i], t = el.textContent || '';
+      if (t.indexOf('Home') < 0 || t.indexOf('Latihan') < 0 || t.length > 400) continue;
+      if (el.classList.contains('lvlnav')) continue;
+      var r = el.getBoundingClientRect();
+      if (r.height < 30 || r.height > 140 || r.width < window.innerWidth * 0.6) continue;
+      bar = el;
+    }
+    if (!bar || bar.getAttribute('data-sticky-ready')) return;
+    bar.setAttribute('data-sticky-ready', '1');
+    var spacer = document.createElement('div'); spacer.style.display = 'none';
+    bar.parentNode.insertBefore(spacer, bar);
+    var fixed = false, props = ['position', 'top', 'left', 'right', 'width', 'zIndex', 'boxShadow'];
+    var origTop = bar.getBoundingClientRect().top + window.pageYOffset;
+    function apply() {
+      var y = window.pageYOffset;
+      if (!fixed && y >= origTop) {
+        spacer.style.height = bar.getBoundingClientRect().height + 'px'; spacer.style.display = 'block';
+        var s = bar.style; s.position = 'fixed'; s.top = '0'; s.left = '0'; s.right = '0'; s.width = '100%'; s.zIndex = '1000'; s.boxShadow = '0 6px 18px rgba(0,0,0,.28)';
+        fixed = true;
+      } else if (fixed && y < origTop) {
+        spacer.style.display = 'none'; props.forEach(function (k) { bar.style[k] = ''; }); fixed = false;
+      }
+    }
+    window.addEventListener('scroll', apply, { passive: true });
+    window.addEventListener('resize', function () { if (!fixed) origTop = bar.getBoundingClientRect().top + window.pageYOffset; apply(); });
+    apply();
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', stickyUnitBar); else stickyUnitBar();
+  window.addEventListener('load', stickyUnitBar);
+  setTimeout(stickyUnitBar, 400); setTimeout(stickyUnitBar, 1200);
 })();
