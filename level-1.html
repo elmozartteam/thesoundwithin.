@@ -114,6 +114,16 @@ footer{color:#B7C0D6}footer a{color:var(--gold2);text-decoration:none;margin:0 8
 .toplink{position:fixed;right:16px;bottom:16px;z-index:20;background:var(--gold2);color:var(--bg2);width:44px;height:44px;border-radius:50%;display:grid;place-items:center;text-decoration:none;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.35)}
 @media(max-width:900px){.burger{display:block}.mainnav{display:none;width:100%;flex-direction:column;align-items:flex-start;gap:12px;padding-top:12px}.mainnav.open{display:flex}.site-head{flex-wrap:wrap}.mainnav a.cta{align-self:stretch;text-align:center}}
 @media(max-width:700px){nav.units a span{display:none}nav.units a.on span{display:inline}.hero2 .lead{font-size:17px}}
+
+/* ══ REVISI: header satu baris seperti Level 0, logo gambar ══ */
+.site-head,.hero2{max-width:1480px}
+.mainnav{flex-wrap:nowrap;white-space:nowrap;gap:24px}
+.mainnav a{font-size:17px}
+.brand{flex:none}.brand small{white-space:nowrap}
+.logo{overflow:hidden;padding:0;background:#0F1B33}
+.logo img{width:100%;height:100%;object-fit:cover;display:block}
+nav.units{padding:10px max(14px,calc((100% - 1480px)/2 + 24px))}
+@media(max-width:1180px){.burger{display:block}.mainnav{display:none;width:100%;flex-direction:column;align-items:flex-start;gap:12px;padding-top:12px;white-space:normal}.mainnav.open{display:flex}.site-head{flex-wrap:wrap}.mainnav a.cta{align-self:stretch;text-align:center}}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&amp;display=swap" rel="stylesheet">
@@ -122,7 +132,7 @@ footer{color:#B7C0D6}footer a{color:var(--gold2);text-decoration:none;margin:0 8
 <div class="site-top" id="top">
   <!-- HEADER: samakan href dengan menu di level-0.html -->
   <header class="site-head">
-    <a class="brand" href="index.html"><span class="logo" aria-hidden="true">TSW</span><span><b>THE SOUND WITHIN</b><small>EVERY EXPERT ONCE HEARD A FIRST NOTE</small></span></a>
+    <a class="brand" href="index.html"><span class="logo" aria-hidden="true"><img src="logo.png" alt="" onerror="this.replaceWith(document.createTextNode('TSW'))"></span><span><b>THE SOUND WITHIN</b><small>EVERY EXPERT ONCE HEARD A FIRST NOTE</small></span></a>
     <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="mainnav" aria-label="Buka menu">☰</button>
     <nav class="mainnav" id="mainnav" aria-label="Menu utama">
       <a href="index.html">Home</a><a href="index.html#level">Level</a><a href="progress.html">Track Progress</a><a href="certificate.html">Sertifikat</a><a href="index.html#tentang">Tentang Kami</a><a href="index.html#profiles">Our Profiles</a><a href="index.html#komunitas">Komunitas</a><a href="index.html#eksklusif">Eksklusif</a>
@@ -135,7 +145,7 @@ footer{color:#B7C0D6}footer a{color:var(--gold2);text-decoration:none;margin:0 8
     <p class="lead">Setelah mengenal bunyi di Level 0, sekarang kamu belajar membaca paranada, menghitung ketukan, membentuk tangga nada mayor, mengenali interval, dan menyusun triad. Setiap unit punya gambar, suara, dan latihan Reading, Listening, Speaking.</p>
     <div class="cta-row"><a class="btn-gold" href="#u1">Mulai belajar ↗</a><a class="btn-link" href="#practice">Coba tiga jalur latihan</a></div>
     <p class="stats">8 UNITS &nbsp;·&nbsp; READING · LISTENING · SPEAKING</p>
-    <div class="levelswitch" aria-label="Pindah level"><a href="level-0.html">Level 0</a><a href="level-1.html" class="cur" aria-current="page">Level 1</a></div>
+    <div id="levelSwitch" data-levelnav="chips" aria-label="Pindah level"></div>
     <svg class="wave" viewBox="0 0 950 170" aria-hidden="true"><line x1="0" y1="40" x2="950" y2="40" stroke="rgba(255,255,255,.12)"/><line x1="0" y1="62" x2="950" y2="62" stroke="rgba(255,255,255,.12)"/><line x1="0" y1="84" x2="950" y2="84" stroke="rgba(255,255,255,.12)"/><line x1="0" y1="106" x2="950" y2="106" stroke="rgba(255,255,255,.12)"/><line x1="0" y1="128" x2="950" y2="128" stroke="rgba(255,255,255,.12)"/><path d="M0 80.0 L8 92.6 L16 104.3 L24 114.5 L32 122.8 L40 128.7 L48 132.2 L56 133.0 L64 131.2 L72 127.0 L80 120.5 L88 112.3 L96 102.7 L104 92.3 L112 81.5 L120 70.9 L128 61.0 L136 52.3 L144 45.2 L152 40.0 L160 36.8 L168 35.8 L176 37.0 L184 40.3 L192 45.4 L200 52.1 L208 59.9 L216 68.6 L224 77.5 L232 86.4 L240 94.7 L248 102.1 L256 108.3 L264 112.9 L272 115.7 L280 116.8 L288 116.1 L296 113.6 L304 109.5 L312 104.1 L320 97.7 L328 90.5 L336 83.1 L344 75.7 L352 68.6 L360 62.3 L368 57.1 L376 53.1 L384 50.5 L392 49.4 L400 49.8 L408 51.7 L416 54.9 L424 59.2 L432 64.5 L440 70.4 L448 76.6 L456 82.8 L464 88.7 L472 94.0 L480 98.6 L488 102.1 L496 104.4 L504 105.5 L512 105.3 L520 103.9 L528 101.4 L536 97.8 L544 93.6 L552 88.7 L560 83.6 L568 78.4 L576 73.4 L584 68.9 L592 65.0 L600 62.0 L608 59.9 L616 58.8 L624 58.8 L632 59.9 L640 61.9 L648 64.7 L656 68.2 L664 72.2 L672 76.4 L680 80.8 L688 84.9 L696 88.8 L704 92.1 L712 94.7 L720 96.6 L728 97.6 L736 97.7 L744 96.9 L752 95.4 L760 93.1 L768 90.3 L776 87.0 L784 83.5 L792 79.9 L800 76.3 L808 73.1 L816 70.3 L824 68.0 L832 66.4 L840 65.4 L848 65.2 L856 65.8 L864 67.0 L872 68.8 L880 71.1 L888 73.8 L896 76.7 L904 79.7 L912 82.7 L920 85.4 L928 87.8 L936 89.8 L944 91.2" fill="none" stroke="#D8BE82" stroke-width="3" stroke-linecap="round"/><text x="130" y="34" font-size="34" fill="#F4EEDD">♪</text><text x="440" y="30" font-size="34" fill="#F4EEDD">♫</text><text x="740" y="34" font-size="34" fill="#F4EEDD">♩</text></svg>
   </section>
 </div>
@@ -154,10 +164,11 @@ footer{color:#B7C0D6}footer a{color:var(--gold2);text-decoration:none;margin:0 8
     <div id="prog" aria-live="polite"></div>
   </section>
 </main>
-<footer><p><a href="index.html">⌂ Kembali ke Home</a><a href="level-0.html">← Level 0</a><a href="level-2.html">Level 2 →</a></p><p>Mikrofon hanya aktif setelah kamu menekan tombol dan memberi izin. Suara dianalisis sementara di perangkatmu, tidak direkam atau diunggah.</p></footer>
+<footer><p><a href="index.html">⌂ Kembali ke Home</a></p><div data-levelnav="pager" style="justify-content:center;margin:10px 0 18px"></div><p>Mikrofon hanya aktif setelah kamu menekan tombol dan memberi izin. Suara dianalisis sementara di perangkatmu, tidak direkam atau diunggah.</p></footer>
 <a class="toplink" href="#top" aria-label="Kembali ke atas">↑</a>
 <script>(function(){var b=document.getElementById("burger"),m=document.getElementById("mainnav");b.addEventListener("click",function(){var o=m.classList.toggle("open");b.setAttribute("aria-expanded",String(o))})})();</script>
 
 <script src="level1.js"></script>
+<script src="levelnav.js"></script>
 </body>
 </html>
