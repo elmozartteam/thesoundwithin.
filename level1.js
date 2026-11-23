@@ -184,10 +184,16 @@ function buildUnits() {
   UNITS.forEach((u, i) => {
     const a = document.createElement('article'); a.className = 'unit'; a.id = 'u' + (i + 1);
     a.innerHTML = '<span class="tag">' + u.tag + '</span><h3>' + esc(u.t) + '</h3><h4>Tujuan belajar</h4><ul>' + u.goal.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul><h4>Konsep</h4><p>' + esc(u.concept) + '</p><h4>Unsur penting</h4><ul>' + u.pts.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul><h4>Demonstrasi interaktif</h4><div class="demo"></div><h4>Kesalahan umum</h4><p>' + esc(u.mistake) + '</p><h4>Cek cepat</h4><details class="ans"><summary>Lihat pertanyaan & jawaban</summary><p>' + esc(u.check) + '</p></details>';
+    const un = document.createElement('div'); un.className = 'unit-nav'; un.innerHTML = (i ? '<a href="#u' + i + '">← Unit ' + i + '</a>' : '<a href="#top">↑ Kembali ke atas</a>') + (i < UNITS.length - 1 ? '<a href="#u' + (i + 2) + '">Unit ' + (i + 2) + ' →</a>' : '<a href="#practice">Ke latihan →</a>'); a.appendChild(un);
     host.appendChild(a); u.demo(a.querySelector('.demo'));
-    const l = document.createElement('a'); l.href = '#u' + (i + 1); l.textContent = (i + 1) + '. ' + u.t; nav.appendChild(l);
+    const l = document.createElement('a'); l.href = '#u' + (i + 1); l.dataset.u = 'u' + (i + 1); l.title = u.t; l.innerHTML = '<b>' + (i + 1) + '</b><span>' + esc(u.t) + '</span>'; nav.appendChild(l);
   });
-  const l = document.createElement('a'); l.href = '#practice'; l.textContent = '★ Latihan'; nav.appendChild(l);
+  const l = document.createElement('a'); l.href = '#practice'; l.dataset.u = 'practice'; l.innerHTML = '<b>★</b><span>Latihan</span>'; nav.appendChild(l);
+  if ('IntersectionObserver' in window) {
+    const links = {}; nav.querySelectorAll('a[data-u]').forEach(x => { links[x.dataset.u] = x; });
+    const io = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; Object.keys(links).forEach(k => links[k].classList.remove('on')); const t = links[e.target.id]; if (t) { t.classList.add('on'); nav.scrollLeft = t.offsetLeft - nav.clientWidth / 2 + t.clientWidth / 2; } }), { rootMargin: '-25% 0px -65% 0px' });
+    document.querySelectorAll('article.unit, #practice').forEach(s => io.observe(s));
+  }
 }
 
 /* ══ PROGRESS (TSWProgress bila ada + cadangan localStorage) ══ */
